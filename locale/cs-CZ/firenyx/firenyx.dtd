@@ -16,7 +16,13 @@
 <!ENTITY menu.nyx.plug "Rozšíření">
 
 <!-- Menu-Other -->
+<!ENTITY menu.writemail "Napsat zprávu">
+<!ENTITY menu.sidebar "Přátelé / Kluby">
 <!ENTITY menu.options "Nastavení">
+
+<!-- PopupMenu-Friends -->
+<!ENTITY menu.sidebar.writemail "Napsat zprávu">
+<!ENTITY menu.sidebar.userinfo "Informace o uživateli">
 
 <!-- Options -->
 <!ENTITY options.title "Nastavení Firenyxu">
@@ -29,3 +35,18 @@
 <!-- Options-refresh -->
 <!ENTITY options.refresh.caption "Obnovování">
 <!ENTITY options.refresh.time "Obnovovat po (sekundy):">
+
+<!-- New mail -->
+<!ENTITY newmail.title "Napsat novou zprávu">
+<!ENTITY newmail.caption "Napsat novou zprávu">
+<!ENTITY newmail.to "Komu:">
+<!ENTITY newmail.message "Zpráva:">
+<!ENTITY newmail.nohtml "Odeslat HTML kód jako prostý text">
+
+<!-- Sidebar -->
+<!ENTITY sidebar.title "Firenyx - Přátelé / Kluby">
+<!ENTITY sidebar.close "Zavřít">
+
+<!-- Access Keys -->
+<!ENTITY sidebar.accesskey "VK_F">
+<!ENTITY sidebar.accesskey.modifiers "alt">

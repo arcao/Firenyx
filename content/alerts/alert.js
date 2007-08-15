@@ -21,6 +21,7 @@
  * Contributor(s):
  *   Scott MacGregor <mscott@netscape.com>
  *   Jens Bannmann <jens.b@web.de>
+ *   Martin "Arcao" Sloup <arcao@arcao.com> 
  *
  * Alternatively, the contents of this file may be used under the terms of
  * either the GNU General Public License Version 2 or later (the "GPL"), or
@@ -87,6 +88,22 @@ function onAlertLoad()
     gSlideTime = prefBranch.getIntPref("alerts.slideIncrementTime");
     gOpenTime = prefBranch.getIntPref("alerts.totalOpenTime");
   } catch (ex) {}
+  
+  //repair hrefs by Arcao
+  var anchors = document.getElementsByTagName("a");
+	for (var i=0; i<anchors.length; i++) {
+		var anchor = anchors[i];
+		if (anchor.getAttribute("href")) {
+			if (!gAlertTextClickable) {
+				anchor.target = "_blank";
+			} else {
+				anchor.onclick = function() { return true; };
+			}
+		}
+	}
+  
+	//maxWidth hack by Arcao
+  document.getElementById('alertTextLabel').style.maxWidth = (screen.width/3)+'px'; 
 
   sizeToContent();
 

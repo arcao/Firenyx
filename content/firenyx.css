@@ -1,0 +1,28 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"); 
+
+#firenyx-dashboard
+{
+    -moz-appearance: dialog !important;
+}
+
+#firenyx-dashboard-splitter
+{
+    background-color: ThreeDFace !important;
+    border: 1px solid ThreeDDarkShadow !important;
+}
+
+#firenyx-dashboard-tab-box, #firenyx-dashboard-tab-panels
+{
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+#firenyx-dashboard-tabs
+{
+    display: block !important;
+}
+
+#firenyx-dashboard-tabs > tab
+{
+    display: inline !important;
+}

@@ -1,10 +1,8 @@
 <?xml version="1.0"?>
 
 <!-- Styles //-->
-<?xml-stylesheet href="chrome://global/skin/" type="text/css"?> 
-<?xml-stylesheet href="chrome://mozapps/skin/pref/pref.css" type="text/css"?>
-<?xml-stylesheet href="chrome://browser/skin/pref/pref.css" type="text/css"?>
- 
+<?xml-stylesheet href="chrome://firenyx/content/firenyx.css" type="text/css"?>
+<?xml-stylesheet href="chrome://firenyx/skin/firenyx.css" type="text/css"?> 
 <!-- Locale info //-->
 <!DOCTYPE overlay [
 <!ENTITY % firenyxDTD SYSTEM "chrome://firenyx/locale/firenyx.dtd">
@@ -19,6 +17,13 @@
 	  function doLoad() {
 	  	fn_init();
 	  	fn.startRefreshing();
+	  	
+	  	var appContent        = document.getElementById("appcontent");
+    	var dashboard         = document.getElementById("firenyx-dashboard");
+    	var dashboardSplitter = document.getElementById("firenyx-dashboard-splitter"); 
+	  	var browser = appContent.parentNode;
+      browser.insertBefore(dashboard, appContent);
+      browser.insertBefore(dashboardSplitter, appContent); 
 		}
     function doUnLoad() {
       fn_destroy();
@@ -40,6 +45,9 @@
         <menuitem label="&menu.nyx.last;" oncommand="fn.openPage('l=last');"/>
         <menuitem label="&menu.nyx.plug;" oncommand="fn.openPage('l=plug');"/>
         <menuseparator/> 
+        <menuitem label="&menu.writemail;" oncommand="fn.showWriteMail();"/>
+        <menuitem label="&menu.sidebar;" oncommand="fn.toggleSidebar();" key="keyFirenyxSidebarShortcut"/>
+        <menuseparator/>
         <menuitem label="&menu.options;" oncommand="fn.showOptions();"/>
       </menupopup>
     </menu>
@@ -61,8 +69,62 @@
         <menuitem label="&menu.nyx.last;" oncommand="fn.openPage('l=last');"/>
         <menuitem label="&menu.nyx.plug;" oncommand="fn.openPage('l=plug');"/>
         <menuseparator/> 
+        <menuitem label="&menu.writemail;" oncommand="fn.showWriteMail();"/>
+        <menuitem label="&menu.sidebar;" oncommand="fn.toggleSidebar();" key="keyFirenyxSidebarShortcut"/>
+        <menuseparator/> 
         <menuitem label="&menu.options;" oncommand="fn.showOptions();"/>
       </menupopup>
   </statusbar>
+  
+  <!-- insert into mainKeyset -->
+	<keyset id="mainKeyset">
+		<key id="keyFirenyxSidebarShortcut" key="F" modifiers="alt" oncommand="fn.toggleSidebar();" />
+	</keyset>
+  
+  <!-- insert into view/sidebar -->
+	<menupopup id="viewSidebarMenu">
+		<menuitem label="&menu.sidebar;" oncommand="fn.toggleSidebar();" key="keyFirenyxSidebarShortcut"/>
+	</menupopup>
+	 
+  <!-- Sidebar (dashboard): begin -->
+  <window id="main-window">
+    <vbox id="firenyx-dashboard" width="115" height="115" hidden="true">
+      <tabbox id="firenyx-dashboard-tab-box" flex="1">
+      	<tabs id="firenyx-dashboard-tabs">
+          <tab label="Přátelé" />
+          <tab label="Kluby" />
+          <spacer id="firenyx-dashboard-spacer" flex="1"/>
+          <!-- <toolbarbutton id="firenyx-position-dashboard" class="firenyx-dashboard-button" tooltiptext="&firenyx.position.label;" oncommand="fn.changePositionDashboard()"/> -->
+          <toolbarbutton id="firenyx-close-dashboard" tooltiptext="&sidebar.close;" oncommand="fn.toggleSidebar()"/>
+        </tabs>
+        <tabpanels flex="1" style="padding:0">
+	        <!-- Sidebar content: begin -->
+	        <tabpanel flex="1" style="padding:0">
+	        	<richlistbox flex="1" id="firenyx-friends" context="popupmenu_friends">
+<!--				  <listitem label="arcao">
+						    <hbox>
+							  	<image width="20" height="25" src="http://i.nyx.cz/A/ARCAO.gif"/>
+							    <vbox flex="1">
+							      <label value="nick"/>
+							      <label value="time"/>
+							    </vbox>
+							  </hbox>
+						  </listitem>-->
+						  <menupopup id="popupmenu_friends">
+				        <menuitem label="&menu.sidebar.writemail;" oncommand="fn.sidebar.menuAction('newmail');"/>
+				        <menuseparator/> 
+				        <menuitem label="&menu.sidebar.userinfo;" oncommand="fn.sidebar.menuAction('userinfo');"/>
+      				</menupopup>
+						</richlistbox>
+	        </tabpanel>
+	        <tabpanel flex="1"/>
+	        <!-- Sidebar content: end -->
+        </tabpanels>
+      </tabbox>
+    </vbox>
+    <splitter id="firenyx-dashboard-splitter" orient="horizontal" hidden="true"/>
+  </window> 
+  <!-- Sidebar (dashboard): end -->
+  
 </overlay>
 

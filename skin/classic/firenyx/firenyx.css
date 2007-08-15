@@ -1,0 +1,5 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"); 
+
+#firenyx-close-dashboard {
+	list-style-image: url("chrome://firenyx/skin/sidebar/close.png");
+}

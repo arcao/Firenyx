@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!-- Styles //-->
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?> 
+<?xml-stylesheet href="chrome://mozapps/skin/pref/pref.css" type="text/css"?>
+<?xml-stylesheet href="chrome://browser/skin/pref/pref.css" type="text/css"?>
+ 
+<!-- Locale info //-->
+<!DOCTYPE overlay [
+<!ENTITY % firenyxDTD SYSTEM "chrome://firenyx/locale/firenyx.dtd">
+%firenyxDTD;
+]> 
+
+<!-- content: chrome://firenyx/content/ -->
+
+<dialog id="firenyx-newmail" title="&newmail.title;"
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        buttons="accept,cancel"
+        ondialogaccept="return doOk();"
+        ondialogcancel="return doCancel();">
+
+<script type="application/x-javascript" src="chrome://firenyx/content/firenyx.js"/>
+<script type="application/x-javascript">
+<![CDATA[
+var listener = null;
+function doOk() {
+	//odeslani posty
+	var to = gBI('firenyx-to').value;
+	var message = gBI('firenyx-message').value;
+	var nohtml = gBI('firenyx-nohtml').checked;
+	
+	//alert(to+":\n"+message);
+	//odesilani musime volat oklikou
+	if (listener) listener.sendMail(to,  message, nohtml);
+	 
+	return true;
+}
+
+function doCancel() {
+	return true;
+}
+
+function doLoad() {
+	fn_init();
+	if (window.arguments && window.arguments[0]) {
+		listener = window.arguments[0];
+	}
+	if (window.arguments && window.arguments[1]) {
+		gBI('firenyx-to').value = window.arguments[1];
+		gBI('firenyx-message').focus();
+	}
+}
+function doUnLoad() {
+	fn_destroy();
+}
+
+window.addEventListener('load',doLoad, false);
+window.addEventListener('unload',doUnLoad, false);
+]]>
+</script>
+  <vbox>
+  <groupbox flex="1">
+    <caption label="&newmail.caption;"/>
+    <hbox align="center">
+		  <label value="&newmail.to;"/>
+		  <textbox maxlength="30" flex="1" id="firenyx-to"/>
+		</hbox>
+		<hbox>
+		  <label value="&newmail.message;"/>
+		</hbox>
+		<hbox>
+		  <textbox flex="1" multiline="true" rows="6" cols="60" id="firenyx-message"/>
+		</hbox>
+		<hbox pack="center">
+			<checkbox label="&newmail.nohtml;" id="firenyx-nohtml"/>
+		</hbox>
+  </groupbox>
+  </vbox>
+</dialog>

@@ -37,7 +37,7 @@ function doOk() {
 	
 	//logme(window.arguments[0]);
 	
-	if (window.arguments && window.arguments[0]) window.arguments[0](); 
+	if (window.arguments && window.arguments[0]) window.arguments[0].updateRefreshing(); 
 	
 	return true;
 }
