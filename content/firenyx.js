@@ -11,6 +11,21 @@ const url_nyx_page = "{0}://www.nyx.cz/index.php?{1}";
 const url_nyx_login_page = "{0}://www.nyx.cz/index.php?login=1";
 const url_nyx_login_post_vars = "loguser={0}&logpass={1}";
 
+const fn_img_throbber = 'chrome://firenyx/skin/throbber.gif';
+const fn_img_butterfly = 'chrome://firenyx/skin/butterfly.png';
+
+const fn_img_alert_mail = 'chrome://firenyx/skin/alert/new/mail.png';
+const fn_img_alert_friend = 'chrome://firenyx/skin/alert/new/friend.png';
+const fn_img_alert_topic = 'chrome://firenyx/skin/alert/new/topic.png';
+
+const fn_img_alert_info = 'chrome://firenyx/skin/alert/new/info.png';
+const fn_img_alert_stop = 'chrome://firenyx/skin/alert/new/stop.png';
+const fn_img_alert_ok = 'chrome://firenyx/skin/alert/new/ok.png';
+const fn_img_alert_network = 'chrome://firenyx/skin/alert/new/network.png';
+const fn_img_alert_key = 'chrome://firenyx/skin/alert/new/key.png';
+
+const ALERT_CHROME_URL = 'chrome://firenyx/content/alerts/alert.xul';
+
 function gBI(id) { return document.getElementById(id); }
 
 
@@ -19,9 +34,23 @@ function firenyx() {
 	this.timer = null;
 	this.xmlHttp = null;
 	this.wrappedJSObject = this;
+	this.topic = new Object();
+	this.topic.unreaded = 0;
+	this.last_books = [];
+	this.last_friends = [];
+	this.dont_show_network_error = false;
+	this.init();
 	return this;
 }
 firenyx.prototype.init = function() {
+	this.observerService = Components.classes["@mozilla.org/observer-service;1"].getService(Components.interfaces.nsIObserverService);
+  this.observerService.addObserver(this, "firenyx:mail:new", false);
+  //this.observerService.addObserver(this, "firenyx:topic:add", false);
+  //this.observerService.addObserver(this, "firenyx:topic:update", false);
+  //this.observerService.addObserver(this, "firenyx:topic:remove", false);
+  this.observerService.addObserver(this, "firenyx:friend:add", false);
+  this.observerService.addObserver(this, "firenyx:friend:update", false);
+  this.observerService.addObserver(this, "firenyx:friend:remove", false);
 }
 firenyx.prototype.startRefreshing = function() {
 	this.timer = Components.classes["@mozilla.org/timer;1"].createInstance(Components.interfaces.nsITimer);
@@ -47,7 +76,6 @@ firenyx.prototype.updateRefreshing = function() {
 			} 
 		}; 
 	 	callback.parent = this; 
-	
 		this.timer.initWithCallback(callback, fn_p.getInt('refresh.time', 60) * 1000, Components.interfaces.nsITimer.TYPE_REPEATING_SLACK);
 	}
 }
@@ -57,16 +85,24 @@ firenyx.prototype.stopRefreshing = function() {
 	}
 }
 firenyx.prototype.processRefresh = function() {
-	//logme(this.xmlHttp);
-	//logme(this.xmlHttp.readyState);
-	if (this.xmlHttp.readyState == 4) {
-		//logme(this.xmlHttp.status);
-		if (this.xmlHttp.status == 200) {
-			this.processXML();			
-		} else {
-			//this.displayError();
+	try {
+		//logme(this.xmlHttp);
+		//logme(this.xmlHttp.readyState);
+		if (this.xmlHttp.readyState == 4) {
+			//logme(this.xmlHttp.status);
+			if (this.xmlHttp.status == 200) {
+				this.processXML();			
+			} else {
+				throw new Error(this.xmlHttp.status);
+			}
+	  }
+	} catch (e) {
+		gBI('firenyx-label').value = fn_s.get('fn.statusbar.unlogged');
+		if (!this.dont_show_network_error) {
+			this.dont_show_network_error = true;
+			this.showAlert(fn_img_alert_network, fn_s.get('fn.error.network.title'), fn_s.get('fn.error.network.text'), false, '');
 		}
-  }
+	}
 }
 
 firenyx.prototype.refresh = function(timer) {
@@ -80,12 +116,13 @@ firenyx.prototype.refresh = function(timer) {
 		return;
 	}
 	
-	if (this.firstlogin) {
+	if (this.firstlogin || this.dont_show_network_error) {
 		gBI('firenyx-label').value = fn_s.get('fn.statusbar.logging');
-		this.firstlogin = false;
 	}
 	
   var params = fn_utils.printf(url_nyx_client_post_vars, username, password);
+  
+  gBI('firenyx-icon').src = fn_img_throbber;
   
 	this.xmlHttp = new XMLHttpRequest();
 	this.xmlHttp.open("POST", url, true);
@@ -99,22 +136,102 @@ firenyx.prototype.refresh = function(timer) {
 firenyx.prototype.processXML = function() {
 	text = this.xmlHttp.responseText;
 	//TODO: osetrit, zda to nehazi HTML error stranku
+	//zpracovani chyb 1.cast
 	//logme(this.xmlHttp.responseText);
+	gBI('firenyx-icon').src = fn_img_butterfly;
+	
+	if (this.xmlHttp.responseText.indexOf('<?xml') != 0) {
+		this.dont_show_network_error = true;
+		this.showAlert(fn_img_alert_key, fn_s.get('fn.error.login.title'), fn_s.get('fn.error.login.text'), false, '');
+		gBI('firenyx-label').value = fn_s.get('fn.statusbar.unlogged');
+		return;
+	}
+	this.dont_show_network_error = false;
 	//alert(this.xmlHttp.responseText);
 	
 	var parser = new DOMParser();
 	var doc = parser.parseFromString(this.xmlHttp.responseText, "text/xml");
 	
-	var username = doc.getElementsByTagName('user')[0].getElementsByTagName('username')[0].firstChild.nodeValue;
-	var unreaded_obj = doc.getElementsByTagName('boards')[0].getElementsByTagName('board');
+	this.username = doc.getElementsByTagName('user')[0].getElementsByTagName('username')[0].firstChild.nodeValue;
 	
-	var unreaded = 0;
+	//zpracovani chyb 2.cast
+	var error_obj = doc.getElementsByTagName('page')[0].getElementsByTagName('error');
+	if (error_obj.length > 0) {
+		this.showAlert(fn_img_alert_stop, fn_s.get('fn.error.nyx.title'), fn_utils.printf(fn_s.get('fn.error.login.title'), error_obj[0].firstChild.nodeValue), false, '');
+	}
+	
+	//zpracovani posty
+	var mail_obj = doc.getElementsByTagName('info')[0].getElementsByTagName('mail');
+	if (mail_obj.length > 0) {
+		var message_obj = mail_obj[0].getElementsByTagName('message');
+		var items = [];
+		for(var i=0; i < message_obj.length; i++) {
+			var from = message_obj[i].getElementsByTagName('username')[0].firstChild.nodeValue;
+			var message = message_obj[i].getElementsByTagName('text')[0].firstChild.nodeValue;
+			var time = parseInt(message_obj[i].getElementsByTagName('time')[0].firstChild.nodeValue);
+			items.push({'from': from, 'time': time, 'message': message});
+		}
+		if (items.length > 1) {
+			var messages = '';
+			for(var i=0; i < items.length; i++) {
+				if (i!=0) messages+="\n\n";
+				messages+=items[i].from+":\n";
+				messages+=items[i].message;
+				this.observerService.notifyObservers(null, "firenyx:mail:new", json.toJSON(items[i]));
+			}
+			this.showAlert(fn_img_alert_mail, fn_s.get('fn.alert.newmail_multiple.title'), messages, true, 'nyxhref:l=mail');
+		} else {
+			this.observerService.notifyObservers(null, "firenyx:mail:new", json.toJSON(items[0]));
+			this.showAlert(fn_img_alert_mail, fn_utils.printf(fn_s.get('fn.alert.newmail.title'), items[0].from), items[0].message, true, 'nyxhref:l=mail');
+		}
+	}
+	
+	
+	//zpracovani klubu
+	var unreaded_obj = doc.getElementsByTagName('boards')[0].getElementsByTagName('board');
+	this.topic.unreaded = 0;
 	for(var i=0; i < unreaded_obj.length; i++) {
 		//logme(unreaded_obj[i].getAttribute('new'));
-		unreaded+=parseInt(unreaded_obj[i].getAttribute('new'));
+		this.topic.unreaded+=parseInt(unreaded_obj[i].getAttribute('new'));
 	}
 		
-	gBI('firenyx-label').value = fn_utils.printf(fn_s.get('fn.statusbar.text'), username, unreaded);
+	//zpracovani friend
+	var friend_obj = doc.getElementsByTagName('friends')[0].getElementsByTagName('friend');
+	var friends = []
+	for(var i=0; i < friend_obj.length; i++) {
+		var id = parseInt(friend_obj[i].getElementsByTagName('id')[0].firstChild.nodeValue);
+		var username = friend_obj[i].getElementsByTagName('username')[0].firstChild.nodeValue;
+		var refresh = parseInt(friend_obj[i].getElementsByTagName('refresh')[0].firstChild.nodeValue);
+		friends.push({'id': id, 'username': username, 'refresh': refresh});
+	}
+	for(var i=0; i < this.last_friends.length; i++) {
+		var lf = this.last_friends[i];
+		var found = false;
+		var f = lf;
+		for(var y=0; y < friends.length;y++) if (lf.username == friends[y].username) {found=true; f=friends[y]; break;}
+		if (found) {
+			//friend update
+			this.observerService.notifyObservers(null, "firenyx:friend:update", json.toJSON(f));
+		} else {
+			//friend remove
+			this.observerService.notifyObservers(null, "firenyx:friend:remove", json.toJSON(f));
+		}
+	}
+	for(var i=0; i < friends.length; i++) {
+		var f = friends[i];
+		var found = false;
+		for(var y=0; y < this.last_friends.length;y++) if (f.username == this.last_friends[y].username) {found=true; break;}
+		if (!found) {
+			//friend add
+			this.observerService.notifyObservers(null, "firenyx:friend:add", json.toJSON(f));
+		}
+	}
+	
+	this.last_friends = friends;
+	this.friends = friends; 
+	
+	this.firstlogin = false;
+	gBI('firenyx-label').value = fn_utils.printf(fn_s.get('fn.statusbar.text'), this.username, this.topic.unreaded);
 }
 firenyx.prototype.openPage = function(page) {
 	//page = 'l=gate'
@@ -156,15 +273,54 @@ firenyx.prototype.openPage = function(page) {
 	this.xmllogin.send(login_params); 
 }
 firenyx.prototype.showOptions = function() {
-	var w = window.openDialog(fn_options_xul, 'fn_options', 'centerscreen, chrome, modal', Delegate.create(this, this.updateRefreshing));
+	window.openDialog(fn_options_xul, 'fn_options', 'centerscreen, chrome, modal', Delegate.create(this, this.updateRefreshing));
+}
+//icon=icon uri, title=title, txt=text, clickable=zavola this.observe po kliknuti, data=hodnota predana pod data v this.observe  
+firenyx.prototype.showAlert = function(icon, title, text, clickable, data, type) {
+	//var alertsService = Components.classes["@mozilla.org/alerts-service;1"].getService(Components.interfaces.nsIAlertsService);
+	//alertsService.showAlertNotification(icon, title, text, clickable, data, this);
+	//owner draw alert box
+	if (type==undefined) type='plain';
+	if (type=='plain') text = fn_utils.encodehtml(text);
+	//var args = [icon, title, text, clickable, data, this];
+	window.openDialog(ALERT_CHROME_URL, "_blank", 'chrome,dialog=yes,titlebar=no,popup=yes', icon, title, text, clickable, data, this);
+}
+firenyx.prototype.onAlertFinished = function() {},
+firenyx.prototype.onAlertClickCallback = function(aCookie) {
+	if (aCookie.indexOf(':')!=0) {
+		var action = aCookie.split(':')[0];
+		var param = aCookie.split(':')[1];
+		
+		switch(action.toLowerCase()) {
+			case 'nyxhref':
+				this.openPage(param);
+				break;
+		}
+	}
+}
+firenyx.prototype.observe = function(subject, topic, data) {
+	logme('observer> subject:'+subject+' topic:'+topic+' data:'+data);
+	
+	if (topic=='alertclickcallback') this.onAlertClickCallback(data);
+	if (topic=='alertfinished') this.onAlertFinished();
 }
 firenyx.prototype.destroy = function() {
+	//observers
+	this.observerService.removeObserver(this, "firenyx:mail:new", false);
+	//this.observerService.removeObserver(this, "firenyx:topic:add", false);
+	//this.observerService.removeObserver(this, "firenyx:topic:update", false);
+	//this.observerService.removeObserver(this, "firenyx:topic:remove", false);
+	this.observerService.removeObserver(this, "firenyx:friend:add", false);
+	this.observerService.removeObserver(this, "firenyx:friend:update", false);
+	this.observerService.removeObserver(this, "firenyx:friend:remove", false);
+	this.observerService = null;
+	//timer
 	this.stopRefreshing();
+	//other
 	this.timer = null;
 	this.xmlHttp = null;
 	this.xmllogin = null;
 }
-
 ////////////////////////////////////////////////////////////////////////////////
 //utils
 function fn_utils() {}
@@ -177,6 +333,15 @@ fn_utils.printf = function() {
     oStr = oStr.replace(re, arguments[i]); 
   } 
   return oStr; 
+}
+fn_utils.encodehtml = function(text) {
+	text = text.replace(/&/g,"&amp;");
+	text = text.replace(/</g,"&lt;");
+	text = text.replace(/>/g,"&gt;");
+	text = text.replace(/\r\n/g,"<br/>");
+	text = text.replace(/\n/g,"<br/>");
+	text = text.replace(/\r/g,"<br/>");
+	return text;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -193,7 +358,7 @@ Delegate.create = function (o, f) {
 }
 
 function logme(message) {
-	logme_ConsoleService.logStringMessage('Firenyx: ' + message);
+	//logme_ConsoleService.logStringMessage('Firenyx: ' + message);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -262,13 +427,101 @@ fn_StringBundle.prototype.destroy = function() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// JSON, by Mark Gibson, hacked the original json.js into a jQuery plugin.
+// original: http://jollytoad.googlepages.com/json.js
+// Edited into object version by Arcao
+function json() {
+	var m = {'\b': '\\b', '\t': '\\t', '\n': '\\n', '\f': '\\f', '\r': '\\r', '"' : '\\"', '\\': '\\\\' };
+	var s = {
+    'array': function (x) {
+        var a = ['['], b, f, i, l = x.length, v;
+        for (i = 0; i < l; i += 1) {
+            v = x[i];
+            f = s[typeof v];
+            if (f) {
+                v = f(v);
+                if (typeof v == 'string') {
+                    if (b) {
+                        a[a.length] = ',';
+                    }
+                    a[a.length] = v;
+                    b = true;
+                }
+            }
+        }
+        a[a.length] = ']';
+        return a.join('');
+    },
+    'boolean': function (x) {
+        return String(x);
+    },
+    'null': function (x) {
+        return "null";
+    },
+    'number': function (x) {
+        return isFinite(x) ? String(x) : 'null';
+    },
+    'object': function (x) {
+        if (x) {
+            if (x instanceof Array) {
+                return s.array(x);
+            }
+            var a = ['{'], b, f, i, v;
+            for (i in x) {
+                v = x[i];
+                f = s[typeof v];
+                if (f) {
+                    v = f(v);
+                    if (typeof v == 'string') {
+                        if (b) {
+                            a[a.length] = ',';
+                        }
+                        a.push(s.string(i), ':', v);
+                        b = true;
+                    }
+                }
+            }
+            a[a.length] = '}';
+            return a.join('');
+        }
+        return 'null';
+    },
+    'string': function (x) {
+        if (/["\\\x00-\x1f]/.test(x)) {
+            x = x.replace(/([\x00-\x1f\\"])/g, function(a, b) {
+                var c = m[b];
+                if (c) {
+                    return c;
+                }
+                c = b.charCodeAt();
+                return '\\u00' +
+                    Math.floor(c / 16).toString(16) +
+                    (c % 16).toString(16);
+            });
+        }
+        return '"' + x + '"';
+    }
+  };
+  this.s = s;
+}
+json.prototype.toJSON = function(v) {
+	var f = isNaN(v) ? this.s[typeof v] : this.s['number'];
+	if (f) return f(v);
+}
+json.prototype.parseJSON = function(v, safe) {
+	if (safe === undefined) safe = false;
+	if (safe && !/^("(\\.|[^"\\\n\r])*?"|[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t])+?$/.test(v))
+		return undefined;
+	return eval('('+v+')');
+}
+json = new json();
+////////////////////////////////////////////////////////////////////////////////
 var fn = null;
 var fn_p = null;
 var fn_s = null;
 
 function fn_init() {
 	fn = new firenyx();
-	fn.init();
 	fn_p = new fn_Pref(fn_branchName);
 	fn_s = new fn_StringBundle(fn_stringBundle_properties);
 }

@@ -13,13 +13,12 @@ MKDIR output >NUL
 del /Q output\firenyx.jar output\%OUTPUT_ZIP% >NUL
 
 ECHO # Komprimuji...
-%winrar% a -eh -m5 -afzip output\firenyx.jar content locale
-REM skin
+%winrar% a -r -x*\.svn\*.* -esh -m5 -afzip output\firenyx.jar content locale skin
 
 CD output
-%winrar% a -eh -m5 -afzip -apchrome %OUTPUT_ZIP% firenyx.jar
+%winrar% a -r -x*\.svn\*.* -esh -m5 -afzip -apchrome %OUTPUT_ZIP% firenyx.jar
 CD ..
-%winrar% a -eh -m5 -afzip output\%OUTPUT_ZIP% defaults install.rdf install.js chrome.manifest
+%winrar% a -r -x*\.svn\*.* -esh -m5 -afzip output\%OUTPUT_ZIP% defaults install.rdf install.js chrome.manifest
 
 ECHO # Mazu docasne soubory...
 del /Q output\firenyx.jar >NUL

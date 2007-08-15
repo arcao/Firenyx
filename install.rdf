@@ -2,7 +2,7 @@
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
   <Description about="urn:mozilla:install-manifest">
     <em:id>{5591137f-ca2c-4c2a-93d1-5514992b2d4a}</em:id>
-    <em:version>0.1.0.2007070402</em:version>
+    <em:version>0.1.1.2007070601</em:version>
     
     <!-- Firefox -->
     <em:targetApplication>
@@ -47,7 +47,7 @@
     <em:file>
       <Description about="urn:mozilla:extension:file:firenyx.jar">
         <em:package>content/</em:package>
-        <!-- <em:skin>skin/classic/firenyx/</em:skin> -->
+        <em:skin>skin/classic/firenyx/</em:skin>
         <em:locale>locale/cs-CZ/firenyx/</em:locale>
       </Description>
     </em:file>
