@@ -3,3 +3,6 @@
 #firenyx-close-dashboard {
 	list-style-image: url("chrome://firenyx/skin/sidebar/close.png");
 }
+.disabled #firenyx-label {
+	color: gray;
+}

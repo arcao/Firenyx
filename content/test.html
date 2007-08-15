@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="content-type" content="text/html; " />
+    <title></title>
+  </head>
+  <body>
+<script type="text/javascript">
+/* <![CDATA[ */
+text ="<br><img><hr><br/><hr /> <img/ >";
+text = text.replace(/<((br|img|hr).*?)(\/>|\/\s+>|>)/ig, "<$1 />");
+alert(text);
+//text = text.replace(/<((br|img|hr)[^>]*)>/ig, "<$1 />");
+alert(text);
+/* ]]> */
+</script>
+  </body>
+</html>

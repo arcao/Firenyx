@@ -12,7 +12,13 @@
 <!-- content: chrome://firenyx/content/ -->
 
 <overlay id="firenyxOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	<script type="application/x-javascript" src="chrome://firenyx/content/firenyx.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.Sidebar.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/init.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/Json.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/Pref.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/StringBundle.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/Utils.js"/>	
 	<script type="application/x-javascript">
 	  function doLoad() {
 	  	fn_init();
@@ -35,19 +41,20 @@
   <menupopup id="menu_ToolsPopup">
     <menu insertafter="devToolsSeparator" label="&menu.label;">
       <menupopup id="menu_popupmenu">
-        <menuitem label="&menu.nyx.gate;" oncommand="fn.openPage('l=gate');"/>
-        <menuitem label="&menu.nyx.mail;" oncommand="fn.openPage('l=mail');"/>
-        <menuitem label="&menu.nyx.topics;" oncommand="fn.openPage('l=topics');"/>
-        <menuitem label="&menu.nyx.notepad;" oncommand="fn.openPage('l=notepad');"/>
-        <menuitem label="&menu.nyx.people;" oncommand="fn.openPage('l=people');"/>
-        <menuitem label="&menu.nyx.user;" oncommand="fn.openPage('l=user');"/>
-        <menuitem label="&menu.nyx.book;" oncommand="fn.openPage('l=book');"/>
-        <menuitem label="&menu.nyx.last;" oncommand="fn.openPage('l=last');"/>
-        <menuitem label="&menu.nyx.plug;" oncommand="fn.openPage('l=plug');"/>
+        <menuitem id="firenyx-menuDisabled-0" label="&menu.nyx.gate;" oncommand="fn.openPage('l=gate');"/>
+        <menuitem id="firenyx-menuDisabled-1" label="&menu.nyx.mail;" oncommand="fn.openPage('l=mail');"/>
+        <menuitem id="firenyx-menuDisabled-2" label="&menu.nyx.topics;" oncommand="fn.openPage('l=topics');"/>
+        <menuitem id="firenyx-menuDisabled-3" label="&menu.nyx.notepad;" oncommand="fn.openPage('l=notepad');"/>
+        <menuitem id="firenyx-menuDisabled-4" label="&menu.nyx.people;" oncommand="fn.openPage('l=people');"/>
+        <menuitem id="firenyx-menuDisabled-5" label="&menu.nyx.user;" oncommand="fn.openPage('l=user');"/>
+        <menuitem id="firenyx-menuDisabled-6" label="&menu.nyx.book;" oncommand="fn.openPage('l=book');"/>
+        <menuitem id="firenyx-menuDisabled-7" label="&menu.nyx.last;" oncommand="fn.openPage('l=last');"/>
+        <menuitem id="firenyx-menuDisabled-8" label="&menu.nyx.plug;" oncommand="fn.openPage('l=plug');"/>
         <menuseparator/> 
-        <menuitem label="&menu.writemail;" oncommand="fn.showWriteMail();"/>
-        <menuitem label="&menu.sidebar;" oncommand="fn.toggleSidebar();" key="keyFirenyxSidebarShortcut"/>
+        <menuitem id="firenyx-menuDisabled-9" label="&menu.writemail;" oncommand="fn.showWriteMail();"/>
+        <menuitem checked="false" autocheck="false" type="checkbox" id="firenyx-toggleSidebar-0" label="&menu.sidebar;" oncommand="fn.sidebar.toggleSidebar();" key="keyFirenyxSidebarShortcut"/>
         <menuseparator/>
+        <menuitem checked="false" autocheck="false" type="checkbox" id="firenyx-toggleDisabled-0" label="&menu.disabled;" oncommand="fn.toggleDisabled();"/>
         <menuitem label="&menu.options;" oncommand="fn.showOptions();"/>
       </menupopup>
     </menu>
@@ -59,31 +66,32 @@
     </statusbarpanel>
     
       <menupopup id="popupmenu_statusbar">
-        <menuitem label="&menu.nyx.gate;" oncommand="fn.openPage('l=gate');"/>
-        <menuitem label="&menu.nyx.mail;" oncommand="fn.openPage('l=mail');"/>
-        <menuitem label="&menu.nyx.topics;" oncommand="fn.openPage('l=topics');"/>
-        <menuitem label="&menu.nyx.notepad;" oncommand="fn.openPage('l=notepad');"/>
-        <menuitem label="&menu.nyx.people;" oncommand="fn.openPage('l=people');"/>
-        <menuitem label="&menu.nyx.user;" oncommand="fn.openPage('l=user');"/>
-        <menuitem label="&menu.nyx.book;" oncommand="fn.openPage('l=book');"/>
-        <menuitem label="&menu.nyx.last;" oncommand="fn.openPage('l=last');"/>
-        <menuitem label="&menu.nyx.plug;" oncommand="fn.openPage('l=plug');"/>
+        <menuitem id="firenyx-menuDisabled-10" label="&menu.nyx.gate;" oncommand="fn.openPage('l=gate');"/>
+        <menuitem id="firenyx-menuDisabled-11" label="&menu.nyx.mail;" oncommand="fn.openPage('l=mail');"/>
+        <menuitem id="firenyx-menuDisabled-12" label="&menu.nyx.topics;" oncommand="fn.openPage('l=topics');"/>
+        <menuitem id="firenyx-menuDisabled-13" label="&menu.nyx.notepad;" oncommand="fn.openPage('l=notepad');"/>
+        <menuitem id="firenyx-menuDisabled-14" label="&menu.nyx.people;" oncommand="fn.openPage('l=people');"/>
+        <menuitem id="firenyx-menuDisabled-15" label="&menu.nyx.user;" oncommand="fn.openPage('l=user');"/>
+        <menuitem id="firenyx-menuDisabled-16" label="&menu.nyx.book;" oncommand="fn.openPage('l=book');"/>
+        <menuitem id="firenyx-menuDisabled-17" label="&menu.nyx.last;" oncommand="fn.openPage('l=last');"/>
+        <menuitem id="firenyx-menuDisabled-18" label="&menu.nyx.plug;" oncommand="fn.openPage('l=plug');"/>
         <menuseparator/> 
-        <menuitem label="&menu.writemail;" oncommand="fn.showWriteMail();"/>
-        <menuitem label="&menu.sidebar;" oncommand="fn.toggleSidebar();" key="keyFirenyxSidebarShortcut"/>
-        <menuseparator/> 
+        <menuitem id="firenyx-menuDisabled-19" label="&menu.writemail;" oncommand="fn.showWriteMail();"/>
+        <menuitem checked="false" autocheck="false" type="checkbox" id="firenyx-toggleSidebar-1" label="&menu.sidebar;" oncommand="fn.sidebar.toggleSidebar();" key="keyFirenyxSidebarShortcut"/>
+        <menuseparator/>
+				<menuitem checked="false" autocheck="false" type="checkbox" id="firenyx-toggleDisabled-1" label="&menu.disabled;" oncommand="fn.toggleDisabled();"/> 
         <menuitem label="&menu.options;" oncommand="fn.showOptions();"/>
       </menupopup>
   </statusbar>
   
   <!-- insert into mainKeyset -->
 	<keyset id="mainKeyset">
-		<key id="keyFirenyxSidebarShortcut" key="F" modifiers="alt" oncommand="fn.toggleSidebar();" />
+		<key id="keyFirenyxSidebarShortcut" key="F" modifiers="alt" oncommand="fn.sidebar.toggleSidebar();" />
 	</keyset>
   
   <!-- insert into view/sidebar -->
 	<menupopup id="viewSidebarMenu">
-		<menuitem label="&menu.sidebar;" oncommand="fn.toggleSidebar();" key="keyFirenyxSidebarShortcut"/>
+		<menuitem checked="false" autocheck="false" type="checkbox" id="firenyx-toggleSidebar-2" label="&menu.sidebar;" oncommand="fn.sidebar.toggleSidebar();" key="keyFirenyxSidebarShortcut"/>
 	</menupopup>
 	 
   <!-- Sidebar (dashboard): begin -->
@@ -95,13 +103,13 @@
           <tab label="Kluby" />
           <spacer id="firenyx-dashboard-spacer" flex="1"/>
           <!-- <toolbarbutton id="firenyx-position-dashboard" class="firenyx-dashboard-button" tooltiptext="&firenyx.position.label;" oncommand="fn.changePositionDashboard()"/> -->
-          <toolbarbutton id="firenyx-close-dashboard" tooltiptext="&sidebar.close;" oncommand="fn.toggleSidebar()"/>
+          <toolbarbutton id="firenyx-close-dashboard" tooltiptext="&sidebar.close;" oncommand="fn.sidebar.toggleSidebar()"/>
         </tabs>
         <tabpanels flex="1" style="padding:0">
 	        <!-- Sidebar content: begin -->
 	        <tabpanel flex="1" style="padding:0">
-	        	<richlistbox flex="1" id="firenyx-friends" context="popupmenu_friends">
-<!--				  <listitem label="arcao">
+	        	<richlistbox flex="1" id="firenyx-friends">
+<!--				  <richlistitem label="arcao">
 						    <hbox>
 							  	<image width="20" height="25" src="http://i.nyx.cz/A/ARCAO.gif"/>
 							    <vbox flex="1">
@@ -109,7 +117,7 @@
 							      <label value="time"/>
 							    </vbox>
 							  </hbox>
-						  </listitem>-->
+						  </richlistitem>-->
 						  <menupopup id="popupmenu_friends">
 				        <menuitem label="&menu.sidebar.writemail;" oncommand="fn.sidebar.menuAction('newmail');"/>
 				        <menuseparator/> 

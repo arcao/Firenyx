@@ -53,7 +53,7 @@
 
   <box id="alertBox" class="alertBox">
     
-    <hbox class="alertImageBox" align="center" pack="center">
+    <hbox class="alertImageBox" align="start" pack="center">
       <image id="alertImage"/>
     </hbox>
 

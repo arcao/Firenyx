@@ -18,45 +18,51 @@
         ondialogaccept="return doOk();"
         ondialogcancel="return doCancel();">
 
-<script type="application/x-javascript" src="chrome://firenyx/content/firenyx.js"/>
-<script type="application/x-javascript">
-<![CDATA[
-var listener = null;
-function doOk() {
-	//odeslani posty
-	var to = gBI('firenyx-to').value;
-	var message = gBI('firenyx-message').value;
-	var nohtml = gBI('firenyx-nohtml').checked;
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.Sidebar.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/init.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/Json.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/Pref.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/StringBundle.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/Utils.js"/>
+	<script type="application/x-javascript">
+	<![CDATA[
+	var listener = null;
+	function doOk() {
+		//odeslani posty
+		var to = gBI('firenyx-to').value;
+		var message = gBI('firenyx-message').value;
+		var nohtml = gBI('firenyx-nohtml').checked;
+		
+		//alert(to+":\n"+message);
+		//odesilani musime volat oklikou
+		if (listener) listener.sendMail(to,  message, nohtml);
+		 
+		return true;
+	}
 	
-	//alert(to+":\n"+message);
-	//odesilani musime volat oklikou
-	if (listener) listener.sendMail(to,  message, nohtml);
-	 
-	return true;
-}
-
-function doCancel() {
-	return true;
-}
-
-function doLoad() {
-	fn_init();
-	if (window.arguments && window.arguments[0]) {
-		listener = window.arguments[0];
+	function doCancel() {
+		return true;
 	}
-	if (window.arguments && window.arguments[1]) {
-		gBI('firenyx-to').value = window.arguments[1];
-		gBI('firenyx-message').focus();
+	
+	function doLoad() {
+		fn_init();
+		if (window.arguments && window.arguments[0]) {
+			listener = window.arguments[0];
+		}
+		if (window.arguments && window.arguments[1]) {
+			gBI('firenyx-to').value = window.arguments[1];
+			gBI('firenyx-message').focus();
+		}
 	}
-}
-function doUnLoad() {
-	fn_destroy();
-}
-
-window.addEventListener('load',doLoad, false);
-window.addEventListener('unload',doUnLoad, false);
-]]>
-</script>
+	function doUnLoad() {
+		fn_destroy();
+	}
+	
+	window.addEventListener('load',doLoad, false);
+	window.addEventListener('unload',doUnLoad, false);
+	]]>
+	</script>
   <vbox>
   <groupbox flex="1">
     <caption label="&newmail.caption;"/>

@@ -18,6 +18,7 @@
 <!-- Menu-Other -->
 <!ENTITY menu.writemail "Napsat zprávu">
 <!ENTITY menu.sidebar "Přátelé / Kluby">
+<!ENTITY menu.disabled "Zakázat rozšíření">
 <!ENTITY menu.options "Nastavení">
 
 <!-- PopupMenu-Friends -->
@@ -32,9 +33,22 @@
 <!ENTITY options.login.password "Heslo externího rozhraní:">
 <!ENTITY options.login.webpassword "Webové heslo:">
 
+<!ENTITY options.login.invisible_mode "Viditelnost po rychlém přihlášení:">
+<!ENTITY options.login.invisible_mode.visible "Viditelný">
+<!ENTITY options.login.invisible_mode.invisible "Neviditelný">
+<!ENTITY options.login.invisible_mode.ask "Ptát se">
+
+<!ENTITY options.login.premium_version "Mám prémiovou verzi Nyxu (nutné zaškrtnout, pokud ji máte, jinak nezaškrtávat!)">
+
 <!-- Options-refresh -->
 <!ENTITY options.refresh.caption "Obnovování">
 <!ENTITY options.refresh.time "Obnovovat po (sekundy):">
+
+<!-- Options-look -->
+<!ENTITY options.look.caption "Vzhled">
+<!ENTITY options.look.statusbar_counter "Za přezdívkou ve stavovém řádku zobrazovat počítadlo:">
+<!ENTITY options.look.statusbar_counter.books "Klubů">
+<!ENTITY options.look.statusbar_counter.posts "Příspěvků">
 
 <!-- New mail -->
 <!ENTITY newmail.title "Napsat novou zprávu">

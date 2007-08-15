@@ -18,53 +18,65 @@
         ondialogaccept="return doOk();"
         ondialogcancel="return doCancel();">
 
-<script type="application/x-javascript" src="chrome://firenyx/content/firenyx.js"/>
-<script type="application/x-javascript">
-<![CDATA[
-function doOk() {
-	fn_p.setString('username', gBI('firenyx-username').value);
-	fn_p.setString('password', gBI('firenyx-password').value);
-	fn_p.setString('webpassword', gBI('firenyx-webpassword').value);
-
-	var refresh_time = 0
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.Sidebar.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/init.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/Json.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/Pref.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/StringBundle.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/Utils.js"/>
+	<script type="application/x-javascript">
+	<![CDATA[
+	function doOk() {
+		fn_p.setString('username', gBI('firenyx-username').value);
+		fn_p.setString('password', gBI('firenyx-password').value);
+		fn_p.setString('webpassword', gBI('firenyx-webpassword').value);
+		fn_p.setInt('invisible_mode', gBI('firenyx-invisible_mode').selectedIndex);
+		fn_p.setBool('premium_version', gBI('firenyx-premium_version').checked);
+		fn_p.setInt('look.statusbar_counter', gBI('firenyx-look-statusbar_counter').selectedIndex);
 	
-	if (!gBI('firenyx-refresh-time').value.match(/^([6-9]\d|[1-9]\d{2,})$/)) {
-		alert(fn_s.get('fn.options.alert.wrong_refresh_time'));
-		return false;
+		var refresh_time = 0
+		
+		if (!gBI('firenyx-refresh-time').value.match(/^([6-9]\d|[1-9]\d{2,})$/)) {
+			alert(fn_s.get('fn.options.alert.wrong_refresh_time'));
+			return false;
+		}
+		refresh_time = parseInt(gBI('firenyx-refresh-time').value);
+		fn_p.setInt('refresh.time', refresh_time);
+		
+		//logme(window.arguments[0]);
+		
+		if (window.arguments && window.arguments[0]) window.arguments[0].updateRefreshing(); 
+		
+		return true;
 	}
-	refresh_time = parseInt(gBI('firenyx-refresh-time').value);
-	fn_p.setInt('refresh.time', refresh_time);
 	
-	//logme(window.arguments[0]);
+	function doCancel() {
+		return true;
+	}
 	
-	if (window.arguments && window.arguments[0]) window.arguments[0].updateRefreshing(); 
+	function doLoad() {
+		fn_init();
+		gBI('firenyx-username').value = fn_p.getString('username', '');
+		gBI('firenyx-password').value = fn_p.getString('password', '');
+		gBI('firenyx-webpassword').value = fn_p.getString('webpassword', '');
+		gBI('firenyx-invisible_mode').selectedIndex = fn_p.getInt('invisible_mode', 0);
+		gBI('firenyx-premium_version').checked = fn_p.getBool('premium_version', false);
+		gBI('firenyx-look-statusbar_counter').selectedIndex = fn_p.getInt('look.statusbar_counter', 0);
+		
+		var refresh_time = fn_p.getInt('refresh.time', 60);
+		if (refresh_time < 60) refresh_time = 60;
+		gBI('firenyx-refresh-time').value = refresh_time;
+	}
 	
-	return true;
-}
-
-function doCancel() {
-	return true;
-}
-
-function doLoad() {
-	fn_init();
-	gBI('firenyx-username').value = fn_p.getString('username', '');
-	gBI('firenyx-password').value = fn_p.getString('password', '');
-	gBI('firenyx-webpassword').value = fn_p.getString('webpassword', '');
+	function doUnLoad() {
+		fn_destroy();
+	}
 	
-	var refresh_time = fn_p.getInt('refresh.time', 60);
-	if (refresh_time < 60) refresh_time = 60;
-	gBI('firenyx-refresh-time').value = refresh_time;
-}
-
-function doUnLoad() {
-	fn_destroy();
-}
-
-window.addEventListener('load',doLoad, false);
-window.addEventListener('unload',doUnLoad, false);
-]]>
-</script>
+	window.addEventListener('load',doLoad, false);
+	window.addEventListener('unload',doUnLoad, false);
+	]]>
+	</script>
   <vbox>
   <groupbox flex="1">
     <caption label="&options.login.caption;"/>
@@ -80,12 +92,37 @@ window.addEventListener('unload',doUnLoad, false);
 		  <label value="&options.login.webpassword;"/>
 		  <textbox type="password" maxlength="30" flex="1" id="firenyx-webpassword"/>
 		</hbox>
+		<hbox align="center">
+		  <label value="&options.login.invisible_mode;"/>
+		  <menulist id="firenyx-invisible_mode" flex="1">
+        <menupopup>
+          <menuitem label="&options.login.invisible_mode.visible;" selected="true"/>
+          <menuitem label="&options.login.invisible_mode.invisible;"/>
+          <menuitem label="&options.login.invisible_mode.ask;"/>
+        </menupopup>
+      </menulist>
+		</hbox>
+		<hbox align="center">
+		  <checkbox label="&options.login.premium_version;" id="firenyx-premium_version"/>
+		</hbox>
   </groupbox>
   <groupbox flex="1">
     <caption label="&options.refresh.caption;"/>
     <hbox align="center">
 		  <label value="&options.refresh.time;"/>
 		  <textbox maxlength="30" flex="1" id="firenyx-refresh-time"/>
+		</hbox>
+  </groupbox>
+  <groupbox flex="1">
+    <caption label="&options.look.caption;"/>
+    <hbox align="center">
+		  <label value="&options.look.statusbar_counter;"/>
+		  <menulist id="firenyx-look-statusbar_counter" flex="1">
+        <menupopup>
+        	<menuitem label="&options.look.statusbar_counter.posts;" selected="true"/>
+          <menuitem label="&options.look.statusbar_counter.books;"/>
+        </menupopup>
+      </menulist>
 		</hbox>
   </groupbox>
   </vbox>

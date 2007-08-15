@@ -4,8 +4,6 @@ const fn_options_xul = 'chrome://firenyx/content/options.xul';
 const fn_writemail_xul = 'chrome://firenyx/content/writemail.xul';
 const fn_stringBundle_properties = 'chrome://firenyx/locale/firenyx.properties';
 
-const logme_ConsoleService = Components.classes['@mozilla.org/consoleservice;1'].getService(Components.interfaces.nsIConsoleService);
-
 const url_nyx_client = "https://www.nyx.cz/code/client.php";
 const url_nyx_avatars = "http://i.nyx.cz/{0}/{1}.gif";
 
@@ -15,10 +13,11 @@ const url_nyx_client_writemail_post_vars = "loguser={0}&logpass={1}&recipient={2
 const url_nyx_page = "{0}://www.nyx.cz/index.php?{1}";
 const url_nyx_login_page = "{0}://www.nyx.cz/index.php?login=1";
 
-const url_nyx_login_post_vars = "loguser={0}&logpass={1}";
+const url_nyx_login_post_vars = "loguser={0}&logpass={1}&loginv={2}";
 
 const fn_img_throbber = 'chrome://firenyx/skin/throbber.gif';
 const fn_img_butterfly = 'chrome://firenyx/skin/butterfly.png';
+const fn_img_butterfly_disabled = 'chrome://firenyx/skin/butterfly_disabled.png';
 
 const fn_img_alert_mail = 'chrome://firenyx/skin/alert/new/mail.png';
 const fn_img_alert_friend = 'chrome://firenyx/skin/alert/new/friend.png';
@@ -34,9 +33,6 @@ const fn_img_avatar_error = 'chrome://firenyx/skin/no_avatar.gif';
 
 const ALERT_CHROME_URL = 'chrome://firenyx/content/alerts/alert.xul';
 
-function gBI(id) { return document.getElementById(id); }
-
-
 function firenyx() {
 	this.firstlogin=true;
 	this.timer = null;
@@ -50,6 +46,7 @@ function firenyx() {
 	this.generated = 0;
 	this.dont_show_network_error = false;
 	this.sidebar = new firenyx_sidebar();
+	this.disabled = false;
 	this.init();
 	return this;
 }
@@ -65,24 +62,17 @@ firenyx.prototype.init = function() {
 	this.observerService.addObserver(this, "firenyx:friend:add", false);
   this.observerService.addObserver(this, "firenyx:friend:update", false);
   this.observerService.addObserver(this, "firenyx:friend:remove", false);
+  this.disabled = fn_p.getBool('disabled', false);
 }
 firenyx.prototype.startRefreshing = function() {
 	this.timer = Components.classes["@mozilla.org/timer;1"].createInstance(Components.interfaces.nsITimer);
-	window.setTimeout(Delegate.create(this, this.refresh, this.timer), 500);
-
-	var callback = { 
-		notify: function(timer) { 
-			this.parent.refresh(timer); 
-		} 
-	}; 
- 	callback.parent = this; 
-
-	this.timer.initWithCallback(callback, fn_p.getInt('refresh.time', 60) * 1000, Components.interfaces.nsITimer.TYPE_REPEATING_SLACK);
+	this.setDisabled(this.disabled);
 }
 firenyx.prototype.updateRefreshing = function() {
+	if (this.disabled) return;
 	if (this.timer) {
 		this.timer.cancel();
-		window.setTimeout(Delegate.create(this, this.refresh, this.timer), 500);
+		window.setTimeout(Delegate.create(this, this.refresh, this.timer), 1);
 		
 		var callback = { 
 			notify: function(timer) { 
@@ -97,6 +87,30 @@ firenyx.prototype.stopRefreshing = function() {
 	if (this.timer) {
 		this.timer.cancel();
 	}
+}
+firenyx.prototype.setDisabled = function(state) {
+  this.disabled = state;
+	fn_p.setBool('disabled', state);
+	
+	gBI('firenyx-toggleDisabled-0').setAttribute('checked', state);
+	gBI('firenyx-toggleDisabled-1').setAttribute('checked', state);
+	
+	for(i=0; i<20;i++) gBI('firenyx-menuDisabled-'+i).setAttribute('disabled', state);
+	for(i=0; i<3;i++) gBI('firenyx-toggleSidebar-'+i).setAttribute('disabled', state);
+	
+	if (state) {
+		gBI('firenyx-statuspanel').setAttribute('class', 'disabled');
+		gBI('firenyx-icon').src = fn_img_butterfly_disabled;
+		this.sidebar.toggleSidebar(false);
+		gBI('firenyx-label').value = fn_s.get('fn.statusbar.unlogged');
+		this.stopRefreshing();
+	} else {
+		gBI('firenyx-statuspanel').setAttribute('class', '');
+		this.updateRefreshing();
+	}	
+}
+firenyx.prototype.toggleDisabled = function() {
+	this.setDisabled(!this.disabled);
 }
 firenyx.prototype.processRefresh = function() {
 	try {
@@ -201,9 +215,12 @@ firenyx.prototype.processXML = function() {
 			var from = message_obj[i].getElementsByTagName('username')[0].firstChild.nodeValue;
 			var message = message_obj[i].getElementsByTagName('text')[0].firstChild.nodeValue;
 			var time = parseInt(message_obj[i].getElementsByTagName('time')[0].firstChild.nodeValue, 10);
+			//Osetreni bugu! Uzavreni nedparovych tagu
+			message = fn_utils.closeUnpairedTags(message);
+			
 			items.push({'from': from, 'time': time, 'message': message});
 		}
-		this.observerService.notifyObservers(null, "firenyx:mail:new", json.toJSON(items));
+		this.observerService.notifyObservers(null, "firenyx:mail:new", Json.toJSON(items));
 		
 		//pozdeji prehodit do observe fce
 		if (items.length > 1) {
@@ -245,11 +262,11 @@ firenyx.prototype.processXML = function() {
 		if (found) {
 			//topic update
 			//nove neprectene?
-			if (lb.unreaded < f.unreaded) this.observerService.notifyObservers(null, "firenyx:topic:newposts", json.toJSON(f));
-			this.observerService.notifyObservers(null, "firenyx:topic:update", json.toJSON(f));
+			if (lb.unreaded < f.unreaded) this.observerService.notifyObservers(null, "firenyx:topic:newposts", Json.toJSON(f));
+			this.observerService.notifyObservers(null, "firenyx:topic:update", Json.toJSON(f));
 		} else {
 			//topic remove
-			this.observerService.notifyObservers(null, "firenyx:topic:remove", json.toJSON(f));
+			this.observerService.notifyObservers(null, "firenyx:topic:remove", Json.toJSON(f));
 		}
 	}
 	for(var i=0; i < books.length; i++) {
@@ -258,7 +275,7 @@ firenyx.prototype.processXML = function() {
 		for(var y=0; y < this.topic.items.length;y++) if (f.id == this.topic.items[y].id) {found=true; break;}
 		if (!found) {
 			//friend add
-			this.observerService.notifyObservers(null, "firenyx:topic:add", json.toJSON(f));
+			this.observerService.notifyObservers(null, "firenyx:topic:add", Json.toJSON(f));
 		}
 	}
 	//kategorie
@@ -269,8 +286,8 @@ firenyx.prototype.processXML = function() {
 		var cat_id = 0;
 		this.topic.cats.push({'name': cat_name, 'id': cat_id});
 	}
-	//logme(json.toJSON(books));
-	//logme(json.toJSON(this.topic.cats));
+	//logme(Json.toJSON(books));
+	//logme(Json.toJSON(this.topic.cats));
 	this.topic.items = books;
 	
 	//----------------------------------------------------------------------------
@@ -291,11 +308,11 @@ firenyx.prototype.processXML = function() {
 		if (found) {
 			//friend update
 			this.sidebar.editPeople(f.username, this.generated-f.refresh);
-			this.observerService.notifyObservers(null, "firenyx:friend:update", json.toJSON(f));
+			this.observerService.notifyObservers(null, "firenyx:friend:update", Json.toJSON(f));
 		} else {
 			//friend remove
 			this.sidebar.removePeople(f.username);
-			this.observerService.notifyObservers(null, "firenyx:friend:remove", json.toJSON(f));
+			this.observerService.notifyObservers(null, "firenyx:friend:remove", Json.toJSON(f));
 		}
 	}
 	for(var i=0; i < friends.length; i++) {
@@ -305,14 +322,17 @@ firenyx.prototype.processXML = function() {
 		if (!found) {
 			//friend add
 			this.sidebar.addPeople(f.username, f.id, this.generated-f.refresh);
-			this.observerService.notifyObservers(null, "firenyx:friend:add", json.toJSON(f));
+			this.observerService.notifyObservers(null, "firenyx:friend:add", Json.toJSON(f));
 		}
 	}
 	
 	this.friends = friends; 
 	
 	this.firstlogin = false;
-	gBI('firenyx-label').value = fn_utils.printf(fn_s.get('fn.statusbar.text'), this.username, this.topic.unreaded);
+	var val = this.topic.unreaded;
+	if (fn_p.getInt('look.statusbar_counter', 0) == 1) val = this.topic.items.length; 
+	
+	gBI('firenyx-label').value = fn_utils.printf(fn_s.get('fn.statusbar.text'), this.username, val);
 }
 firenyx.prototype.openPage = function(page) {
 	//page = 'l=gate'
@@ -324,6 +344,30 @@ firenyx.prototype.openPage = function(page) {
 		return;
 	}
 	
+	var invisible = fn_p.getInt('invisible_mode', 0);
+	if (invisible == 2) {
+		//zeptame se zda visible / invisible
+		var pSI= Components.interfaces.nsIPromptService;
+		var pS = Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService(pSI);
+  	var result = pS.confirmEx(null, fn_s.get('fn.invisible_prompt.title'),
+															fn_s.get('fn.invisible_prompt.text'),
+															pSI.BUTTON_TITLE_IS_STRING * pSI.BUTTON_POS_0 +
+															pSI.BUTTON_TITLE_IS_STRING * pSI.BUTTON_POS_1 +
+															/*pSI.BUTTON_TITLE_IS_STRING * pSI.BUTTON_POS_2 +*/ pSI.BUTTON_POS_0_DEFAULT,
+															fn_s.get('fn.invisible_prompt.invisible'),
+															fn_s.get('fn.invisible_prompt.visible'),
+															null, //fn_s.get('fn.invisible_prompt.cancel'),
+															null,
+															{});
+		//alert(result);
+		//if (result == 1) return;
+		//if (result == 2) result=1;
+		invisible = 1 - result;
+	}
+	
+	var protocol = 'http';
+	if (fn_p.getBool('premium_version', false)) protocol = 'https';
+	 
 	var login_url = fn_utils.printf(url_nyx_login_page, 'https');
 	var login_params = fn_utils.printf(url_nyx_login_post_vars, encodeURIComponent(username), encodeURIComponent(password));
 
@@ -335,9 +379,10 @@ firenyx.prototype.openPage = function(page) {
 		if (this.xmllogin.readyState == 4) {
 			//logme(this.xmllogin.status);
 			if (this.xmllogin.status == 200) {
-				var url = fn_utils.printf(url_nyx_page, 'http', page);
+				var url = fn_utils.printf(url_nyx_page, protocol, page);
 				//logme(url);
 				//If the open tabs preference is set to true
+				//logme(this.xmllogin.responseText);
 				if(true) {
 					getBrowser().selectedTab = getBrowser().addTab(url);
 				} else {
@@ -417,101 +462,6 @@ firenyx.prototype.observe = function(subject, topic, data) {
 	if (topic=='alertclickcallback') this.onAlertClickCallback(data);
 	if (topic=='alertfinished') this.onAlertFinished();
 }
-//------------------------------------------------------------------------
-//sidebar
-firenyx.prototype.toggleSidebar = function() {
-	var hidden = !gBI('firenyx-dashboard').hidden;
-	gBI('firenyx-dashboard').hidden = hidden;
-	gBI('firenyx-dashboard-splitter').hidden = hidden;
-	
-	//TODO: provest zaskrtnuti v menu
-}
-function firenyx_sidebar() {
-	return this; 
-}
-firenyx_sidebar.prototype.addPeople = function(nick, id, time) {
-	nick = nick.toUpperCase();
-
-	var list = gBI('firenyx-friends');
-	
-	var items = list.getElementsByTagName('richlistitem');
-	
-	var beforeEl = null;
-	
-	for(var i=0; i<items.length; i++) {
-		if(items[i].nick>nick) { beforeEl = items[i]; break; }
-	}
-	
-	var el = document.createElement('richlistitem');
-	
-	el.nick = nick;
-	el.id = id;
-	
-	var hbox = document.createElement('hbox');
-	
-	var image = document.createElement('image');
-	image.setAttribute('src', fn_utils.printf(url_nyx_avatars, nick.substring(0,1), nick));
-	image.onerror = function() { image.src=fn_img_avatar_error;};
-	
-	var vbox = document.createElement('vbox');
-	
-	var label_nick = document.createElement('label');
-	label_nick.setAttribute('value', nick);
-	var label_time = document.createElement('label');
-	label_time.setAttribute('value', fn_utils.formatTime(time));
-	
-	vbox.appendChild(label_nick);
-	vbox.appendChild(label_time);
-	
-	hbox.appendChild(image);
-	hbox.appendChild(vbox);
-	
-	el.appendChild(hbox);
-	
-	if (!beforeEl) { 
-		list.appendChild(el);
-	} else {
-		list.insertBefore(el, beforeEl);
-	}
-	return el;
-}
-firenyx_sidebar.prototype.editPeople = function(nick, time) {
-	nick = nick.toUpperCase();
-	
-	var list = gBI('firenyx-friends');
-	var items = list.getElementsByTagName('richlistitem');
-	var el = null;
-	for(var i=0; i<items.length; i++) {
-		logme(items[i].nick);
-		if(items[i].nick==nick) { el = items[i]; break; }
-	}
-	
-	if (el) {
-		el.getElementsByTagName('label')[1].value = fn_utils.formatTime(time);
-		logme(el.getElementsByTagName('label')[1].value);
-	}	
-}
-firenyx_sidebar.prototype.removePeople = function(nick) {
-	nick = nick.toUpperCase();
-	
-	var list = gBI('firenyx-friends');
-	var items = list.getElementsByTagName('richlistitem');
-	var el = null;
-	for(var i=0; i<items.length; i++) if(items[i].nick==nick) { el = items[i]; break; }
-	
-	if (el) list.removeChild(el);
-}
-firenyx_sidebar.prototype.menuAction = function(action) {
-	var item = gBI('firenyx-friends').selectedItem;
-	switch(action.toLowerCase()) {
-		case 'newmail':
-			fn.showWriteMail(item.nick);
-			break;
-		case 'userinfo':
-			fn.openPage('l=user;id='+item.nick);
-			break;
-	}
-}
 firenyx.prototype.destroy = function() {
 	//observers
 	this.observerService.removeObserver(this, "firenyx:mail:new", false);
@@ -533,225 +483,4 @@ firenyx.prototype.destroy = function() {
 	this.timer = null;
 	this.xmlHttp = null;
 	this.xmllogin = null;
-}
-////////////////////////////////////////////////////////////////////////////////
-//utils
-function fn_utils() {}
-fn_utils.printf = function() { 
-  var num = arguments.length; 
-  var oStr = arguments[0];   
-  for (var i = 1; i < num; i++) { 
-    var pattern = "\\{" + (i-1) + "\\}"; 
-    var re = new RegExp(pattern, "g"); 
-    oStr = oStr.replace(re, arguments[i]); 
-  } 
-  return oStr; 
-}
-fn_utils.encodehtml = function(text) {
-	text = text.replace(/&/g,"&amp;");
-	text = text.replace(/</g,"&lt;");
-	text = text.replace(/>/g,"&gt;");
-	text = text.replace(/\r\n/g,"<br/>");
-	text = text.replace(/\n/g,"<br/>");
-	text = text.replace(/\r/g,"<br/>");
-	return text;
-}
-fn_utils.formatTime = function(sec) {
-	var minutes = Math.floor(sec / 60);
-	var seconds = Math.floor(sec - minutes*60);
-	
-	var str = minutes;
-	str+= ':';
-	str+= (seconds < 10) ? '0'+seconds: seconds;
-	return str;
-}
-////////////////////////////////////////////////////////////////////////////////
-//delegate
-function Delegate() {}
-Delegate.create = function (o, f) {
-  var a = new Array() ;
-  var l = arguments.length ;
-  for(var i = 2 ; i < l ; i++) a[i - 2] = arguments[i] ;
-  return function() {
-    var aP = [].concat(arguments, a) ;
-    f.apply(o, aP);
-  }
-}
-
-function logme(message) {
-	//logme_ConsoleService.logStringMessage('Firenyx: ' + message);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-//Pref
-function fn_Pref(branchName) {
-	this.service = Components.classes["@mozilla.org/preferences-service;1"].getService(Components.interfaces.nsIPrefService);
-	this.branchName = branchName;
-	this.branch = this.service.getBranch(this.branchName);
-	this.wrappedJSObject = this;
-	return this;
-}
-//User Prefs Bool
-fn_Pref.prototype.getBool = function(name, default_value) {
-	if(this.branch.prefHasUserValue(name)) {
-		return this.branch.getBoolPref(name);	
-	} else {
-		return default_value;
-	}
-}
-fn_Pref.prototype.setBool = function(name, value) {
-	return this.branch.setBoolPref(name, value);
-}
-//User Prefs Int
-fn_Pref.prototype.getInt = function(name, default_value) {
-	if(this.branch.prefHasUserValue(name)) {
-		return this.branch.getIntPref(name);	
-	} else {
-		return default_value;
-	}
-}
-fn_Pref.prototype.setInt = function(name, value) {
-	return this.branch.setIntPref(name, value);
-}
-//User Prefs String
-fn_Pref.prototype.getString = function(name, default_value) {
-	if(this.branch.prefHasUserValue(name)) {
-		return this.branch.getCharPref(name);	
-	} else {
-		return default_value;
-	}
-}
-fn_Pref.prototype.setString = function(name, value) {
-	return this.branch.setCharPref(name, value);
-}
-fn_Pref.prototype.destroy = function() {
-	this.service = null;
-	this.branchName = null;
-	this.branch = null;
-	this.wrappedJSObject = null;
-}
-
-
-function fn_StringBundle(filename) {
-	this.service = Components.classes["@mozilla.org/intl/stringbundle;1"].getService(Components.interfaces.nsIStringBundleService);
-  this.bundle = this.service.createBundle(filename);
-  this.wrappedJSObject = this;
-  return this;
-}
-fn_StringBundle.prototype.get = function(name) {
-	return this.bundle.GetStringFromName(name);
-}
-fn_StringBundle.prototype.destroy = function() {
-	this.service = null;
-	this.bundle = null;
-	this.wrappedJSObject = null;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// JSON, by Mark Gibson, hacked the original json.js into a jQuery plugin.
-// original: http://jollytoad.googlepages.com/json.js
-// Edited into object version by Arcao
-function json() {
-	var m = {'\b': '\\b', '\t': '\\t', '\n': '\\n', '\f': '\\f', '\r': '\\r', '"' : '\\"', '\\': '\\\\' };
-	var s = {
-    'array': function (x) {
-        var a = ['['], b, f, i, l = x.length, v;
-        for (i = 0; i < l; i += 1) {
-            v = x[i];
-            f = s[typeof v];
-            if (f) {
-                v = f(v);
-                if (typeof v == 'string') {
-                    if (b) {
-                        a[a.length] = ',';
-                    }
-                    a[a.length] = v;
-                    b = true;
-                }
-            }
-        }
-        a[a.length] = ']';
-        return a.join('');
-    },
-    'boolean': function (x) {
-        return String(x);
-    },
-    'null': function (x) {
-        return "null";
-    },
-    'number': function (x) {
-        return isFinite(x) ? String(x) : 'null';
-    },
-    'object': function (x) {
-        if (x) {
-            if (x instanceof Array) {
-                return s.array(x);
-            }
-            var a = ['{'], b, f, i, v;
-            for (i in x) {
-                v = x[i];
-                f = s[typeof v];
-                if (f) {
-                    v = f(v);
-                    if (typeof v == 'string') {
-                        if (b) {
-                            a[a.length] = ',';
-                        }
-                        a.push(s.string(i), ':', v);
-                        b = true;
-                    }
-                }
-            }
-            a[a.length] = '}';
-            return a.join('');
-        }
-        return 'null';
-    },
-    'string': function (x) {
-        if (/["\\\x00-\x1f]/.test(x)) {
-            x = x.replace(/([\x00-\x1f\\"])/g, function(a, b) {
-                var c = m[b];
-                if (c) {
-                    return c;
-                }
-                c = b.charCodeAt();
-                return '\\u00' +
-                    Math.floor(c / 16).toString(16) +
-                    (c % 16).toString(16);
-            });
-        }
-        return '"' + x + '"';
-    }
-  };
-  this.s = s;
-}
-json.prototype.toJSON = function(v) {
-	var f = isNaN(v) ? this.s[typeof v] : this.s['number'];
-	if (f) return f(v);
-	return '';
-}
-json.prototype.parseJSON = function(v, safe) {
-	if (safe === undefined) safe = false;
-	if (safe && !/^("(\\.|[^"\\\n\r])*?"|[,:{}\[\]0-9.\-+Eaeflnr-u \n\r\t])+?$/.test(v))
-		return undefined;
-	return eval('('+v+')');
-}
-json = new json();
-////////////////////////////////////////////////////////////////////////////////
-var fn = null;
-var fn_p = null;
-var fn_s = null;
-
-function fn_init() {
-	fn = new firenyx();
-	fn_p = new fn_Pref(fn_branchName);
-	fn_s = new fn_StringBundle(fn_stringBundle_properties);
-}
-function fn_destroy() {
-	fn.destroy();
-	fn_p.destroy();
-	fn_s.destroy();
-	fn = null;
-	fn_p = null;
-	fn_s = null;
 }
