@@ -1,6 +1,7 @@
 const fn_branchName = 'extensions.firenyx.';
 const fn_user_agent = 'Firenyx_{0}';
 const fn_options_xul = 'chrome://firenyx/content/options.xul';
+const fn_about_xul = 'chrome://firenyx/content/about/about.xul';
 const fn_writemail_xul = 'chrome://firenyx/content/writemail.xul';
 const fn_stringBundle_properties = 'chrome://firenyx/locale/firenyx.properties';
 
@@ -32,6 +33,7 @@ const fn_img_alert_key = 'chrome://firenyx/skin/alert/new/key.png';
 const fn_img_avatar_error = 'chrome://firenyx/skin/no_avatar.gif';
 
 const ALERT_CHROME_URL = 'chrome://firenyx/content/alerts/alert.xul';
+const FIRENYX_CHROME_BASE = 'chrome://firenyx/';
 
 function firenyx() {
 	this.firstlogin=true;
@@ -63,6 +65,7 @@ firenyx.prototype.init = function() {
   this.observerService.addObserver(this, "firenyx:friend:update", false);
   this.observerService.addObserver(this, "firenyx:friend:remove", false);
   this.disabled = fn_p.getBool('disabled', false);
+  this.upgradeSettings();
 }
 firenyx.prototype.startRefreshing = function() {
 	this.timer = Components.classes["@mozilla.org/timer;1"].createInstance(Components.interfaces.nsITimer);
@@ -98,11 +101,11 @@ firenyx.prototype.setDisabled = function(state) {
   this.disabled = state;
 	fn_p.setBool('disabled', state);
 	
-	gBI('firenyx-toggleDisabled-0').setAttribute('checked', state);
-	gBI('firenyx-toggleDisabled-1').setAttribute('checked', state);
+	try{ gBI('firenyx-toggleDisabled-0').setAttribute('checked', state); } catch(e) {};
+	try{ gBI('firenyx-toggleDisabled-1').setAttribute('checked', state); } catch(e) {};
 	
-	for(i=0; i<20;i++) gBI('firenyx-menuDisabled-'+i).setAttribute('disabled', state);
-	for(i=0; i<3;i++) gBI('firenyx-toggleSidebar-'+i).setAttribute('disabled', state);
+	for(i=0; i<20;i++) try{ gBI('firenyx-menuDisabled-'+i).setAttribute('disabled', state); } catch(e) {};
+	for(i=0; i<3;i++) try{ gBI('firenyx-toggleSidebar-'+i).setAttribute('disabled', state); } catch(e) {};
 	
 	if (state) {
 		gBI('firenyx-statuspanel').setAttribute('class', 'disabled');
@@ -145,7 +148,11 @@ firenyx.prototype.refresh = function(timer) {
 	var url = url_nyx_client;
 	
 	var username = fn_p.getString('username', null);
-	var password = fn_p.getString('password', null);
+	
+	//var password = fn_p.getString('password', null);
+	var fn_pm = new fn_PasswordManager(FIRENYX_CHROME_BASE+'password');
+	var password = fn_pm.get(username);
+	fn_pm = null;
 	
 	if (!username || !password) {
 		gBI('firenyx-label').value = fn_s.get('fn.statusbar.unlogged');
@@ -340,10 +347,16 @@ firenyx.prototype.processXML = function() {
 	
 	gBI('firenyx-label').value = fn_utils.printf(fn_s.get('fn.statusbar.text'), this.username, val);
 }
-firenyx.prototype.openPage = function(page) {
+firenyx.prototype.openPage = function(page, e) {
 	//page = 'l=gate'
 	var username = fn_p.getString('username', null);
-	var password = fn_p.getString('webpassword', null);
+	
+	//var password = fn_p.getString('webpassword', null);
+	var fn_pm = new fn_PasswordManager(FIRENYX_CHROME_BASE+'webpassword');
+	var password = fn_pm.get(username);
+	fn_pm = null;
+	
+	if (this.disabled) return;
 	
 	if (!username || !password) {
 		alert(fn_s.get('fn.main.alert.need_webpassword'));
@@ -373,6 +386,25 @@ firenyx.prototype.openPage = function(page) {
 	
 	var protocol = 'http';
 	if (fn_p.getBool('premium_version', false)) protocol = 'https';
+	
+	var openUrlMethod = fn_p.getInt('open_url_method', 1);
+	var loadInBackground = fn_Pref.getBool("browser.tabs.loadBookmarksInBackground", false);
+	
+	var where = whereToOpenLink(e, false, false);
+	switch(where) {
+		case 'tabshifted':
+			loadInBackground = !loadInBackground;
+			// fall through 
+		case 'tab':
+			openUrlMethod = 1;
+			break;
+		case 'window':
+			openUrlMethod = 0;
+			break;
+		case 'current':
+		default:
+			break;
+	}
 	 
 	var login_url = fn_utils.printf(url_nyx_login_page, 'https');
 	var login_params = fn_utils.printf(url_nyx_login_post_vars, encodeURIComponent(username), encodeURIComponent(password));
@@ -389,10 +421,33 @@ firenyx.prototype.openPage = function(page) {
 				//logme(url);
 				//If the open tabs preference is set to true
 				//logme(this.xmllogin.responseText);
-				if(true) {
-					getBrowser().selectedTab = getBrowser().addTab(url);
-				} else {
+				if(openUrlMethod==0) {
 					window.open(url);
+				} else if(openUrlMethod==1) {
+					//getBrowser().selectedTab = getBrowser().addTab(url);
+					var new_tab = getBrowser().addTab(url);
+					if (!loadInBackground) getBrowser().selectedTab = new_tab;
+				} else if(openUrlMethod==2) {
+					getBrowser().selectedBrowser.loadURI(url);
+				} else {
+					try {
+						var num = getBrowser().browsers.length;
+						found = -1;
+						for (var i = 0; i < num; i++) {
+	  					var br = getBrowser().browsers[i];
+	  					try {
+	    					if (br.currentURI.host.toLowerCase() == 'www.nyx.cz') { found = i;}
+	    				} catch(ex) {}
+						}
+						if (found != -1) {
+							getBrowser().selectedTab = getBrowser().mTabContainer.childNodes[found];
+							getBrowser().browsers[found].loadURI(url);
+						} else {
+							getBrowser().selectedTab = getBrowser().addTab(url);
+						}
+					} catch(e) {
+  					Components.utils.reportError(e);
+					}
 				}
 				// This must be done to make generated content render
 				//var request = new XMLHttpRequest();
@@ -406,10 +461,13 @@ firenyx.prototype.openPage = function(page) {
 }
 firenyx.prototype.sendMail = function(message_to, message, nohtml) {
 	var username = fn_p.getString('username', null);
-	var password = fn_p.getString('webpassword', null);
+	//var password = fn_p.getString('webpassword', null);
+	var fn_pm = new fn_PasswordManager(FIRENYX_CHROME_BASE+'webpassword');
+	var password = fn_pm.get(username);
+	fn_pm = null;
 	
 	if (!username || !password) {
-		//TODO:pridat nejakou zpravu ze neni mozne odesilat postu bez zadani hesla
+		alert(fn_s.get('fn.main.alert.need_webpassword'));
 		return;
 	}
 	
@@ -439,6 +497,9 @@ firenyx.prototype.showWriteMail = function(to) {
 firenyx.prototype.showOptions = function() {
 	window.openDialog(fn_options_xul, 'fn_options', 'centerscreen, chrome, modal', this);
 }
+firenyx.prototype.showAbout = function() {
+	window.openDialog(fn_about_xul, 'fn_about', 'centerscreen, chrome, modal', this);
+}
 //icon=icon uri, title=title, txt=text, clickable=zavola this.observe po kliknuti, data=hodnota predana pod data v this.observe  
 firenyx.prototype.showAlert = function(icon, title, text, clickable, data, type) {
 	//var alertsService = Components.classes["@mozilla.org/alerts-service;1"].getService(Components.interfaces.nsIAlertsService);
@@ -467,6 +528,22 @@ firenyx.prototype.observe = function(subject, topic, data) {
 	
 	if (topic=='alertclickcallback') this.onAlertClickCallback(data);
 	if (topic=='alertfinished') this.onAlertFinished();
+}
+firenyx.prototype.upgradeSettings = function() {
+	if (fn_p.getString('password', null) != null) {
+		var fn_pm = new fn_PasswordManager(FIRENYX_CHROME_BASE+'password');
+		fn_pm.set(fn_p.getString('username', null), fn_p.getString('password', null));
+		fn_pm = null;
+		
+		fn_p.clear('password');
+	}
+	if (fn_p.getString('webpassword', null) != null) {
+		var fn_pm = new fn_PasswordManager(FIRENYX_CHROME_BASE+'webpassword');
+		fn_pm.set(fn_p.getString('username', null), fn_p.getString('webpassword', null));
+		fn_pm = null;
+		
+		fn_p.clear('webpassword');
+	}
 }
 firenyx.prototype.destroy = function() {
 	//observers

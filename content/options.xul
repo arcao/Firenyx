@@ -12,7 +12,7 @@
 
 <!-- content: chrome://firenyx/content/ -->
 
-<dialog id="firenyx-options" title="&options.title;"
+<dialog id="firenyx-options" title="&firenyx.options.title;"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         buttons="accept,cancel"
         ondialogaccept="return doOk();"
@@ -22,6 +22,7 @@
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.Sidebar.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/init.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/Json.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/PasswordManager.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/Pref.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/StringBundle.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/Utils.js"/>
@@ -29,9 +30,20 @@
 	<![CDATA[
 	function doOk() {
 		fn_p.setString('username', gBI('firenyx-username').value);
-		fn_p.setString('password', gBI('firenyx-password').value);
-		fn_p.setString('webpassword', gBI('firenyx-webpassword').value);
+		
+		//ulozeni hesel
+		//fn_p.setString('password', gBI('firenyx-password').value);
+		var fn_pm = new fn_PasswordManager(FIRENYX_CHROME_BASE+'password');
+		fn_pm.set(gBI('firenyx-username').value, gBI('firenyx-password').value)
+		fn_pm = null;
+		
+		//fn_p.setString('webpassword', gBI('firenyx-webpassword').value);
+		var fn_pm = new fn_PasswordManager(FIRENYX_CHROME_BASE+'webpassword');
+		fn_pm.set(gBI('firenyx-username').value, gBI('firenyx-webpassword').value)
+		fn_pm = null;
+
 		fn_p.setInt('invisible_mode', gBI('firenyx-invisible_mode').selectedIndex);
+		fn_p.setInt('open_url_method', gBI('firenyx-open_url_method').selectedIndex);
 		fn_p.setBool('premium_version', gBI('firenyx-premium_version').checked);
 		fn_p.setInt('look.statusbar_counter', gBI('firenyx-look-statusbar_counter').selectedIndex);
 	
@@ -58,9 +70,19 @@
 	function doLoad() {
 		fn_init();
 		gBI('firenyx-username').value = fn_p.getString('username', '');
-		gBI('firenyx-password').value = fn_p.getString('password', '');
-		gBI('firenyx-webpassword').value = fn_p.getString('webpassword', '');
+		
+		//gBI('firenyx-password').value = fn_p.getString('password', '');
+		var fn_pm = new fn_PasswordManager(FIRENYX_CHROME_BASE+'password');
+		gBI('firenyx-password').value = fn_pm.get(gBI('firenyx-username').value);
+		fn_pm = null;
+		
+		//gBI('firenyx-webpassword').value = fn_p.getString('webpassword', '');
+		var fn_pm = new fn_PasswordManager(FIRENYX_CHROME_BASE+'webpassword');
+		gBI('firenyx-webpassword').value = fn_pm.get(gBI('firenyx-username').value);
+		fn_pm = null;
+		
 		gBI('firenyx-invisible_mode').selectedIndex = fn_p.getInt('invisible_mode', 0);
+		gBI('firenyx-open_url_method').selectedIndex = fn_p.getInt('open_url_method', 1);
 		gBI('firenyx-premium_version').checked = fn_p.getBool('premium_version', false);
 		gBI('firenyx-look-statusbar_counter').selectedIndex = fn_p.getInt('look.statusbar_counter', 0);
 		
@@ -79,48 +101,59 @@
 	</script>
   <vbox>
   <groupbox flex="1">
-    <caption label="&options.login.caption;"/>
+    <caption label="&firenyx.options.login.caption;"/>
     <hbox align="center">
-		  <label value="&options.login.username;"/>
+		  <label value="&firenyx.options.login.username;"/>
 		  <textbox maxlength="30" flex="1" id="firenyx-username"/>
 		</hbox>
 		<hbox align="center">
-		  <label value="&options.login.password;"/>
+		  <label value="&firenyx.options.login.password;"/>
 		  <textbox type="password" maxlength="30" flex="1" id="firenyx-password"/>
 		</hbox>
 		<hbox align="center">
-		  <label value="&options.login.webpassword;"/>
+		  <label value="&firenyx.options.login.webpassword;"/>
 		  <textbox type="password" maxlength="30" flex="1" id="firenyx-webpassword"/>
 		</hbox>
 		<hbox align="center">
-		  <label value="&options.login.invisible_mode;"/>
+		  <label value="&firenyx.options.login.invisible_mode;"/>
 		  <menulist id="firenyx-invisible_mode" flex="1">
         <menupopup>
-          <menuitem label="&options.login.invisible_mode.visible;" selected="true"/>
-          <menuitem label="&options.login.invisible_mode.invisible;"/>
-          <menuitem label="&options.login.invisible_mode.ask;"/>
+          <menuitem label="&firenyx.options.login.invisible_mode.visible;"/>
+          <menuitem label="&firenyx.options.login.invisible_mode.invisible;"/>
+          <menuitem label="&firenyx.options.login.invisible_mode.ask;"/>
         </menupopup>
       </menulist>
 		</hbox>
 		<hbox align="center">
-		  <checkbox label="&options.login.premium_version;" id="firenyx-premium_version"/>
+		  <label value="&firenyx.options.login.open_url_method;"/>
+		  <menulist id="firenyx-open_url_method" flex="1">
+        <menupopup>
+          <menuitem label="&firenyx.options.login.open_url_method.new_window;"/>
+          <menuitem label="&firenyx.options.login.open_url_method.new_tab;"/>
+          <menuitem label="&firenyx.options.login.open_url_method.current_tab;"/>
+          <menuitem label="&firenyx.options.login.open_url_method.current_nyx_tab;"/>
+        </menupopup>
+      </menulist>
+		</hbox>
+		<hbox align="center">
+		  <checkbox label="&firenyx.options.login.premium_version;" id="firenyx-premium_version"/>
 		</hbox>
   </groupbox>
   <groupbox flex="1">
-    <caption label="&options.refresh.caption;"/>
+    <caption label="&firenyx.options.refresh.caption;"/>
     <hbox align="center">
-		  <label value="&options.refresh.time;"/>
+		  <label value="&firenyx.options.refresh.time;"/>
 		  <textbox maxlength="30" flex="1" id="firenyx-refresh-time"/>
 		</hbox>
   </groupbox>
   <groupbox flex="1">
-    <caption label="&options.look.caption;"/>
+    <caption label="&firenyx.options.look.caption;"/>
     <hbox align="center">
-		  <label value="&options.look.statusbar_counter;"/>
+		  <label value="&firenyx.options.look.statusbar_counter;"/>
 		  <menulist id="firenyx-look-statusbar_counter" flex="1">
         <menupopup>
-        	<menuitem label="&options.look.statusbar_counter.posts;" selected="true"/>
-          <menuitem label="&options.look.statusbar_counter.books;"/>
+        	<menuitem label="&firenyx.options.look.statusbar_counter.posts;" selected="true"/>
+          <menuitem label="&firenyx.options.look.statusbar_counter.books;"/>
         </menupopup>
       </menulist>
 		</hbox>

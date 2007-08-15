@@ -12,7 +12,7 @@
 
 <!-- content: chrome://firenyx/content/ -->
 
-<dialog id="firenyx-newmail" title="&newmail.title;"
+<dialog id="firenyx-newmail" title="&firenyx.newmail.title;"
         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
         buttons="accept,cancel"
         ondialogaccept="return doOk();"
@@ -22,6 +22,7 @@
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.Sidebar.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/init.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/Json.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/PasswordManager.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/Pref.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/StringBundle.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/Utils.js"/>
@@ -65,19 +66,19 @@
 	</script>
   <vbox>
   <groupbox flex="1">
-    <caption label="&newmail.caption;"/>
+    <caption label="&firenyx.newmail.caption;"/>
     <hbox align="center">
-		  <label value="&newmail.to;"/>
+		  <label value="&firenyx.newmail.to;"/>
 		  <textbox maxlength="30" flex="1" id="firenyx-to"/>
 		</hbox>
 		<hbox>
-		  <label value="&newmail.message;"/>
+		  <label value="&firenyx.newmail.message;"/>
 		</hbox>
 		<hbox>
 		  <textbox flex="1" multiline="true" rows="6" cols="60" id="firenyx-message"/>
 		</hbox>
 		<hbox pack="center">
-			<checkbox label="&newmail.nohtml;" id="firenyx-nohtml"/>
+			<checkbox label="&firenyx.newmail.nohtml;" id="firenyx-nohtml"/>
 		</hbox>
   </groupbox>
   </vbox>

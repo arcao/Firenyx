@@ -14,9 +14,9 @@ firenyx_sidebar.prototype.toggleSidebar = function(show) {
 	gBI('firenyx-dashboard').hidden = hidden;
 	gBI('firenyx-dashboard-splitter').hidden = hidden;
 
-	gBI('firenyx-toggleSidebar-0').setAttribute('checked', !hidden);	
-	gBI('firenyx-toggleSidebar-1').setAttribute('checked', !hidden);
-	gBI('firenyx-toggleSidebar-2').setAttribute('checked', !hidden);
+	try{ gBI('firenyx-toggleSidebar-0').setAttribute('checked', !hidden); } catch(e) {};	
+	try{ gBI('firenyx-toggleSidebar-1').setAttribute('checked', !hidden); } catch(e) {};
+	try{ gBI('firenyx-toggleSidebar-2').setAttribute('checked', !hidden); } catch(e) {};
 }
 firenyx_sidebar.prototype.addPeople = function(nick, id, time) {
 	nick = nick.toUpperCase();
@@ -91,14 +91,14 @@ firenyx_sidebar.prototype.removePeople = function(nick) {
 	
 	if (el) list.removeChild(el);
 }
-firenyx_sidebar.prototype.menuAction = function(action) {
+firenyx_sidebar.prototype.menuAction = function(action, event) {
 	var item = gBI('firenyx-friends').selectedItem;
 	switch(action.toLowerCase()) {
 		case 'newmail':
 			fn.showWriteMail(item.nick);
 			break;
 		case 'userinfo':
-			fn.openPage('l=user;id='+item.nick);
+			fn.openPage('l=user;id='+item.nick, event);
 			break;
 	}
 }

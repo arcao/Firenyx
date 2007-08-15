@@ -63,8 +63,11 @@ function prefillAlertInfo()
   //document.getElementById('alertTextLabel').setAttribute('value', window.arguments[2]);
   var s = "<html xmlns=\"http://www.w3.org/1999/xhtml\">" + window.arguments[2] + "</html>";
   var parser = new DOMParser();
-  var doc = parser.parseFromString(s, "text/xml"); 
-  document.getElementById('alertTextLabel').appendChild(doc.firstChild); 
+  var doc = parser.parseFromString(s, "text/xml");
+  //Error: Node cannot be used in a document other than the one in which it was created = NS_ERROR_DOM_WRONG_DOCUMENT_ERR
+  //Solution: do importNode before appendChild
+  var new_node = document.importNode(doc.firstChild, true);
+	document.getElementById('alertTextLabel').appendChild(new_node);
   
   gAlertTextClickable = window.arguments[3];
   gAlertCookie = window.arguments[4];
@@ -73,7 +76,7 @@ function prefillAlertInfo()
     document.getElementById('alertTextLabel').setAttribute('clickable', true);
   
   // the 5th argument is optional
-  gAlertListener = window.arguments[5];
+  gAlertListener = window.arguments[5];  
 }
 
 function onAlertLoad()
@@ -88,6 +91,11 @@ function onAlertLoad()
     gSlideTime = prefBranch.getIntPref("alerts.slideIncrementTime");
     gOpenTime = prefBranch.getIntPref("alerts.totalOpenTime");
   } catch (ex) {}
+  //modified by Arcao
+  //User pref settings
+  if (window.arguments[6]) gSlideIncrement = window.arguments[6]; 
+  if (window.arguments[7]) gSlideTime = window.arguments[7];
+  if (window.arguments[8]) gOpenTime = window.arguments[8];
   
   //repair hrefs by Arcao
   var anchors = document.getElementsByTagName("a");

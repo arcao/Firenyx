@@ -1,66 +1,79 @@
 <!-- Statusbar -->
-<!ENTITY statusbar.label "Přihlašuji se...">
-<!ENTITY statusbar.unlogged "Nepřihlášen">
+<!ENTITY firenyx.statusbar.label "Přihlašuji se...">
+<!ENTITY firenyx.statusbar.unlogged "Nepřihlášen">
 
-<!ENTITY menu.label "Firenyx">
+<!ENTITY firenyx.menu.label "Firenyx">
 
 <!-- Menu-Nyx -->
-<!ENTITY menu.nyx.gate "Úvod">
-<!ENTITY menu.nyx.mail "Pošta">
-<!ENTITY menu.nyx.topics "Témata">
-<!ENTITY menu.nyx.notepad "Blok">
-<!ENTITY menu.nyx.people "Lidé">
-<!ENTITY menu.nyx.user "Osobní">
-<!ENTITY menu.nyx.book "Sledované">
-<!ENTITY menu.nyx.last "Poslední">
-<!ENTITY menu.nyx.plug "Rozšíření">
+<!ENTITY firenyx.menu.nyx.gate "Úvod">
+<!ENTITY firenyx.menu.nyx.mail "Pošta">
+<!ENTITY firenyx.menu.nyx.topics "Témata">
+<!ENTITY firenyx.menu.nyx.notepad "Blok">
+<!ENTITY firenyx.menu.nyx.people "Lidé">
+<!ENTITY firenyx.menu.nyx.user "Osobní">
+<!ENTITY firenyx.menu.nyx.book "Sledované">
+<!ENTITY firenyx.menu.nyx.last "Poslední">
+<!ENTITY firenyx.menu.nyx.plug "Rozšíření">
 
 <!-- Menu-Other -->
-<!ENTITY menu.writemail "Napsat zprávu">
-<!ENTITY menu.sidebar "Přátelé / Kluby">
-<!ENTITY menu.disabled "Zakázat rozšíření">
-<!ENTITY menu.options "Nastavení">
+<!ENTITY firenyx.menu.writemail "Napsat zprávu">
+<!ENTITY firenyx.menu.sidebar "Přátelé / Kluby">
+<!ENTITY firenyx.menu.disabled "Zakázat rozšíření">
+<!ENTITY firenyx.menu.options "Nastavení">
+<!ENTITY firenyx.menu.about "O rozšíření">
 
 <!-- PopupMenu-Friends -->
-<!ENTITY menu.sidebar.writemail "Napsat zprávu">
-<!ENTITY menu.sidebar.userinfo "Informace o uživateli">
+<!ENTITY firenyx.menu.sidebar.writemail "Napsat zprávu">
+<!ENTITY firenyx.menu.sidebar.userinfo "Informace o uživateli">
 
 <!-- Options -->
-<!ENTITY options.title "Nastavení Firenyxu">
+<!ENTITY firenyx.options.title "Nastavení Firenyxu">
 <!-- Options-login -->
-<!ENTITY options.login.caption "Přihlašovací informace">
-<!ENTITY options.login.username "Uživatel:">
-<!ENTITY options.login.password "Heslo externího rozhraní:">
-<!ENTITY options.login.webpassword "Webové heslo:">
+<!ENTITY firenyx.options.login.caption "Přihlašovací informace">
+<!ENTITY firenyx.options.login.username "Uživatel:">
+<!ENTITY firenyx.options.login.password "Heslo externího rozhraní:">
+<!ENTITY firenyx.options.login.webpassword "Webové heslo:">
 
-<!ENTITY options.login.invisible_mode "Viditelnost po rychlém přihlášení:">
-<!ENTITY options.login.invisible_mode.visible "Viditelný">
-<!ENTITY options.login.invisible_mode.invisible "Neviditelný">
-<!ENTITY options.login.invisible_mode.ask "Ptát se">
+<!ENTITY firenyx.options.login.invisible_mode "Viditelnost po rychlém přihlášení:">
+<!ENTITY firenyx.options.login.invisible_mode.visible "Viditelný">
+<!ENTITY firenyx.options.login.invisible_mode.invisible "Neviditelný">
+<!ENTITY firenyx.options.login.invisible_mode.ask "Ptát se">
 
-<!ENTITY options.login.premium_version "Mám prémiovou verzi Nyxu (nutné zaškrtnout, pokud ji máte, jinak nezaškrtávat!)">
+<!ENTITY firenyx.options.login.open_url_method "Zobrazit stránku rychlého přihlášení v:">
+<!ENTITY firenyx.options.login.open_url_method.new_window "novém okně">
+<!ENTITY firenyx.options.login.open_url_method.new_tab "nové záložce">
+<!ENTITY firenyx.options.login.open_url_method.current_tab "v aktuálně zobrazené záložce">
+<!ENTITY firenyx.options.login.open_url_method.current_nyx_tab "v záložce, kde je načtena stránka s nyx.cz">
+
+<!ENTITY firenyx.options.login.premium_version "Mám prémiovou verzi Nyxu (nutné zaškrtnout, pokud ji máte, jinak nezaškrtávat!)">
 
 <!-- Options-refresh -->
-<!ENTITY options.refresh.caption "Obnovování">
-<!ENTITY options.refresh.time "Obnovovat po (sekundy):">
+<!ENTITY firenyx.options.refresh.caption "Obnovování">
+<!ENTITY firenyx.options.refresh.time "Obnovovat po (sekundy):">
 
 <!-- Options-look -->
-<!ENTITY options.look.caption "Vzhled">
-<!ENTITY options.look.statusbar_counter "Za přezdívkou ve stavovém řádku zobrazovat počítadlo:">
-<!ENTITY options.look.statusbar_counter.books "Klubů">
-<!ENTITY options.look.statusbar_counter.posts "Příspěvků">
+<!ENTITY firenyx.options.look.caption "Vzhled">
+<!ENTITY firenyx.options.look.statusbar_counter "Za přezdívkou ve stavovém řádku zobrazovat počítadlo:">
+<!ENTITY firenyx.options.look.statusbar_counter.books "Klubů">
+<!ENTITY firenyx.options.look.statusbar_counter.posts "Příspěvků">
 
 <!-- New mail -->
-<!ENTITY newmail.title "Napsat novou zprávu">
-<!ENTITY newmail.caption "Napsat novou zprávu">
-<!ENTITY newmail.to "Komu:">
-<!ENTITY newmail.message "Zpráva:">
-<!ENTITY newmail.nohtml "Odeslat HTML kód jako prostý text">
+<!ENTITY firenyx.newmail.title "Napsat novou zprávu">
+<!ENTITY firenyx.newmail.caption "Napsat novou zprávu">
+<!ENTITY firenyx.newmail.to "Komu:">
+<!ENTITY firenyx.newmail.message "Zpráva:">
+<!ENTITY firenyx.newmail.nohtml "Odeslat HTML kód jako prostý text">
 
 <!-- Sidebar -->
-<!ENTITY sidebar.title "Firenyx - Přátelé / Kluby">
-<!ENTITY sidebar.close "Zavřít">
+<!ENTITY firenyx.sidebar.title "Firenyx - Přátelé / Kluby">
+<!ENTITY firenyx.sidebar.close "Zavřít">
+
+<!-- About dialog -->
+<!ENTITY firenyx.about.title "O rozšíření Firenyx">
+<!ENTITY firenyx.about.build.date "Datum sestavení:">
+<!ENTITY firenyx.about.author "Autor:">
+<!ENTITY firenyx.about.contributors "Spoluautoři:">
 
 <!-- Access Keys -->
-<!ENTITY sidebar.accesskey "VK_F">
-<!ENTITY sidebar.accesskey.modifiers "alt">
+<!ENTITY firenyx.sidebar.accesskey "VK_F">
+<!ENTITY firenyx.sidebar.accesskey.modifiers "alt">

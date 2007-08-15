@@ -1,66 +1,80 @@
 <!-- Statusbar -->
-<!ENTITY statusbar.label "Logging in...">
-<!ENTITY statusbar.unlogged "Logged out">
+<!ENTITY firenyx.statusbar.label "Logging in...">
+<!ENTITY firenyx.statusbar.unlogged "Logged out">
 
-<!ENTITY menu.label "Firenyx">
+<!ENTITY firenyx.menu.label "Firenyx">
 
 <!-- Menu-Nyx -->
-<!ENTITY menu.nyx.gate "Gate">
-<!ENTITY menu.nyx.mail "Mail">
-<!ENTITY menu.nyx.topics "Topics">
-<!ENTITY menu.nyx.notepad "Notepad">
-<!ENTITY menu.nyx.people "People">
-<!ENTITY menu.nyx.user "Personal">
-<!ENTITY menu.nyx.book "Bookmarks">
-<!ENTITY menu.nyx.last "Last">
-<!ENTITY menu.nyx.plug "Plugin">
+<!ENTITY firenyx.menu.nyx.gate "Gate">
+<!ENTITY firenyx.menu.nyx.mail "Mail">
+<!ENTITY firenyx.menu.nyx.topics "Topics">
+<!ENTITY firenyx.menu.nyx.notepad "Notepad">
+<!ENTITY firenyx.menu.nyx.people "People">
+<!ENTITY firenyx.menu.nyx.user "Personal">
+<!ENTITY firenyx.menu.nyx.book "Bookmarks">
+<!ENTITY firenyx.menu.nyx.last "Last">
+<!ENTITY firenyx.menu.nyx.plug "Plugin">
 
 <!-- Menu-Other -->
-<!ENTITY menu.writemail "Write Mail">
-<!ENTITY menu.sidebar "Friends / Boards">
-<!ENTITY menu.disabled "Disable Firenyx">
-<!ENTITY menu.options "Options">
+<!ENTITY firenyx.menu.writemail "Write Mail">
+<!ENTITY firenyx.menu.sidebar "Friends / Boards">
+<!ENTITY firenyx.menu.disabled "Disable Firenyx">
+<!ENTITY firenyx.menu.options "Options">
+<!ENTITY firenyx.menu.about "About add-on">
+
 
 <!-- PopupMenu-Friends -->
-<!ENTITY menu.sidebar.writemail "Write Mail">
-<!ENTITY menu.sidebar.userinfo "User Info">
+<!ENTITY firenyx.menu.sidebar.writemail "Write Mail">
+<!ENTITY firenyx.menu.sidebar.userinfo "User Info">
 
 <!-- Options -->
-<!ENTITY options.title "Firenyx Options">
+<!ENTITY firenyx.options.title "Firenyx Options">
 <!-- Options-login -->
-<!ENTITY options.login.caption "Login Info">
-<!ENTITY options.login.username "Username:">
-<!ENTITY options.login.password "External Password:">
-<!ENTITY options.login.webpassword "Regular Password:">
+<!ENTITY firenyx.options.login.caption "Login Info">
+<!ENTITY firenyx.options.login.username "Username:">
+<!ENTITY firenyx.options.login.password "External Password:">
+<!ENTITY firenyx.options.login.webpassword "Regular Password:">
 
-<!ENTITY options.login.invisible_mode "Visibility after quick login:">
-<!ENTITY options.login.invisible_mode.visible "Visible">
-<!ENTITY options.login.invisible_mode.invisible "Invisible">
-<!ENTITY options.login.invisible_mode.ask "Always ask">
+<!ENTITY firenyx.options.login.invisible_mode "Visibility after quick login:">
+<!ENTITY firenyx.options.login.invisible_mode.visible "Visible">
+<!ENTITY firenyx.options.login.invisible_mode.invisible "Invisible">
+<!ENTITY firenyx.options.login.invisible_mode.ask "Always ask">
 
-<!ENTITY options.login.premium_version "I use the premium version of Nyx.cz">
+<!ENTITY firenyx.options.login.open_url_method "Open the quick login page in:">
+<!ENTITY firenyx.options.login.open_url_method.new_window "a new window">
+<!ENTITY firenyx.options.login.open_url_method.new_tab "a new tab">
+<!ENTITY firenyx.options.login.open_url_method.current_tab "the current tab">
+<!ENTITY firenyx.options.login.open_url_method.current_nyx_tab "an existing Nyx.cz tab">
+
+<!ENTITY firenyx.options.login.premium_version "I use the premium version of Nyx.cz">
 
 <!-- Options-refresh -->
-<!ENTITY options.refresh.caption "Auto-Refresh">
-<!ENTITY options.refresh.time "Refresh every (seconds):">
+<!ENTITY firenyx.options.refresh.caption "Auto-Refresh">
+<!ENTITY firenyx.options.refresh.time "Refresh every (seconds):">
 
 <!-- Options-look -->
-<!ENTITY options.look.caption "Display">
-<!ENTITY options.look.statusbar_counter "In the status bar, count:">
-<!ENTITY options.look.statusbar_counter.books "Boards">
-<!ENTITY options.look.statusbar_counter.posts "Write-ups">
+<!ENTITY firenyx.options.look.caption "Display">
+<!ENTITY firenyx.options.look.statusbar_counter "In the status bar, count:">
+<!ENTITY firenyx.options.look.statusbar_counter.books "Boards">
+<!ENTITY firenyx.options.look.statusbar_counter.posts "Write-ups">
 
 <!-- New mail -->
-<!ENTITY newmail.title "Write Mail">
-<!ENTITY newmail.caption "Write Mail">
-<!ENTITY newmail.to "To:">
-<!ENTITY newmail.message "Message:">
-<!ENTITY newmail.nohtml "Send HTML as plain text">
+<!ENTITY firenyx.newmail.title "Write Mail">
+<!ENTITY firenyx.newmail.caption "Write Mail">
+<!ENTITY firenyx.newmail.to "To:">
+<!ENTITY firenyx.newmail.message "Message:">
+<!ENTITY firenyx.newmail.nohtml "Send HTML as plain text">
 
 <!-- Sidebar -->
-<!ENTITY sidebar.title "Firenyx - Friends / Boards">
-<!ENTITY sidebar.close "Close">
+<!ENTITY firenyx.sidebar.title "Firenyx - Friends / Boards">
+<!ENTITY firenyx.sidebar.close "Close">
+
+<!-- About dialog -->
+<!ENTITY firenyx.about.title "About Firenyx">
+<!ENTITY firenyx.about.build.date "Build date:">
+<!ENTITY firenyx.about.author "Author:">
+<!ENTITY firenyx.about.contributors "Contributors:">
 
 <!-- Access Keys -->
-<!ENTITY sidebar.accesskey "VK_F">
-<!ENTITY sidebar.accesskey.modifiers "alt">
+<!ENTITY firenyx.sidebar.accesskey "VK_F9">
+<!ENTITY firenyx.sidebar.accesskey.modifiers "alt">

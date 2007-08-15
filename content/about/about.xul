@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://firenyx/content/about/about.css" type="text/css"?>
+
+<!DOCTYPE dialog SYSTEM "chrome://firenyx/locale/firenyx.dtd">
+
+<dialog buttons="accept"
+        id="firenyx-about-dialog"
+        title="&firenyx.about.title;"
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+				onload="fn_about_init();"
+				onunload="fn_about_destroy();">
+
+    <script type="application/x-javascript" src="chrome://firenyx/content/js/Utils.js"/>
+    <script type="application/x-javascript" src="chrome://firenyx/content/about/about.js"/>
+    <vbox id="firenyx-about-details">
+        <hbox>
+            <description class="name">Firenyx</description>
+            <description class="name" id="firenyx-about-version">developer version</description>
+        </hbox>
+        <description value="&firenyx.about.build.date;" class="title"/>
+        <description class="date" id="firenyx-about-date">N/A</description>
+        <description value="&firenyx.about.author;" class="title"/>
+        <description onclick="window.open('http://arcao.com/')" class="url">Arcao</description>
+        <description onclick="window.open(this.firstChild.nodeValue)" class="url">http://www.nyx.cz/index.php?l=topic;id=13403</description>
+        <description value="&firenyx.about.contributors;" class="title"/>
+        <description class="contributors">Esten (en-US translation)</description>
+    </vbox>
+    <separator class="groove"/>
+</dialog>

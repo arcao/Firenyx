@@ -1,0 +1,61 @@
+@import url("chrome://global/skin/");
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+description
+{
+    margin-left: 0 !important;
+}
+
+separator, #firenyx-about-dialog
+{
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+#firenyx-about-details
+{
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    padding: 0.5em !important;
+}
+
+#firenyx-about-details hbox
+{
+    background-image: url("chrome://firenyx/skin/butterfly_32a.png") !important;
+    background-position: top right !important;
+    background-repeat: no-repeat !important;
+    min-height: 35px !important;
+    padding-right: 35px !important;
+}
+
+.date, .contributors
+{
+    color: #999999 !important;
+}
+
+.name
+{
+    font-size: x-large !important;
+    padding-right: 0.25em !important;
+}
+
+.name, .title
+{
+    font-weight: bold !important;
+}
+
+.title
+{
+    padding-top: 0.25em !important;
+}
+
+.url
+{
+    color: #0000ff !important;
+    cursor: pointer !important;
+    text-decoration: underline !important;
+}
+.url:hover
+{
+    color: #ff0000 !important;
+}

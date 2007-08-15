@@ -2,7 +2,7 @@
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
   <Description about="urn:mozilla:install-manifest">
     <em:id>{5591137f-ca2c-4c2a-93d1-5514992b2d4a}</em:id>
-    <em:version>0.1.3.2007072202</em:version>
+    <em:version>0.1.4.2007081201</em:version>
     <em:type>2</em:type><!-- extension -->
 
     
@@ -11,7 +11,7 @@
       <Description>
         <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
         <em:minVersion>1.5</em:minVersion>
-        <em:maxVersion>3.0a6</em:maxVersion>
+        <em:maxVersion>3.0.*</em:maxVersion>
       </Description>
     </em:targetApplication>
    
@@ -29,7 +29,7 @@
       <Description>
         <em:id>{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}</em:id>
         <em:minVersion>1.0</em:minVersion>
-        <em:maxVersion>1.5a</em:maxVersion>
+        <em:maxVersion>2.0.*</em:maxVersion>
       </Description>
     </em:targetApplication>
     
@@ -60,7 +60,7 @@
 
     <!-- Front End Integration Hooks (used by Extension Manager)-->
     <em:optionsURL>chrome://firenyx/content/options.xul</em:optionsURL>
-    <em:iconURL>chrome://firenyx/skin/butterfly.png</em:iconURL>  
+    <em:iconURL>chrome://firenyx/skin/butterfly_32a.png</em:iconURL>  
     <!-- <em:aboutURL>chrome://firenyx/content/about.xul</em:aboutURL> -->
 
     <!-- Packages, Skins and Locales that this extension registers -->
@@ -77,12 +77,12 @@
       <Description>
         <em:locale>en-US</em:locale>
         <em:name>Firenyx</em:name>
-        <em:description>A client application for NYX.CZ community server.</em:description>
+        <em:description>A client application for NYX.CZ community server. (en-US translation by Esten)</em:description>
       </Description>
       <Description>
         <em:locale>cs-CZ</em:locale>
         <em:name>Firenyx</em:name>
-        <em:description>Klient pro diskuzní server NYX.CZ.</em:description>
+        <em:description>Klient pro diskuzní server NYX.CZ. (cs-CZ)</em:description>
       </Description>
     </em:localized>
   </Description>
