@@ -3,15 +3,15 @@ Prace se SVN firenyx a vyvoj ve firefoxu bez instalace:
 V adresari, kde je nainstalovan firefox je adresar chrome, tedy treba:
 > CD c:\Program Files\Mozilla Firefox\chrome\
 
-vytvorte adresar firefox:
-> MKDIR firefox
+vytvorte adresar firenyx:
+> MKDIR firenyx
 
-provedte checkout ze svn do adresare firefox:
-> SVN co http://tools.assembla.com/svn/firenyx/trunk firefox
+provedte checkout ze svn do adresare firenyx:
+> SVN co http://tools.assembla.com/svn/firenyx/trunk firenyx
 
-soubor firefox\chrome-ff\firenyx.manifest je nutne zkopirovat do chrome adresare
+soubor firenyx\chrome-ff\firenyx.manifest je nutne zkopirovat do chrome adresare
 firefoxu
-> COPY firefox\chrome-ff\firenyx.manifest firenyx.manifest
+> COPY firenyx\chrome-ff\firenyx.manifest firenyx.manifest
 
 po restartu firefoxu jiz rozsireni firenyx funguje.
 
