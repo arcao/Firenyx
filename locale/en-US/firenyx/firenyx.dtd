@@ -1,0 +1,52 @@
+<!-- Statusbar -->
+<!ENTITY statusbar.label "Logging in...">
+<!ENTITY statusbar.unlogged "Logged out">
+
+<!ENTITY menu.label "Firenyx">
+
+<!-- Menu-Nyx -->
+<!ENTITY menu.nyx.gate "Gate">
+<!ENTITY menu.nyx.mail "Mail">
+<!ENTITY menu.nyx.topics "Topics">
+<!ENTITY menu.nyx.notepad "Notepad">
+<!ENTITY menu.nyx.people "People">
+<!ENTITY menu.nyx.user "Personal">
+<!ENTITY menu.nyx.book "Bookmarks">
+<!ENTITY menu.nyx.last "Last">
+<!ENTITY menu.nyx.plug "Plugin">
+
+<!-- Menu-Other -->
+<!ENTITY menu.writemail "Write Mail">
+<!ENTITY menu.sidebar "Friends / Boards">
+<!ENTITY menu.options "Options">
+
+<!-- PopupMenu-Friends -->
+<!ENTITY menu.sidebar.writemail "Write Mail">
+<!ENTITY menu.sidebar.userinfo "User Info">
+
+<!-- Options -->
+<!ENTITY options.title "Firenyx Options">
+<!-- Options-login -->
+<!ENTITY options.login.caption "Login Info">
+<!ENTITY options.login.username "Username:">
+<!ENTITY options.login.password "External Password:">
+<!ENTITY options.login.webpassword "Regular Password:">
+
+<!-- Options-refresh -->
+<!ENTITY options.refresh.caption "Auto-Refresh">
+<!ENTITY options.refresh.time "Refresh every (seconds):">
+
+<!-- New mail -->
+<!ENTITY newmail.title "Write Mail">
+<!ENTITY newmail.caption "Write Mail">
+<!ENTITY newmail.to "To:">
+<!ENTITY newmail.message "Message:">
+<!ENTITY newmail.nohtml "Send HTML as plain text">
+
+<!-- Sidebar -->
+<!ENTITY sidebar.title "Firenyx -- Friends / Boards">
+<!ENTITY sidebar.close "Close">
+
+<!-- Access Keys -->
+<!ENTITY sidebar.accesskey "VK_F">
+<!ENTITY sidebar.accesskey.modifiers "alt">

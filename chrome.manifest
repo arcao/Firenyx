@@ -3,5 +3,6 @@ overlay	chrome://browser/content/browser.xul	chrome://firenyx/content/overlay.xu
 overlay	chrome://navigator/content/navigator.xul	chrome://firenyx/content/overlay.xul
 content	firenyx	jar:chrome/firenyx.jar!/content/
 
+locale	firenyx	en-US	jar:chrome/firenyx.jar!/locale/en-US/firenyx/
 locale	firenyx	cs-CZ	jar:chrome/firenyx.jar!/locale/cs-CZ/firenyx/
 skin	firenyx	classic/1.0 jar:chrome/firenyx.jar!/skin/classic/firenyx/ 
