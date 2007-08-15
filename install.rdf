@@ -2,7 +2,7 @@
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
   <Description about="urn:mozilla:install-manifest">
     <em:id>{5591137f-ca2c-4c2a-93d1-5514992b2d4a}</em:id>
-    <em:version>0.1.4.2007081201</em:version>
+    <em:version>0.1.4.2007081202</em:version>
     <em:type>2</em:type><!-- extension -->
 
     

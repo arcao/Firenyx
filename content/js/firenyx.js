@@ -407,7 +407,7 @@ firenyx.prototype.openPage = function(page, e) {
 	}
 	 
 	var login_url = fn_utils.printf(url_nyx_login_page, 'https');
-	var login_params = fn_utils.printf(url_nyx_login_post_vars, encodeURIComponent(username), encodeURIComponent(password));
+	var login_params = fn_utils.printf(url_nyx_login_post_vars, encodeURIComponent(username), encodeURIComponent(password), invisible);
 
 	this.xmllogin = new XMLHttpRequest();
 	this.xmllogin.open("POST", login_url, true);
