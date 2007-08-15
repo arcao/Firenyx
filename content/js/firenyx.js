@@ -1,5 +1,5 @@
 const fn_branchName = 'extensions.firenyx.';
-const fn_user_agent = 'Firenyx_0.1.3.2007072102';
+const fn_user_agent = 'Firenyx_{0}';
 const fn_options_xul = 'chrome://firenyx/content/options.xul';
 const fn_writemail_xul = 'chrome://firenyx/content/writemail.xul';
 const fn_stringBundle_properties = 'chrome://firenyx/locale/firenyx.properties';
@@ -163,7 +163,7 @@ firenyx.prototype.refresh = function(timer) {
 	this.xmlHttp = new XMLHttpRequest();
 	this.xmlHttp.open("POST", url, true);
 	this.xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	this.xmlHttp.setRequestHeader("User-Agent",fn_user_agent);
+	this.xmlHttp.setRequestHeader("User-Agent", fn_utils.printf(fn_user_agent, fn_utils.getVersion('{5591137f-ca2c-4c2a-93d1-5514992b2d4a}')));
   //logme(url);
 	//logme(this.processRefresh);
 	this.xmlHttp.onreadystatechange = Delegate.create(this, this.processRefresh);

@@ -32,6 +32,16 @@ fn_utils.formatTime = function(sec) {
 fn_utils.closeUnpairedTags = function(text) {
 	return text.replace(/<((br|img|hr).*?)(\/>|\/\s+>|>)/ig, "<$1 />");
 }
+fn_utils.getVersion = function(guid) {
+	try {
+		var em = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
+		var addon = em.getItemForID(guid);
+		if (!addon) return '';
+		return addon.version;
+	} catch(e) {
+		return '';
+	}
+}
 ////////////////////////////////////////////////////////////////////////////////
 //delegate
 function Delegate() {}

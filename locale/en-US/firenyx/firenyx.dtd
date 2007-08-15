@@ -18,6 +18,7 @@
 <!-- Menu-Other -->
 <!ENTITY menu.writemail "Write Mail">
 <!ENTITY menu.sidebar "Friends / Boards">
+<!ENTITY menu.disabled "Disable Firenyx">
 <!ENTITY menu.options "Options">
 
 <!-- PopupMenu-Friends -->
@@ -32,9 +33,22 @@
 <!ENTITY options.login.password "External Password:">
 <!ENTITY options.login.webpassword "Regular Password:">
 
+<!ENTITY options.login.invisible_mode "Visibility after quick login:">
+<!ENTITY options.login.invisible_mode.visible "Visible">
+<!ENTITY options.login.invisible_mode.invisible "Invisible">
+<!ENTITY options.login.invisible_mode.ask "Always ask">
+
+<!ENTITY options.login.premium_version "I use the premium version of Nyx.cz">
+
 <!-- Options-refresh -->
 <!ENTITY options.refresh.caption "Auto-Refresh">
 <!ENTITY options.refresh.time "Refresh every (seconds):">
+
+<!-- Options-look -->
+<!ENTITY options.look.caption "Display">
+<!ENTITY options.look.statusbar_counter "In the status bar, count:">
+<!ENTITY options.look.statusbar_counter.books "Boards">
+<!ENTITY options.look.statusbar_counter.posts "Write-ups">
 
 <!-- New mail -->
 <!ENTITY newmail.title "Write Mail">
@@ -44,7 +58,7 @@
 <!ENTITY newmail.nohtml "Send HTML as plain text">
 
 <!-- Sidebar -->
-<!ENTITY sidebar.title "Firenyx -- Friends / Boards">
+<!ENTITY sidebar.title "Firenyx - Friends / Boards">
 <!ENTITY sidebar.close "Close">
 
 <!-- Access Keys -->
