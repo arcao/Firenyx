@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+
+<!-- Styles //-->
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?> 
+<?xml-stylesheet href="chrome://mozapps/skin/pref/pref.css" type="text/css"?>
+<?xml-stylesheet href="chrome://browser/skin/pref/pref.css" type="text/css"?>
+ 
+<!-- Locale info //-->
+<!DOCTYPE overlay [
+<!ENTITY % firenyxDTD SYSTEM "chrome://firenyx/locale/firenyx.dtd">
+%firenyxDTD;
+]> 
+
+<!-- content: chrome://firenyx/content/ -->
+
+<overlay id="firenyxOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+	<script type="application/x-javascript" src="chrome://firenyx/content/firenyx.js"/>
+	<script type="application/x-javascript">
+	  function doLoad() {
+	  	fn_init();
+	  	fn.startRefreshing();
+		}
+    function doUnLoad() {
+      fn_destroy();
+    }
+
+    window.addEventListener('load',doLoad, false);
+    window.addEventListener('unload',doUnLoad, false);
+	</script>
+  <menupopup id="menu_ToolsPopup">
+    <menu insertafter="devToolsSeparator" label="&menu.label;">
+      <menupopup id="menu_popupmenu">
+        <menuitem label="&menu.nyx.gate;" oncommand="fn.openPage('l=gate');"/>
+        <menuitem label="&menu.nyx.mail;" oncommand="fn.openPage('l=mail');"/>
+        <menuitem label="&menu.nyx.topics;" oncommand="fn.openPage('l=topics');"/>
+        <menuitem label="&menu.nyx.notepad;" oncommand="fn.openPage('l=notepad');"/>
+        <menuitem label="&menu.nyx.people;" oncommand="fn.openPage('l=people');"/>
+        <menuitem label="&menu.nyx.user;" oncommand="fn.openPage('l=user');"/>
+        <menuitem label="&menu.nyx.book;" oncommand="fn.openPage('l=book');"/>
+        <menuitem label="&menu.nyx.last;" oncommand="fn.openPage('l=last');"/>
+        <menuitem label="&menu.nyx.plug;" oncommand="fn.openPage('l=plug');"/>
+        <menuseparator/> 
+        <menuitem label="&menu.options;" oncommand="fn.showOptions();"/>
+      </menupopup>
+    </menu>
+  </menupopup>
+  <statusbar id="status-bar">
+    <statusbarpanel id="firenyx-statuspanel" ondblclick="if (event.button == 0) fn.openPage('l=book');" context="popupmenu_statusbar">
+      <image id="firenyx-icon" src="chrome://firenyx/content/nyx.png"/>
+      <label id="firenyx-label" value="&statusbar.label;"/> 
+    </statusbarpanel>
+    
+      <menupopup id="popupmenu_statusbar">
+        <menuitem label="&menu.nyx.gate;" oncommand="fn.openPage('l=gate');"/>
+        <menuitem label="&menu.nyx.mail;" oncommand="fn.openPage('l=mail');"/>
+        <menuitem label="&menu.nyx.topics;" oncommand="fn.openPage('l=topics');"/>
+        <menuitem label="&menu.nyx.notepad;" oncommand="fn.openPage('l=notepad');"/>
+        <menuitem label="&menu.nyx.people;" oncommand="fn.openPage('l=people');"/>
+        <menuitem label="&menu.nyx.user;" oncommand="fn.openPage('l=user');"/>
+        <menuitem label="&menu.nyx.book;" oncommand="fn.openPage('l=book');"/>
+        <menuitem label="&menu.nyx.last;" oncommand="fn.openPage('l=last');"/>
+        <menuitem label="&menu.nyx.plug;" oncommand="fn.openPage('l=plug');"/>
+        <menuseparator/> 
+        <menuitem label="&menu.options;" oncommand="fn.showOptions();"/>
+      </menupopup>
+  </statusbar>
+</overlay>
+

@@ -1,0 +1,31 @@
+<!-- Statusbar -->
+<!ENTITY statusbar.label "Přihlašuji se...">
+<!ENTITY statusbar.unlogged "Nepřihlášen">
+
+<!ENTITY menu.label "Firenyx">
+
+<!-- Menu-Nyx -->
+<!ENTITY menu.nyx.gate "Úvod">
+<!ENTITY menu.nyx.mail "Pošta">
+<!ENTITY menu.nyx.topics "Témata">
+<!ENTITY menu.nyx.notepad "Blok">
+<!ENTITY menu.nyx.people "Lidé">
+<!ENTITY menu.nyx.user "Osobní">
+<!ENTITY menu.nyx.book "Sledované">
+<!ENTITY menu.nyx.last "Poslední">
+<!ENTITY menu.nyx.plug "Rozšíření">
+
+<!-- Menu-Other -->
+<!ENTITY menu.options "Nastavení">
+
+<!-- Options -->
+<!ENTITY options.title "Nastavení Firenyxu">
+<!-- Options-login -->
+<!ENTITY options.login.caption "Přihlašovací informace">
+<!ENTITY options.login.username "Uživatel:">
+<!ENTITY options.login.password "Heslo externího rozhraní:">
+<!ENTITY options.login.webpassword "Webové heslo:">
+
+<!-- Options-refresh -->
+<!ENTITY options.refresh.caption "Obnovování">
+<!ENTITY options.refresh.time "Obnovovat po (sekundy):">

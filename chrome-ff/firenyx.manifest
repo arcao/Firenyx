@@ -1,0 +1,8 @@
+
+overlay	chrome://browser/content/browser.xul	chrome://firenyx/content/overlay.xul
+overlay	chrome://navigator/content/navigator.xul	chrome://firenyx/content/overlay.xul
+content	firenyx	firenyx/content/
+
+locale	firenyx	en-US	firenyx/locale/en-US/firenyx/
+locale	firenyx	cs-CZ	firenyx/locale/cs-CZ/firenyx/
+skin	firenyx	classic/1.0 firenyx/skin/classic/firenyx/ 
