@@ -1,5 +1,5 @@
 const fn_branchName = 'extensions.firenyx.';
-const fn_user_agent = 'Firenyx_1.0_preview';
+const fn_user_agent = 'Firenyx_0.1.3.2007072102';
 const fn_options_xul = 'chrome://firenyx/content/options.xul';
 const fn_writemail_xul = 'chrome://firenyx/content/writemail.xul';
 const fn_stringBundle_properties = 'chrome://firenyx/locale/firenyx.properties';
@@ -86,6 +86,12 @@ firenyx.prototype.updateRefreshing = function() {
 firenyx.prototype.stopRefreshing = function() {
 	if (this.timer) {
 		this.timer.cancel();
+		this.topic = new Object();
+		this.topic.items = [];
+		this.topic.cats = [];
+		this.topic.unreaded = 0;
+		this.friends = [];
+		this.generated = 0;
 	}
 }
 firenyx.prototype.setDisabled = function(state) {

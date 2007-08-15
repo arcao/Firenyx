@@ -5,6 +5,7 @@ function firenyx_sidebar() {
 }
 firenyx_sidebar.prototype.toggleSidebar = function(show) {
 	if (show == undefined) {
+		if (fn_p.getBool('disabled', false)) return;
 		var hidden = !(gBI('firenyx-dashboard').hidden);
 	} else {
 		var hidden = !show;
