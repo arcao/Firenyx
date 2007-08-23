@@ -1,3 +1,4 @@
+<!-- en-US localization, UTF8 dummy chars (do not remove, thx): € -->
 <!-- Statusbar -->
 <!ENTITY firenyx.statusbar.label "Logging in...">
 <!ENTITY firenyx.statusbar.unlogged "Logged out">
@@ -57,6 +58,10 @@
 <!ENTITY firenyx.options.look.statusbar_counter "In the status bar, count:">
 <!ENTITY firenyx.options.look.statusbar_counter.books "Boards">
 <!ENTITY firenyx.options.look.statusbar_counter.posts "Write-ups">
+
+<!-- Options-alerts -->
+<!ENTITY firenyx.options.alerts.caption "Upozorňování">
+<!ENTITY firenyx.options.alerts.donot_show_mail_alert "Nezobrazovat upozornění na novou poštu a neoznačovat poštu jako přečtenou">
 
 <!-- New mail -->
 <!ENTITY firenyx.newmail.title "Write Mail">

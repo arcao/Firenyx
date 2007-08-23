@@ -1,4 +1,5 @@
 const fn_branchName = 'extensions.firenyx.';
+//client user-agent/version: {0} version like 0.1.5.2007082201
 const fn_user_agent = 'Firenyx_{0}';
 const fn_options_xul = 'chrome://firenyx/content/options.xul';
 const fn_about_xul = 'chrome://firenyx/content/about/about.xul';
@@ -6,14 +7,19 @@ const fn_writemail_xul = 'chrome://firenyx/content/writemail.xul';
 const fn_stringBundle_properties = 'chrome://firenyx/locale/firenyx.properties';
 
 const url_nyx_client = "https://www.nyx.cz/code/client.php";
+//ico url, all params must be uppercase: {0}=first letter of nick, {1}=nick
 const url_nyx_avatars = "http://i.nyx.cz/{0}/{1}.gif";
 
-const url_nyx_client_post_vars = "loguser={0}&logpass={1}";
+//client login post vars: {0}=username, {1}=password, {2}=other post params
+const url_nyx_client_post_vars = "loguser={0}&logpass={1}{2}";
+//client send mail post vars: {0}=username, {1}=password, {3}=recipient, {4}=message
 const url_nyx_client_writemail_post_vars = "loguser={0}&logpass={1}&recipient={2}&message={3}";
 
+//nyx global page url: {0}=protocol, {1}=params
 const url_nyx_page = "{0}://www.nyx.cz/index.php?{1}";
+//nyx login url: {0}=protocol
 const url_nyx_login_page = "{0}://www.nyx.cz/index.php?login=1";
-
+//nyx login post vars: {0}=username, {1}=password, {2}=invisible(1/0)
 const url_nyx_login_post_vars = "loguser={0}&logpass={1}&loginv={2}";
 
 const fn_img_throbber = 'chrome://firenyx/skin/throbber.gif';
@@ -163,7 +169,11 @@ firenyx.prototype.refresh = function(timer) {
 		gBI('firenyx-label').value = fn_s.get('fn.statusbar.logging');
 	}
 	
-  var params = fn_utils.printf(url_nyx_client_post_vars, encodeURIComponent(username), encodeURIComponent(password));
+	var append_post_vars = '';
+	//neoznacovani posty?
+	if (fn_p.getBool('donot_show_mail_alert', false)) append_post_vars+= '&ignore_mail=1'; 
+	
+  var params = fn_utils.printf(url_nyx_client_post_vars, encodeURIComponent(username), encodeURIComponent(password), append_post_vars);
   
   gBI('firenyx-icon').src = fn_img_throbber;
   
@@ -220,32 +230,34 @@ firenyx.prototype.processXML = function() {
 	
 	//----------------------------------------------------------------------------
 	//zpracovani posty
-	var mail_obj = doc.getElementsByTagName('info')[0].getElementsByTagName('mail');
-	if (mail_obj.length > 0) {
-		var message_obj = mail_obj[0].getElementsByTagName('message');
-		var items = [];
-		for(var i=0; i < message_obj.length; i++) {
-			var from = message_obj[i].getElementsByTagName('username')[0].firstChild.nodeValue;
-			var message = message_obj[i].getElementsByTagName('text')[0].firstChild.nodeValue;
-			var time = parseInt(message_obj[i].getElementsByTagName('time')[0].firstChild.nodeValue, 10);
-			//Osetreni bugu! Uzavreni nedparovych tagu
-			message = fn_utils.closeUnpairedTags(message);
-			
-			items.push({'from': from, 'time': time, 'message': message});
-		}
-		this.observerService.notifyObservers(null, "firenyx:mail:new", Json.toJSON(items));
-		
-		//pozdeji prehodit do observe fce
-		if (items.length > 1) {
-			var messages = '';
-			for(var i=0; i < items.length; i++) {
-				if (i!=0) messages+="<br/><br/>";
-				messages+='<strong>'+items[i].from+":</strong><br/>";
-				messages+=items[i].message;
+	if (!fn_p.getBool('donot_show_mail_alert', false)) {
+		var mail_obj = doc.getElementsByTagName('info')[0].getElementsByTagName('mail');
+		if (mail_obj.length > 0) {
+			var message_obj = mail_obj[0].getElementsByTagName('message');
+			var items = [];
+			for(var i=0; i < message_obj.length; i++) {
+				var from = message_obj[i].getElementsByTagName('username')[0].firstChild.nodeValue;
+				var message = message_obj[i].getElementsByTagName('text')[0].firstChild.nodeValue;
+				var time = parseInt(message_obj[i].getElementsByTagName('time')[0].firstChild.nodeValue, 10);
+				//Osetreni bugu! Uzavreni nedparovych tagu
+				message = fn_utils.closeUnpairedTags(message);
+				
+				items.push({'from': from, 'time': time, 'message': message});
 			}
-			this.showAlert(fn_img_alert_mail, fn_s.get('fn.alert.newmail_multiple.title'), messages, true, 'nyxhref:l=mail', 'html');
-		} else {
-			this.showAlert(fn_img_alert_mail, fn_utils.printf(fn_s.get('fn.alert.newmail.title'), items[0].from), items[0].message, true, 'nyxhref:l=mail', 'html');
+			this.observerService.notifyObservers(null, "firenyx:mail:new", Json.toJSON(items));
+			
+			//pozdeji prehodit do observe fce
+			if (items.length > 1) {
+				var messages = '';
+				for(var i=0; i < items.length; i++) {
+					if (i!=0) messages+="<br/><br/>";
+					messages+='<strong>'+items[i].from+":</strong><br/>";
+					messages+=items[i].message;
+				}
+				this.showAlert(fn_img_alert_mail, fn_s.get('fn.alert.newmail_multiple.title'), messages, true, 'nyxhref:l=mail', 'html');
+			} else {
+				this.showAlert(fn_img_alert_mail, fn_utils.printf(fn_s.get('fn.alert.newmail.title'), items[0].from), items[0].message, true, 'nyxhref:l=mail', 'html');
+			}
 		}
 	}
 	

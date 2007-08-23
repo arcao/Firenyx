@@ -45,6 +45,7 @@
 		fn_p.setInt('invisible_mode', gBI('firenyx-invisible_mode').selectedIndex);
 		fn_p.setInt('open_url_method', gBI('firenyx-open_url_method').selectedIndex);
 		fn_p.setBool('premium_version', gBI('firenyx-premium_version').checked);
+		fn_p.setBool('donot_show_mail_alert', gBI('firenyx-donot_show_mail_alert').checked);
 		fn_p.setInt('look.statusbar_counter', gBI('firenyx-look-statusbar_counter').selectedIndex);
 	
 		var refresh_time = 0
@@ -84,6 +85,7 @@
 		gBI('firenyx-invisible_mode').selectedIndex = fn_p.getInt('invisible_mode', 0);
 		gBI('firenyx-open_url_method').selectedIndex = fn_p.getInt('open_url_method', 1);
 		gBI('firenyx-premium_version').checked = fn_p.getBool('premium_version', false);
+		gBI('firenyx-donot_show_mail_alert').checked = fn_p.getBool('donot_show_mail_alert', false);
 		gBI('firenyx-look-statusbar_counter').selectedIndex = fn_p.getInt('look.statusbar_counter', 0);
 		
 		var refresh_time = fn_p.getInt('refresh.time', 60);
@@ -156,6 +158,12 @@
           <menuitem label="&firenyx.options.look.statusbar_counter.books;"/>
         </menupopup>
       </menulist>
+		</hbox>
+  </groupbox>
+  <groupbox flex="1">
+    <caption label="&firenyx.options.alerts.caption;"/>
+    <hbox align="center">
+      <checkbox label="&firenyx.options.alerts.donot_show_mail_alert;" id="firenyx-donot_show_mail_alert"/>
 		</hbox>
   </groupbox>
   </vbox>
