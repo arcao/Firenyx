@@ -101,11 +101,11 @@ function onAlertLoad()
   var anchors = document.getElementsByTagName("a");
 	for (var i=0; i<anchors.length; i++) {
 		var anchor = anchors[i];
-		if (anchor.getAttribute("href")) {
+		if (anchor.hasAttribute("href")) {
 			if (!gAlertTextClickable) {
-				anchor.target = "_blank";
+				anchor.setAttribute('target', '_blank');
 			} else {
-				anchor.onclick = function() { return true; };
+				anchor.removeAttribute('href');
 			}
 		}
 	}
