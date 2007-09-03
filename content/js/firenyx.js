@@ -60,18 +60,18 @@ function firenyx() {
 }
 firenyx.prototype.init = function() {
 	this.observerService = Components.classes["@mozilla.org/observer-service;1"].getService(Components.interfaces.nsIObserverService);
-  this.observerService.addObserver(this, "firenyx:mail:new", false);
-  
+	this.observerService.addObserver(this, "firenyx:mail:new", false);
+	
 	this.observerService.addObserver(this, "firenyx:topic:add", false);
-  this.observerService.addObserver(this, "firenyx:topic:update", false);
-  this.observerService.addObserver(this, "firenyx:topic:newposts", false);
-  this.observerService.addObserver(this, "firenyx:topic:remove", false);
-  
+	this.observerService.addObserver(this, "firenyx:topic:update", false);
+	this.observerService.addObserver(this, "firenyx:topic:newposts", false);
+	this.observerService.addObserver(this, "firenyx:topic:remove", false);
+	
 	this.observerService.addObserver(this, "firenyx:friend:add", false);
-  this.observerService.addObserver(this, "firenyx:friend:update", false);
-  this.observerService.addObserver(this, "firenyx:friend:remove", false);
-  this.disabled = fn_p.getBool('disabled', false);
-  this.upgradeSettings();
+	this.observerService.addObserver(this, "firenyx:friend:update", false);
+	this.observerService.addObserver(this, "firenyx:friend:remove", false);
+	this.disabled = fn_p.getBool('disabled', false);
+	this.upgradeSettings();
 }
 firenyx.prototype.startRefreshing = function() {
 	this.timer = Components.classes["@mozilla.org/timer;1"].createInstance(Components.interfaces.nsITimer);
@@ -104,7 +104,7 @@ firenyx.prototype.stopRefreshing = function() {
 	}
 }
 firenyx.prototype.setDisabled = function(state) {
-  this.disabled = state;
+	this.disabled = state;
 	fn_p.setBool('disabled', state);
 	
 	try{ gBI('firenyx-toggleDisabled-0').setAttribute('checked', state); } catch(e) {};
@@ -134,19 +134,21 @@ firenyx.prototype.processRefresh = function() {
 		if (this.xmlHttp.readyState == 4) {
 			//logme(this.xmlHttp.status);
 			if (this.xmlHttp.status == 200) {
+				if (!this.xmlHttp.responseText) throw new Error('Empty responseText'); 	
 				this.processXML();			
 			} else {
 				throw new Error(this.xmlHttp.status);
 			}
-	  }
+		}
 	} catch (e) {
 		gBI('firenyx-label').value = fn_s.get('fn.statusbar.unlogged');
+		gBI('firenyx-icon').src = fn_img_butterfly;
 		if (!this.dont_show_network_error) {
 			this.dont_show_network_error = true;
 			this.showAlert(fn_img_alert_network, fn_s.get('fn.error.network.title'), fn_s.get('fn.error.network.text'), false, '');
 		}
 		logme('ERR> '+e.name+': '+e.message);
-		throw e;
+		//throw e;
 	}
 }
 
@@ -173,15 +175,15 @@ firenyx.prototype.refresh = function(timer) {
 	//neoznacovani posty?
 	if (fn_p.getBool('donot_show_mail_alert', false)) append_post_vars+= '&ignore_mail=1'; 
 	
-  var params = fn_utils.printf(url_nyx_client_post_vars, encodeURIComponent(username), encodeURIComponent(password), append_post_vars);
-  
-  gBI('firenyx-icon').src = fn_img_throbber;
-  
+	var params = fn_utils.printf(url_nyx_client_post_vars, encodeURIComponent(username), encodeURIComponent(password), append_post_vars);
+	
+	gBI('firenyx-icon').src = fn_img_throbber;
+	
 	this.xmlHttp = new XMLHttpRequest();
 	this.xmlHttp.open("POST", url, true);
 	this.xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	this.xmlHttp.setRequestHeader("User-Agent", fn_utils.printf(fn_user_agent, fn_utils.getVersion('{5591137f-ca2c-4c2a-93d1-5514992b2d4a}')));
-  //logme(url);
+	//logme(url);
 	//logme(this.processRefresh);
 	this.xmlHttp.onreadystatechange = Delegate.create(this, this.processRefresh);
 	this.xmlHttp.send(params);
@@ -199,7 +201,7 @@ firenyx.prototype.processXML = function() {
 		gBI('firenyx-label').value = fn_s.get('fn.statusbar.unlogged');
 		return;
 	}
-	//alert(this.xmlHttp.responseText);
+	//logme(this.xmlHttp.responseText);
 	
 	var parser = new DOMParser();
 	var doc = parser.parseFromString(this.xmlHttp.responseText, "text/xml");
@@ -210,7 +212,7 @@ firenyx.prototype.processXML = function() {
 		this.showAlert(fn_img_alert_stop, fn_s.get('fn.error.nyx.title'), fn_utils.printf(fn_s.get('fn.error.login.title'), error_obj[0].firstChild.nodeValue), false, '');
 	}
 	
-	//pokud obsahuje xml jen chybove hlaseni tak nepokracovat dal  
+	//pokud obsahuje xml jen chybove hlaseni tak nepokracovat dal	
 	if (doc.getElementsByTagName('info')[0].getElementsByTagName('friends').length <1) {
 		gBI('firenyx-label').value = fn_s.get('fn.statusbar.unlogged');
 		this.dont_show_network_error = true;
@@ -380,7 +382,7 @@ firenyx.prototype.openPage = function(page, e) {
 		//zeptame se zda visible / invisible
 		var pSI= Components.interfaces.nsIPromptService;
 		var pS = Components.classes["@mozilla.org/embedcomp/prompt-service;1"].getService(pSI);
-  	var result = pS.confirmEx(null, fn_s.get('fn.invisible_prompt.title'),
+		var result = pS.confirmEx(null, fn_s.get('fn.invisible_prompt.title'),
 															fn_s.get('fn.invisible_prompt.text'),
 															pSI.BUTTON_TITLE_IS_STRING * pSI.BUTTON_POS_0 +
 															pSI.BUTTON_TITLE_IS_STRING * pSI.BUTTON_POS_1 +
@@ -446,10 +448,10 @@ firenyx.prototype.openPage = function(page, e) {
 						var num = getBrowser().browsers.length;
 						found = -1;
 						for (var i = 0; i < num; i++) {
-	  					var br = getBrowser().browsers[i];
-	  					try {
-	    					if (br.currentURI.host.toLowerCase() == 'www.nyx.cz') { found = i;}
-	    				} catch(ex) {}
+							var br = getBrowser().browsers[i];
+							try {
+								if (br.currentURI.host.toLowerCase() == 'www.nyx.cz') { found = i;}
+							} catch(ex) {}
 						}
 						if (found != -1) {
 							getBrowser().selectedTab = getBrowser().mTabContainer.childNodes[found];
@@ -458,7 +460,7 @@ firenyx.prototype.openPage = function(page, e) {
 							getBrowser().selectedTab = getBrowser().addTab(url);
 						}
 					} catch(e) {
-  					Components.utils.reportError(e);
+						Components.utils.reportError(e);
 					}
 				}
 				// This must be done to make generated content render
@@ -512,7 +514,7 @@ firenyx.prototype.showOptions = function() {
 firenyx.prototype.showAbout = function() {
 	window.openDialog(fn_about_xul, 'fn_about', 'centerscreen, chrome, modal', this);
 }
-//icon=icon uri, title=title, txt=text, clickable=zavola this.observe po kliknuti, data=hodnota predana pod data v this.observe  
+//icon=icon uri, title=title, txt=text, clickable=zavola this.observe po kliknuti, data=hodnota predana pod data v this.observe	
 firenyx.prototype.showAlert = function(icon, title, text, clickable, data, type) {
 	//var alertsService = Components.classes["@mozilla.org/alerts-service;1"].getService(Components.interfaces.nsIAlertsService);
 	//alertsService.showAlertNotification(icon, title, text, clickable, data, this);
