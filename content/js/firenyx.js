@@ -6,7 +6,7 @@ const fn_about_xul = 'chrome://firenyx/content/about/about.xul';
 const fn_writemail_xul = 'chrome://firenyx/content/writemail.xul';
 const fn_stringBundle_properties = 'chrome://firenyx/locale/firenyx.properties';
 
-const url_nyx_client = "https://www.nyx.cz/code/client.php";
+const url_nyx_client = "http://www.nyx.cz/code/client.php";
 //ico url, all params must be uppercase: {0}=first letter of nick, {1}=nick
 const url_nyx_avatars = "http://i.nyx.cz/{0}/{1}.gif";
 
@@ -55,6 +55,7 @@ function firenyx() {
 	this.dont_show_network_error = false;
 	this.sidebar = new firenyx_sidebar();
 	this.disabled = false;
+	this.old_mail_count = 0;
 	this.init();
 	return this;
 }
@@ -173,7 +174,7 @@ firenyx.prototype.refresh = function(timer) {
 	
 	var append_post_vars = '';
 	//neoznacovani posty?
-	if (fn_p.getBool('donot_show_mail_alert', false)) append_post_vars+= '&ignore_mail=1'; 
+	if (fn_p.getBool('donot_mark_mail_as_readed', false)) append_post_vars+= '&ignore_mail=1'; 
 	
 	var params = fn_utils.printf(url_nyx_client_post_vars, encodeURIComponent(username), encodeURIComponent(password), append_post_vars);
 	
@@ -232,35 +233,57 @@ firenyx.prototype.processXML = function() {
 	
 	//----------------------------------------------------------------------------
 	//zpracovani posty
-	if (!fn_p.getBool('donot_show_mail_alert', false)) {
-		var mail_obj = doc.getElementsByTagName('info')[0].getElementsByTagName('mail');
-		if (mail_obj.length > 0) {
-			var message_obj = mail_obj[0].getElementsByTagName('message');
-			var items = [];
-			for(var i=0; i < message_obj.length; i++) {
-				var from = message_obj[i].getElementsByTagName('username')[0].firstChild.nodeValue;
-				var message = message_obj[i].getElementsByTagName('text')[0].firstChild.nodeValue;
-				var time = parseInt(message_obj[i].getElementsByTagName('time')[0].firstChild.nodeValue, 10);
-				//Osetreni bugu! Uzavreni nedparovych tagu
-				message = fn_utils.closeUnpairedTags(message);
-				
-				items.push({'from': from, 'time': time, 'message': message});
-			}
-			this.observerService.notifyObservers(null, "firenyx:mail:new", Json.toJSON(items));
-			
-			//pozdeji prehodit do observe fce
-			if (items.length > 1) {
-				var messages = '';
-				for(var i=0; i < items.length; i++) {
-					if (i!=0) messages+="<br/><br/>";
-					messages+='<strong>'+items[i].from+":</strong><br/>";
-					messages+=items[i].message;
+	var mail_count = -1;
+	//prvni zpusob: oznacovani posty jako prectenou
+	if (!fn_p.getBool('donot_mark_mail_as_readed', false)) {
+		if (!fn_p.getBool('donot_show_mail_alert', false)) {
+			var mail_obj = doc.getElementsByTagName('info')[0].getElementsByTagName('mail');
+			if (mail_obj.length > 0) {
+				var message_obj = mail_obj[0].getElementsByTagName('message');
+				var items = [];
+				for(var i=0; i < message_obj.length; i++) {
+					var from = message_obj[i].getElementsByTagName('username')[0].firstChild.nodeValue;
+					var message = message_obj[i].getElementsByTagName('text')[0].firstChild.nodeValue;
+					var time = parseInt(message_obj[i].getElementsByTagName('time')[0].firstChild.nodeValue, 10);
+					//Osetreni bugu! Uzavreni nedparovych tagu
+					message = fn_utils.closeUnpairedTags(message);
+					
+					items.push({'from': from, 'time': time, 'message': message});
 				}
-				this.showAlert(fn_img_alert_mail, fn_s.get('fn.alert.newmail_multiple.title'), messages, true, 'nyxhref:l=mail', 'html');
-			} else {
-				this.showAlert(fn_img_alert_mail, fn_utils.printf(fn_s.get('fn.alert.newmail.title'), items[0].from), items[0].message, true, 'nyxhref:l=mail', 'html');
+				this.observerService.notifyObservers(null, "firenyx:mail:new", Json.toJSON(items));
+				
+				//pozdeji prehodit do observe fce
+				if (items.length > 1) {
+					var messages = '';
+					for(var i=0; i < items.length; i++) {
+						if (i!=0) messages+="<br/><br/>";
+						messages+='<strong>'+items[i].from+":</strong><br/>";
+						messages+=items[i].message;
+					}
+					this.showAlert(fn_img_alert_mail, fn_s.get('fn.alert.newmail_multiple.title'), messages, true, 'nyxhref:l=mail', 'html');
+				} else {
+					this.showAlert(fn_img_alert_mail, fn_utils.printf(fn_s.get('fn.alert.newmail.title'), items[0].from), items[0].message, true, 'nyxhref:l=mail', 'html');
+				}
 			}
 		}
+	} else {
+		//druhy zpusob: neoznacovani posty jako prectenou
+		var mail_obj = doc.getElementsByTagName('info')[0].getElementsByTagName('mail');
+		mail_count = 0;
+		if (mail_obj.length > 0) {
+			try {
+				mail_count = parseInt(mail_obj[0].getAttribute('new'), 10);
+			} catch(e) {
+				mail_count = 0;
+			}
+		}
+		
+		if (this.old_mail_count != mail_count && !fn_p.getBool('donot_show_mail_alert', false)) {
+			//nova posta!
+			this.observerService.notifyObservers(null, "firenyx:mail:new", Json.toJSON([{'from': '', 'time': -1, 'message': ''}]));
+			this.showAlert(fn_img_alert_mail, fn_s.get('fn.alert.newmail2.title'), fn_s.get('fn.alert.newmail2.message'), true, 'nyxhref:l=mail', 'plain');
+		}
+		this.old_mail_count = mail_count;
 	}
 	
 	//----------------------------------------------------------------------------
@@ -358,6 +381,8 @@ firenyx.prototype.processXML = function() {
 	this.firstlogin = false;
 	var val = this.topic.unreaded;
 	if (fn_p.getInt('look.statusbar_counter', 0) == 1) val = this.topic.items.length; 
+	
+	if (mail_count >= 0) val = val + '/' + mail_count; 
 	
 	gBI('firenyx-label').value = fn_utils.printf(fn_s.get('fn.statusbar.text'), this.username, val);
 }

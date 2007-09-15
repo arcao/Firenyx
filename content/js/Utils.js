@@ -63,8 +63,8 @@ Delegate.create = function (o, f) {
 }
 
 function logme(message) {
-	//const logme_ConsoleService = Components.classes['@mozilla.org/consoleservice;1'].getService(Components.interfaces.nsIConsoleService);
-	//logme_ConsoleService.logStringMessage('Firenyx: ' + message);
+	const logme_ConsoleService = Components.classes['@mozilla.org/consoleservice;1'].getService(Components.interfaces.nsIConsoleService);
+	logme_ConsoleService.logStringMessage('Firenyx: ' + message);
 }
 
 function gBI(id) { try { return document.getElementById(id); } catch (e) {return null;} }
