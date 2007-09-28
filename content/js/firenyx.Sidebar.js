@@ -1,7 +1,8 @@
 ////////////////////////////////////////////////////////////////////////////////
 //sidebar
 function firenyx_sidebar() {
-	return this; 
+	this.topics = new firenyx_sidebar_topics();
+	return this;
 }
 firenyx_sidebar.prototype.toggleSidebar = function(show) {
 	if (show == undefined) {
@@ -13,6 +14,7 @@ firenyx_sidebar.prototype.toggleSidebar = function(show) {
 	
 	gBI('firenyx-dashboard').hidden = hidden;
 	gBI('firenyx-dashboard-splitter').hidden = hidden;
+	gBI('firenyx-topics').view=this.topics;
 
 	try{ gBI('firenyx-toggleSidebar-0').setAttribute('checked', !hidden); } catch(e) {};	
 	try{ gBI('firenyx-toggleSidebar-1').setAttribute('checked', !hidden); } catch(e) {};
@@ -72,13 +74,13 @@ firenyx_sidebar.prototype.editPeople = function(nick, time) {
 	var items = list.getElementsByTagName('richlistitem');
 	var el = null;
 	for(var i=0; i<items.length; i++) {
-		logme(items[i].nick);
+		//logme(items[i].nick);
 		if(items[i].nick==nick) { el = items[i]; break; }
 	}
 	
 	if (el) {
 		el.getElementsByTagName('label')[1].value = fn_utils.formatTime(time);
-		logme(el.getElementsByTagName('label')[1].value);
+		//logme(el.getElementsByTagName('label')[1].value);
 	}	
 }
 firenyx_sidebar.prototype.removePeople = function(nick) {

@@ -12,14 +12,15 @@
 <!-- content: chrome://firenyx/content/ -->
 
 <overlay id="firenyxOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.Sidebar.Topics.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.Sidebar.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/init.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/Json.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/PasswordManager.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/Pref.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/StringBundle.js"/>
-	<script type="application/x-javascript" src="chrome://firenyx/content/js/Utils.js"/>	
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/Utils.js"/>
 	<script type="application/x-javascript">
 	  function doLoad() {
 	  	fn_init();
@@ -128,7 +129,16 @@
       				</menupopup>
 						</richlistbox>
 	        </tabpanel>
-	        <tabpanel flex="1"/>
+	        <tabpanel flex="1">
+						<tree id="firenyx-topics" flex="1" hidecolumnpicker="true">
+							<treecols>
+								<treecol id="topic" label="Klub" primary="true" flex="1"/>
+								<splitter class="tree-splitter" />
+								<treecol id="unreaded" label="Nepřečteno" style="width: 3em"/>
+							</treecols>
+							<treechildren/>
+						</tree>
+	        </tabpanel>
 	        <!-- Sidebar content: end -->
         </tabpanels>
       </tabbox>

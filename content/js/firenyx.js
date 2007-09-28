@@ -46,10 +46,10 @@ function firenyx() {
 	this.timer = null;
 	this.xmlHttp = null;
 	this.wrappedJSObject = this;
-	this.topic = new Object();
-	this.topic.items = [];
-	this.topic.cats = [];
-	this.topic.unreaded = 0;
+	this.topics = new Object();
+	this.topics.items = [];
+	this.topics.cats = [];
+	this.topics.unreaded = 0;
 	this.friends = [];
 	this.generated = 0;
 	this.dont_show_network_error = false;
@@ -96,10 +96,10 @@ firenyx.prototype.updateRefreshing = function() {
 firenyx.prototype.stopRefreshing = function() {
 	if (this.timer) {
 		this.timer.cancel();
-		this.topic = new Object();
-		this.topic.items = [];
-		this.topic.cats = [];
-		this.topic.unreaded = 0;
+		this.topics = new Object();
+		this.topics.items = [];
+		this.topics.cats = [];
+		this.topics.unreaded = 0;
 		this.friends = [];
 		this.generated = 0;
 	}
@@ -149,7 +149,7 @@ firenyx.prototype.processRefresh = function() {
 			this.showAlert(fn_img_alert_network, fn_s.get('fn.error.network.title'), fn_s.get('fn.error.network.text'), false, '');
 		}
 		logme('ERR> '+e.name+': '+e.message);
-		//throw e;
+		throw e;
 	}
 }
 
@@ -278,7 +278,7 @@ firenyx.prototype.processXML = function() {
 			}
 		}
 		
-		if (this.old_mail_count != mail_count && !fn_p.getBool('donot_show_mail_alert', false)) {
+		if (this.old_mail_count < mail_count && !fn_p.getBool('donot_show_mail_alert', false)) {
 			//nova posta!
 			this.observerService.notifyObservers(null, "firenyx:mail:new", Json.toJSON([{'from': '', 'time': -1, 'message': ''}]));
 			this.showAlert(fn_img_alert_mail, fn_s.get('fn.alert.newmail2.title'), fn_s.get('fn.alert.newmail2.message'), true, 'nyxhref:l=mail', 'plain');
@@ -289,7 +289,7 @@ firenyx.prototype.processXML = function() {
 	//----------------------------------------------------------------------------
 	//zpracovani klubu
 	var books_obj = doc.getElementsByTagName('boards')[0].getElementsByTagName('board');
-	this.topic.unreaded = 0;
+	this.topics.unreaded = 0;
 	var books = [];
 	for(var i=0; i < books_obj.length; i++) {
 		//logme(unreaded_obj[i].getAttribute('new'));
@@ -301,11 +301,11 @@ firenyx.prototype.processXML = function() {
 		var cat_id = 0;
 		
 		books.push({'name': book_name, 'id': book_id, 'unreaded': book_unreaded, 'cat_name': cat_name, 'cat_id': cat_id});
-		this.topic.unreaded+=book_unreaded;
+		this.topics.unreaded+=book_unreaded;
 	}
 	//kluby hledani pridanych/odebranych/novych prizpevku v klubech
-	for(var i=0; i <this.topic.items.length; i++) {
-		var lb = this.topic.items[i];
+	for(var i=0; i <this.topics.items.length; i++) {
+		var lb = this.topics.items[i];
 		var found = false;
 		var f = lb;
 		for(var y=0; y < books.length;y++) if (lb.id == books[y].id) {found=true; f=books[y]; break;}
@@ -322,23 +322,24 @@ firenyx.prototype.processXML = function() {
 	for(var i=0; i < books.length; i++) {
 		var f = books[i];
 		var found = false;
-		for(var y=0; y < this.topic.items.length;y++) if (f.id == this.topic.items[y].id) {found=true; break;}
+		for(var y=0; y < this.topics.items.length;y++) if (f.id == this.topics.items[y].id) {found=true; break;}
 		if (!found) {
 			//friend add
 			this.observerService.notifyObservers(null, "firenyx:topic:add", Json.toJSON(f));
 		}
 	}
 	//kategorie
-	this.topic.cats = [];
+	this.topics.cats = [];
 	var cats_obj = doc.getElementsByTagName('boards')[0].getElementsByTagName('category');
 	for(var i=0; i < cats_obj.length; i++) {
 		var cat_name = cats_obj[i].getAttribute('name');
 		var cat_id = 0;
-		this.topic.cats.push({'name': cat_name, 'id': cat_id});
+		this.topics.cats.push({'name': cat_name, 'id': cat_id});
 	}
-	//logme(Json.toJSON(books));
-	//logme(Json.toJSON(this.topic.cats));
-	this.topic.items = books;
+	//logme(Json.toJSON(this.sidebar));
+	this.topics.items = books;
+	this.sidebar.topics.setTopics(this.topics);
+	//logme(Json.toJSON(this.topic));
 	
 	//----------------------------------------------------------------------------
 	//zpracovani friend
@@ -379,8 +380,8 @@ firenyx.prototype.processXML = function() {
 	this.friends = friends; 
 	
 	this.firstlogin = false;
-	var val = this.topic.unreaded;
-	if (fn_p.getInt('look.statusbar_counter', 0) == 1) val = this.topic.items.length; 
+	var val = this.topics.unreaded;
+	if (fn_p.getInt('look.statusbar_counter', 0) == 1) val = this.topics.items.length; 
 	
 	if (mail_count >= 0) val = val + '/' + mail_count; 
 	

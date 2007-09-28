@@ -20,6 +20,7 @@
 
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.Sidebar.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.Sidebar.Topics.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/init.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/Json.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/PasswordManager.js"/>
