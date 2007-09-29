@@ -1,8 +1,12 @@
 ////////////////////////////////////////////////////////////////////////////////
 //topics on sidebar
-function firenyx_sidebar_topics() {
+function firenyx_sidebar_topics(treeObject) {
 	this._topics = {'items': [], 'cats': [], 'unreaded':0};
 	this._mytopics = []; 
+	this.treeObject = treeObject;
+	this.treeObject.setAttribute('onclick', 'checkForMiddleClick(this, event);');
+	this.treeObject.setAttribute('ondblclick', 'fn.sidebar.topics.onClick(event);');
+	this.treeObject.setAttribute('oncommand', 'fn.sidebar.topics.onClick(event);');
 	return this; 
 }
 firenyx_sidebar_topics.prototype = {
@@ -32,8 +36,10 @@ firenyx_sidebar_topics.prototype = {
 	selection: null,
 
 	get wrappedJSObject() { return this; }, 
-	get rowCount() { return this._topics.items.length + this._topics.cats.length; },
-	setTree: function(treebox){ this.treebox = treebox; },
+	get rowCount() { return this._mytopics.length; },
+	setTree: function(treeBox){ 
+		this.treeBox = treeBox;
+	},
 	getCellText: function(row,column){	
 		if (column.id=='topic') return this._mytopics[row].name;
 		if (column.id=='unreaded' && this.getLevel(row) != 0) return this._mytopics[row].unreaded; 
@@ -92,11 +98,22 @@ firenyx_sidebar_topics.prototype = {
 	canDropOn: function canDropOn(index) { return false; },
 	canDropBeforeAfter: function canDropBeforeAfter(index, before) { return false; },
 	drop: function drop(index, orientation) { },
+	
+	onClick: function(event) {
+		//logme(event);
+		if (this.treeObject.currentIndex==-1) return;
+		
+		var item = this._mytopics[this.treeObject.currentIndex];
+		if (item.type=='category' || item.id == 0) return;
+		
+		fn.openPage('l=topic;id='+item.id, event);
+	},
 
 	setTopics: function(topics) {
+		if (this.treeBox) this.treeBox.beginUpdateBatch();
 		this._topics = topics;
 		this.sortTopics();
-		if (this.treebox) this.treebox.invalidate();
+		if (this.treeBox) this.treeBox.endUpdateBatch();
 	},
 	sortTopics: function() {
 		this._mytopics = [];
@@ -118,5 +135,7 @@ firenyx_sidebar_topics.prototype = {
 				}
 			}
 		}
+	},
+	destroy: function() {
 	}
 }

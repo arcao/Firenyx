@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 //sidebar
 function firenyx_sidebar() {
-	this.topics = new firenyx_sidebar_topics();
+	if (gBI('firenyx-topics')) this.topics = new firenyx_sidebar_topics(gBI('firenyx-topics'));
 	return this;
 }
 firenyx_sidebar.prototype.toggleSidebar = function(show) {
@@ -38,6 +38,7 @@ firenyx_sidebar.prototype.addPeople = function(nick, id, time) {
 	el.nick = nick;
 	el.id = id;
 	el.setAttribute('context', 'popupmenu_friends');
+	el.setAttribute('ondblclick', "fn.sidebar.menuAction('newmail', event);");
 	
 	var hbox = document.createElement('hbox');
 	

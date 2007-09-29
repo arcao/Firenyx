@@ -100,11 +100,11 @@
 	 
   <!-- Sidebar (dashboard): begin -->
   <window id="main-window">
-    <vbox id="firenyx-dashboard" width="115" height="115" hidden="true">
+    <vbox id="firenyx-dashboard" width="200" height="100" hidden="true">
       <tabbox id="firenyx-dashboard-tab-box" flex="1">
       	<tabs id="firenyx-dashboard-tabs">
-          <tab label="Přátelé" />
-          <tab label="Kluby" />
+          <tab label="&firenyx.sidebar.friends;" />
+          <tab label="&firenyx.sidebar.topics;" />
           <spacer id="firenyx-dashboard-spacer" flex="1"/>
           <!-- <toolbarbutton id="firenyx-position-dashboard" class="firenyx-dashboard-button" tooltiptext="&firenyx.firenyx.position.label;" oncommand="fn.changePositionDashboard()"/> -->
           <toolbarbutton id="firenyx-close-dashboard" tooltiptext="&firenyx.sidebar.close;" oncommand="fn.sidebar.toggleSidebar()"/>
@@ -130,11 +130,11 @@
 						</richlistbox>
 	        </tabpanel>
 	        <tabpanel flex="1">
-						<tree id="firenyx-topics" flex="1" hidecolumnpicker="true">
+						<tree id="firenyx-topics" flex="1" hidecolumnpicker="true" seltype="single">
 							<treecols>
-								<treecol id="topic" label="Klub" primary="true" flex="1"/>
+								<treecol id="topic" label="&firenyx.sidebar.topics.topic;" primary="true" flex="1"/>
 								<splitter class="tree-splitter" />
-								<treecol id="unreaded" label="Nepřečteno" style="width: 3em"/>
+								<treecol id="unreaded" label="&firenyx.sidebar.topics.unreaded;" style="width: 3em"/>
 							</treecols>
 							<treechildren/>
 						</tree>
@@ -148,4 +148,3 @@
   <!-- Sidebar (dashboard): end -->
   
 </overlay>
-

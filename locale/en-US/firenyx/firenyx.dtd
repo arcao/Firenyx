@@ -60,12 +60,12 @@
 <!ENTITY firenyx.options.look.statusbar_counter.posts "Write-ups">
 
 <!-- Options-alerts -->
-<!ENTITY firenyx.options.alerts.caption "Upozorňování">
-<!ENTITY firenyx.options.alerts.donot_show_mail_alert "Nezobrazovat upozornění na novou poštu">
+<!ENTITY firenyx.options.alerts.caption "Alerts">
+<!ENTITY firenyx.options.alerts.donot_show_mail_alert "Do not show new mail notice">
 
 <!-- Options-mail -->
-<!ENTITY firenyx.options.mail.caption "Pošta">
-<!ENTITY firenyx.options.mail.donot_mark_mail_as_readed "Neoznačovat poštu jako přečtenou">
+<!ENTITY firenyx.options.mail.caption "Mail">
+<!ENTITY firenyx.options.mail.donot_mark_mail_as_readed "Do not mark new mail as readed">
 
 <!-- New mail -->
 <!ENTITY firenyx.newmail.title "Write Mail">
@@ -75,7 +75,10 @@
 <!ENTITY firenyx.newmail.nohtml "Send HTML as plain text">
 
 <!-- Sidebar -->
-<!ENTITY firenyx.sidebar.title "Firenyx - Friends / Boards">
+<!ENTITY firenyx.sidebar.friends "Friends">
+<!ENTITY firenyx.sidebar.topics "Boards">
+<!ENTITY firenyx.sidebar.topics.topic "Board">
+<!ENTITY firenyx.sidebar.topics.unreaded "Unreaded">
 <!ENTITY firenyx.sidebar.close "Close">
 
 <!-- About dialog -->

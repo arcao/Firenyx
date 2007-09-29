@@ -74,7 +74,10 @@
 <!ENTITY firenyx.newmail.nohtml "Odeslat HTML kód jako prostý text">
 
 <!-- Sidebar -->
-<!ENTITY firenyx.sidebar.title "Firenyx - Přátelé / Kluby">
+<!ENTITY firenyx.sidebar.friends "Přátelé">
+<!ENTITY firenyx.sidebar.topics "Kluby">
+<!ENTITY firenyx.sidebar.topics.topic "Klub">
+<!ENTITY firenyx.sidebar.topics.unreaded "Nepřečteno">
 <!ENTITY firenyx.sidebar.close "Zavřít">
 
 <!-- About dialog -->

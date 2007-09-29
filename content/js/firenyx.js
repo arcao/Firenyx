@@ -6,7 +6,7 @@ const fn_about_xul = 'chrome://firenyx/content/about/about.xul';
 const fn_writemail_xul = 'chrome://firenyx/content/writemail.xul';
 const fn_stringBundle_properties = 'chrome://firenyx/locale/firenyx.properties';
 
-const url_nyx_client = "http://www.nyx.cz/code/client.php";
+const url_nyx_client = "https://www.nyx.cz/code/client.php";
 //ico url, all params must be uppercase: {0}=first letter of nick, {1}=nick
 const url_nyx_avatars = "http://i.nyx.cz/{0}/{1}.gif";
 
@@ -53,7 +53,7 @@ function firenyx() {
 	this.friends = [];
 	this.generated = 0;
 	this.dont_show_network_error = false;
-	this.sidebar = new firenyx_sidebar();
+	this.sidebar = null;
 	this.disabled = false;
 	this.old_mail_count = 0;
 	this.init();
@@ -72,6 +72,7 @@ firenyx.prototype.init = function() {
 	this.observerService.addObserver(this, "firenyx:friend:update", false);
 	this.observerService.addObserver(this, "firenyx:friend:remove", false);
 	this.disabled = fn_p.getBool('disabled', false);
+	this.sidebar = new firenyx_sidebar();
 	this.upgradeSettings();
 }
 firenyx.prototype.startRefreshing = function() {
