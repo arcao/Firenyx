@@ -1,55 +1,90 @@
 <?xml version="1.0"?>
-<RDF:RDF xmlns:em="http://www.mozilla.org/2004/em-rdf#"
-         xmlns:NC="http://home.netscape.com/NC-rdf#"
-         xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <RDF:Description RDF:about="rdf:#$ZOqd."
-                   em:id="{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}"
-                   em:minVersion="1.0"
-                   em:maxVersion="2.0.*" />
-  <RDF:Description RDF:about="rdf:#$UOqd."
-                   em:id="{86c18b42-e466-45a9-ae7a-9b95ba6f5640}"
-                   em:minVersion="1.8"
-                   em:maxVersion="1.8+" />
-  <RDF:Description RDF:about="urn:mozilla:install-manifest"
-                   em:id="{5591137f-ca2c-4c2a-93d1-5514992b2d4a}"
-                   em:version="0.1.4.2007081202"
-                   em:type="2"
-                   em:name="Firenyx"
-                   em:description="Localized - See http://kb.mozillazine.org/Localize_extension_descriptions"
-                   em:creator="Arcao"
-                   em:homepageURL="http://nyx.arcao.com/firenyx/"
-                   em:updateURL="http://nyx.arcao.com/firenyx/update.rdf"
-                   em:optionsURL="chrome://firenyx/content/options.xul"
-                   em:iconURL="chrome://firenyx/skin/butterfly_32a.png"
-                   em:updateKey="MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCV2MZffWQmjLu8cvKvsiKZ4LFkEer5LQy9oCTDPdiaN1j0yYKZg5yToISZQDxyructNCPKABE5D0J3PpcY8lKLBmIIQ4T6WEqZAfg4kr0lA1vpG4FaqQTPQoxXrPU3I+V+WjCQKIgG8gvPM4RCtZGLEuYZR8aBf1dUFGJd2DcWKwIDAQAB">
-    <em:targetApplication RDF:resource="rdf:#$POqd."/>
-    <em:targetApplication RDF:resource="rdf:#$UOqd."/>
-    <em:targetApplication RDF:resource="rdf:#$ZOqd."/>
-    <em:targetApplication RDF:resource="rdf:#$2Pqd."/>
-    <em:file RDF:resource="urn:mozilla:extension:file:firenyx.jar"/>
-    <em:localized RDF:resource="rdf:#$jPqd."/>
-    <em:localized RDF:resource="rdf:#$nPqd."/>
-  </RDF:Description>
-  <RDF:Description RDF:about="rdf:#$nPqd."
-                   em:locale="cs-CZ"
-                   em:name="Firenyx"
-                   em:description="Klient pro diskuzní server NYX.CZ. (cs-CZ)" />
-  <RDF:Description RDF:about="urn:mozilla:extension:file:firenyx.jar"
-                   em:package="content/"
-                   em:skin="skin/classic/firenyx/">
-    <em:locale>locale/en-US/firenyx/</em:locale>
-    <em:locale>locale/cs-CZ/firenyx/</em:locale>
-  </RDF:Description>
-  <RDF:Description RDF:about="rdf:#$2Pqd."
-                   em:id="{a463f10c-3994-11da-9945-000d60ca027b}"
-                   em:minVersion="0.5"
-                   em:maxVersion="1.0+" />
-  <RDF:Description RDF:about="rdf:#$jPqd."
-                   em:locale="en-US"
-                   em:name="Firenyx"
-                   em:description="A client application for NYX.CZ community server. (en-US translation by Esten)" />
-  <RDF:Description RDF:about="rdf:#$POqd."
-                   em:id="{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
-                   em:minVersion="1.5"
-                   em:maxVersion="3.0.*" />
-</RDF:RDF>
+<RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:em="http://www.mozilla.org/2004/em-rdf#">
+  <Description about="urn:mozilla:install-manifest">
+		<em:updateKey>MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCV2MZffWQmjLu8cvKvsiKZ4LFkEer5LQy9oCTDPdiaN1j0yYKZg5yToISZQDxyructNCPKABE5D0J3PpcY8lKLBmIIQ4T6WEqZAfg4kr0lA1vpG4FaqQTPQoxXrPU3I+V+WjCQKIgG8gvPM4RCtZGLEuYZR8aBf1dUFGJd2DcWKwIDAQAB</em:updateKey>
+    <em:id>{5591137f-ca2c-4c2a-93d1-5514992b2d4a}</em:id>
+    <em:version>0.1.5.2007100601</em:version>
+    <em:type>2</em:type><!-- extension -->
+
+
+    <!-- Firefox -->
+    <em:targetApplication>
+      <Description>
+        <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
+        <em:minVersion>1.5</em:minVersion>
+        <em:maxVersion>3.0.*</em:maxVersion>
+      </Description>
+    </em:targetApplication>
+
+    <!-- Mozilla -->
+    <em:targetApplication>
+      <Description>
+        <em:id>{86c18b42-e466-45a9-ae7a-9b95ba6f5640}</em:id>
+        <em:minVersion>1.8</em:minVersion>
+        <em:maxVersion>1.8+</em:maxVersion>
+      </Description>
+    </em:targetApplication>
+
+    <!-- Seamonkey -->
+    <em:targetApplication>
+      <Description>
+        <em:id>{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}</em:id>
+        <em:minVersion>1.0</em:minVersion>
+        <em:maxVersion>2.0.*</em:maxVersion>
+      </Description>
+    </em:targetApplication>
+
+    <!-- Thunderbird -->
+		<!-- <em:targetApplication>
+			<Description>
+				<em:id>{3550f703-e582-4d05-9a08-453d09bdfdc6}</em:id>
+				<em:minVersion>1.5</em:minVersion>
+				<em:maxVersion>3.0a1</em:maxVersion>
+			</Description>
+		</em:targetApplication> -->
+
+    <!-- Flock -->
+    <em:targetApplication>
+      <Description>
+        <em:id>{a463f10c-3994-11da-9945-000d60ca027b}</em:id>
+        <em:minVersion>0.5</em:minVersion>
+        <em:maxVersion>1.0+</em:maxVersion>
+      </Description>
+    </em:targetApplication>
+
+    <!-- Front End MetaData -->
+    <em:name>Firenyx</em:name>
+    <em:description>Localized - See http://kb.mozillazine.org/Localize_extension_descriptions</em:description>
+    <em:creator>Arcao</em:creator>
+    <em:homepageURL>http://nyx.arcao.com/firenyx/</em:homepageURL>
+    <em:updateURL>http://nyx.arcao.com/firenyx/update.rdf</em:updateURL>
+
+    <!-- Front End Integration Hooks (used by Extension Manager)-->
+    <em:optionsURL>chrome://firenyx/content/options.xul</em:optionsURL>
+    <em:iconURL>chrome://firenyx/skin/butterfly_32a.png</em:iconURL>
+    <!-- <em:aboutURL>chrome://firenyx/content/about.xul</em:aboutURL> -->
+
+    <!-- Packages, Skins and Locales that this extension registers -->
+    <em:file>
+      <Description about="urn:mozilla:extension:file:firenyx.jar">
+        <em:package>content/</em:package>
+        <em:skin>skin/classic/firenyx/</em:skin>
+        <em:locale>locale/en-US/firenyx/</em:locale>
+        <em:locale>locale/cs-CZ/firenyx/</em:locale>
+      </Description>
+    </em:file>
+
+    <em:localized>
+      <Description>
+        <em:locale>en-US</em:locale>
+        <em:name>Firenyx</em:name>
+        <em:description>A client application for NYX.CZ community server. (en-US translation by Esten)</em:description>
+      </Description>
+      <Description>
+        <em:locale>cs-CZ</em:locale>
+        <em:name>Firenyx</em:name>
+        <em:description>Klient pro diskuzní server NYX.CZ. (cs-CZ)</em:description>
+      </Description>
+    </em:localized>
+  </Description>
+</RDF>
