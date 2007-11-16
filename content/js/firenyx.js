@@ -188,6 +188,7 @@ firenyx.prototype.refresh = function(timer) {
 	//logme(url);
 	//logme(this.processRefresh);
 	this.xmlHttp.onreadystatechange = Delegate.create(this, this.processRefresh);
+	new CookieMonster(this.xmlHttp);
 	this.xmlHttp.send(params);
 }
 firenyx.prototype.processXML = function() {
@@ -526,6 +527,7 @@ firenyx.prototype.sendMail = function(message_to, message, nohtml) {
 		this.xmlHttp.open("POST", url, true);
 		this.xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 		this.xmlHttp.onreadystatechange = Delegate.create(this, this.processRefresh);
+		new CookieMonster(this.xmlHttp);
 		this.xmlHttp.send(params);
 		gBI('firenyx-icon').src = fn_img_throbber;
 	}
