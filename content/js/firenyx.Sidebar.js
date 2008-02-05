@@ -94,6 +94,13 @@ firenyx_sidebar.prototype.removePeople = function(nick) {
 	
 	if (el) list.removeChild(el);
 }
+
+firenyx_sidebar.prototype.removeAllPeople = function() {
+	var list = gBI('firenyx-friends');
+	
+	while (list.getRowCount() > 0) list.removeItemAt(0);
+}
+
 firenyx_sidebar.prototype.menuAction = function(action, event) {
 	var item = gBI('firenyx-friends').selectedItem;
 	switch(action.toLowerCase()) {

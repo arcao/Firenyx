@@ -102,6 +102,7 @@ firenyx.prototype.stopRefreshing = function() {
 		this.topics.cats = [];
 		this.topics.unreaded = 0;
 		this.friends = [];
+		if (this.sidebar) this.sidebar.removeAllPeople();
 		this.generated = 0;
 	}
 }
@@ -406,6 +407,9 @@ firenyx.prototype.openPage = function(page, e) {
 	}
 	
 	var invisible = fn_p.getInt('invisible_mode', 0);
+	//v nonpremium nefunguje visible/invisible mod
+	if (!fn_p.getBool('premium_version', false)) invisible = 0;
+	 
 	if (invisible == 2) {
 		//zeptame se zda visible / invisible
 		var pSI= Components.interfaces.nsIPromptService;

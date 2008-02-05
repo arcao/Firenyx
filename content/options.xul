@@ -88,6 +88,7 @@
 		gBI('firenyx-invisible_mode').selectedIndex = fn_p.getInt('invisible_mode', 0);
 		gBI('firenyx-open_url_method').selectedIndex = fn_p.getInt('open_url_method', 1);
 		gBI('firenyx-premium_version').checked = fn_p.getBool('premium_version', false);
+		gBI('firenyx-invisible_mode').disabled = !gBI('firenyx-premium_version').checked;
 		gBI('firenyx-donot_show_mail_alert').checked = fn_p.getBool('donot_show_mail_alert', false);
 		gBI('firenyx-donot_mark_mail_as_readed').checked = fn_p.getBool('donot_mark_mail_as_readed', false);
 		gBI('firenyx-look-statusbar_counter').selectedIndex = fn_p.getInt('look.statusbar_counter', 0);
@@ -142,7 +143,7 @@
       </menulist>
 		</hbox>
 		<hbox align="center">
-		  <checkbox label="&firenyx.options.login.premium_version;" id="firenyx-premium_version"/>
+		  <checkbox label="&firenyx.options.login.premium_version;" id="firenyx-premium_version" oncommand="gBI('firenyx-invisible_mode').disabled = !this.checked"/>
 		</hbox>
   </groupbox>
   <groupbox flex="1">
