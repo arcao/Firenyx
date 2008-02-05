@@ -81,7 +81,7 @@ fn_PasswordManager.prototype.create = function(username, password) {
 		var loginManager = this._loginManager.getService(Components.interfaces.nsILoginManager);
 		var nsLoginInfo = new Components.Constructor("@mozilla.org/login-manager/loginInfo;1", Components.interfaces.nsILoginInfo, "init");
 		
-		var extLoginInfo = new nsLoginInfo(this.chromeURL, null, 'Nyx login', username, password, null, null);
+		var extLoginInfo = new nsLoginInfo(this.chromeURL, null, 'Nyx login', username, password, 'username', 'password');
 		loginManager.addLogin(extLoginInfo);
 		
 		extLoginInfo = null;
