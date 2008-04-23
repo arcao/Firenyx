@@ -1,0 +1,145 @@
+<?xml version="1.0"?>
+
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+
+<window title="Tree Example" id="tree-window"
+   xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+   onload="setView();">
+
+<script><![CDATA[
+function logme(message) {
+	//alert(message);
+	/* const ConsoleService = Components.classes['@mozilla.org/consoleservice;1'].getService(Components.interfaces.nsIConsoleService);
+	ConsoleService.logStringMessage('Firenyx: ' + message); */
+}
+
+var topics = {"items":[
+{"name":"jQuery - the 'write less, do more' javascript library","id":13224,"unreaded":1,"cat_name":"nezařazené diskuze","cat_id":0},
+{"name":"Mozilla - najlepsi browser na svete (Mozilla, Mozilla Firefox (Firebird (Phoenix)), Mozilla Thunderbird)","id":3866,"unreaded":1,"cat_name":"nezařazené diskuze","cat_id":0}],
+"cats":[
+{"name":"vlastní diskuze","id":0},
+{"name":"Internet","id":0},
+{"name":"NYX - only","id":0},
+{"name":"Programování","id":0},
+{"name":"WEB","id":0},
+{"name":"nezařazené diskuze","id":0}],
+"unreaded":2};
+
+
+var treeView = {
+	QueryInterface: function QueryInterface(aIID) {
+		if (Components.interfaces.nsITreeView.equals(aIID) ||
+			Components.interfaces.nsIClassInfo.equals(aIID) ||
+			Components.interfaces.nsISupportsWeakReference.equals(aIID) ||
+			Components.interfaces.nsISupports.equals(aIID)) return this;
+		throw 0x80004002; // Components.results.NS_NOINTERFACE;
+	},
+	/* nsIClassInfo */
+	getInterfaces: function getInterfaces(count) {
+		count.value = 4;
+		return [Components.interfaces.nsITreeView, Components.interfaces.nsIClassInfo, Components.interfaces.nsISupportsWeakReference, Components.interfaces.nsISupports];
+	},
+	
+	getHelperForLanguage: function getHelperForLanguage(language) { return null; },
+	get contractID() { return null; },
+	get classDescription() { return "myTreeView"; },
+	get classID() { return null; },
+	
+	get implementationLanguage() { return Components.interfaces.nsIProgrammimgLanguage.JAVASCRIPT; },
+	get flags() { return Components.interfaces.nsIClassInfo.MAIN_THREAD_ONLY | Components.interfaces.nsIClassInfo.DOM_OBJECT; },
+	/* nsITreeView methods go here */
+
+  treeBox: null,
+  selection: null,
+
+	get wrappedJSObject() { return this; }, 
+	get rowCount() { return topics.items.length + topics.cats.length; },
+	setTree: function(treebox){ this.treebox = treebox; },
+	getCellText: function(row,column){
+		var it = topics.cats.concat(topics.items);
+		
+		return it[row].name;
+	},
+	isContainer: function(row){ return (this.getLevel(row) == 0); },
+	isContainerOpen: function(row){ if (this.getLevel(row) == 0) return true; return false;},
+	isContainerEmpty: function(row){
+		if (row < topics.cats.length) {
+		  var name = topics.cats[row].name;
+		  for(var i=0; i < topics.items.length; i++) if (topics.items[i].cat_name == name) return false;
+		}
+		return true;
+	},
+	isSeparator: function(row){ return false; },
+	isSorted: function(){ return false; },
+	isEditable: function(idx, column){ return false; },
+
+	getParentIndex: function(row){ 
+		if (row < topics.cats.length) return -1;
+		
+		var r = row - topics.cats.length;
+		var name =  topics.items[r].cat_name;
+		for(var i = 0; i < topics.cats; i++) if (topics.cats[i].name==name) return i;
+		return -1;
+	},
+	getLevel: function(row){
+		if (row < topics.cats.length) return 0; 
+		return 1;
+	},
+	hasNextSibling: function(row, afterIndex){
+		if (row < topics.cats.length - 1) return true;
+		if (row == topics.cats.length - 1) return false;
+
+		var r = row - topics.cats.length;
+		if (r == topics.items.length -1) return false;
+		if (topics.items[r].cat_name == topics.items[r + 1].cat_name) return true;
+		return false;
+	},
+	toggleOpenState: function(row){},
+
+	getImageSrc: function(idx, column) {},
+	getProgressMode : function(idx,column) {},
+	getCellValue: function(idx, column) {},
+	cycleHeader: function(col, elem) {},
+	selectionChanged: function() {},
+	cycleCell: function(idx, column) {},
+	performAction: function(action) { logme(action);},
+	performActionOnCell: function(action, index, column) {logme(action+"; "+index+"; "+column);},
+	getRowProperties: function(idx, column, prop) {},
+	getCellProperties: function(idx, column, prop) {},
+	getColumnProperties: function(column, element, prop) {},
+	
+	canDrop: function(index, orientation){ return false; },
+	drop: function(row, orientation){},
+	getCellValue: function(row, col){ return "";},
+	performActionOnRow: function(action, row){logme(action+"; "+row);},
+	selectionChanged: function(){},
+	setCellText: function(row, col, value){},
+	setCellValue: function(row, col, value){},
+	canDropOn: function canDropOn(index) { return false; },
+	canDropBeforeAfter: function canDropBeforeAfter(index, before) { return false; },
+	drop: function drop(index, orientation) { }
+}
+
+var controller = {
+  supportsCommand : function(cmd){ logme(cmd); return false; },
+  isCommandEnabled : function(cmd){ logme(cmd); return false; },
+  doCommand : function(cmd){ logme(cmd); },
+  onEvent : function(evt){ logme(evt); }
+}
+
+function setView()
+{
+		netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserWrite");
+    document.getElementById('my-tree').view=treeView;
+    document.getElementById('my-tree').controllers.appendController(controller);
+}
+]]></script>
+
+<tree id="my-tree" flex="1">
+  <treecols>
+    <treecol id="element" label="Element" primary="true" flex="1"/>
+  </treecols>
+  <treechildren/>
+</tree>
+
+</window>

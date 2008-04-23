@@ -462,7 +462,7 @@ firenyx.prototype.openPage = function(page, e) {
 		//logme(this.xmllogin.readyState);
 		if (this.xmllogin.readyState == 4) {
 			//logme(this.xmllogin.status);
-			if (this.xmllogin.status == 200) {
+			if (this.xmllogin.status == 200 || this.xmllogin.status == 302) {
 				var url = fn_utils.printf(url_nyx_page, protocol, page);
 				//logme(url);
 				//If the open tabs preference is set to true
