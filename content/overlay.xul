@@ -12,7 +12,6 @@
 <!-- content: chrome://firenyx/content/ -->
 
 <overlay id="firenyxOverlay" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-	<script type="application/x-javascript" src="chrome://firenyx/content/js/cookiemonster.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.Sidebar.Topics.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.Sidebar.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.js"/>
@@ -24,15 +23,15 @@
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/Utils.js"/>
 	<script type="application/x-javascript">
 	  function doLoad() {
-	  	fn_init();
-	  	fn.startRefreshing();
-	  	
 	  	var appContent        = document.getElementById("appcontent");
     	var dashboard         = document.getElementById("firenyx-dashboard");
     	var dashboardSplitter = document.getElementById("firenyx-dashboard-splitter"); 
 	  	var browser = appContent.parentNode;
       browser.insertBefore(dashboard, appContent);
       browser.insertBefore(dashboardSplitter, appContent); 
+
+	  	fn_init();
+	  	fn.startRefreshing();
 		}
     function doUnLoad() {
       fn_destroy();

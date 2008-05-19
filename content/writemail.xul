@@ -17,7 +17,6 @@
         buttons="accept,cancel"
         ondialogaccept="return doOk();"
         ondialogcancel="return doCancel();">
-	<script type="application/x-javascript" src="chrome://firenyx/content/js/cookiemonster.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.Sidebar.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.Sidebar.Topics.js"/>

@@ -2,42 +2,42 @@
 <RDF:RDF xmlns:NS1="http://www.mozilla.org/2004/em-rdf#"
          xmlns:NC="http://home.netscape.com/NC-rdf#"
          xmlns:RDF="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-  <RDF:Description RDF:about="rdf:#$CPqd."
-                   NS1:id="{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
-                   NS1:minVersion="1.5"
-                   NS1:maxVersion="3.0.*"
-                   NS1:updateLink="http://nyx.arcao.com/firenyx/firenyx-0.1.6.2008042401.xpi"
-                   NS1:updateHash="sha1:A90926C84C7ABD69AF2ED722B615647367B9B3AC" />
-  <RDF:Description RDF:about="urn:mozilla:extension:{5591137f-ca2c-4c2a-93d1-5514992b2d4a}"
-                   NS1:version="0.1.6.2008042401"
-                   NS1:updateLink="http://nyx.arcao.com/firenyx/firenyx-0.1.6.2008042401.xpi"
-                   NS1:updateHash="sha1:A90926C84C7ABD69AF2ED722B615647367B9B3AC"
-                   NS1:signature="MIGTMA0GCSqGSIb3DQEBDQUAA4GBACXMHWMPvWxQaDlgN70GU/ocJIb+71iwAmqgII6Kjye5lzJORlhIgoKYdG+8amAXRpO+tdNjy2u1Bt3STd2YwoE26FIYJ/wOM/JZt2kKztkl8crBQ+IQ/yRHArcdyyVk4hx/wOr5M6lP2dxUZ95pn83D3LshP1PkQNM21nAgwu16">
-    <NS1:updates RDF:resource="rdf:#$yPqd."/>
-  </RDF:Description>
+  <RDF:Description RDF:about="rdf:#$OPqd."
+                   NS1:id="{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}"
+                   NS1:minVersion="1.0"
+                   NS1:maxVersion="1.5a"
+                   NS1:updateLink="http://nyx.arcao.com/firenyx/firenyx-0.1.7.2008052001.xpi" />
   <RDF:Description RDF:about="rdf:#$zPqd."
-                   NS1:version="0.1.6.2008042401">
+                   NS1:version="0.1.7.2008052001">
     <NS1:targetApplication RDF:resource="rdf:#$CPqd."/>
     <NS1:targetApplication RDF:resource="rdf:#$IPqd."/>
     <NS1:targetApplication RDF:resource="rdf:#$OPqd."/>
     <NS1:targetApplication RDF:resource="rdf:#$UPqd."/>
   </RDF:Description>
-  <RDF:Description RDF:about="rdf:#$OPqd."
-                   NS1:id="{92650c4d-4b8e-4d2a-b7eb-24ecf4f6b63a}"
-                   NS1:minVersion="1.0"
-                   NS1:maxVersion="1.5a"
-                   NS1:updateLink="http://nyx.arcao.com/firenyx/firenyx-0.1.6.2008042401.xpi" />
+  <RDF:Seq RDF:about="rdf:#$yPqd.">
+    <RDF:li RDF:resource="rdf:#$zPqd."/>
+  </RDF:Seq>
+  <RDF:Description RDF:about="rdf:#$CPqd."
+                   NS1:id="{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
+                   NS1:minVersion="1.5"
+                   NS1:maxVersion="3.0.*"
+                   NS1:updateLink="http://nyx.arcao.com/firenyx/firenyx-0.1.7.2008052001.xpi"
+                   NS1:updateHash="sha1:56CF5525789C4ECB9430B4A204D96A94EEBA47F1" />
   <RDF:Description RDF:about="rdf:#$UPqd."
                    NS1:id="{a463f10c-3994-11da-9945-000d60ca027b}"
                    NS1:minVersion="0.5"
                    NS1:maxVersion="1.0+"
-                   NS1:updateLink="http://nyx.arcao.com/firenyx/firenyx-0.1.6.2008042401.xpi" />
-  <RDF:Seq RDF:about="rdf:#$yPqd.">
-    <RDF:li RDF:resource="rdf:#$zPqd."/>
-  </RDF:Seq>
+                   NS1:updateLink="http://nyx.arcao.com/firenyx/firenyx-0.1.7.2008052001.xpi" />
+  <RDF:Description RDF:about="urn:mozilla:extension:{5591137f-ca2c-4c2a-93d1-5514992b2d4a}"
+                   NS1:version="0.1.7.2008052001"
+                   NS1:updateLink="http://nyx.arcao.com/firenyx/firenyx-0.1.7.2008052001.xpi"
+                   NS1:updateHash="sha1:56CF5525789C4ECB9430B4A204D96A94EEBA47F1"
+                   NS1:signature="MIGTMA0GCSqGSIb3DQEBDQUAA4GBAJCMYpphDLgPwpr0H/7yEIcLqAvX7WpGQM+wg+KUkMN29HmXiyl9fIgwr1cN3P+JbBFHTw6MZ5PBpvJwL/kzof6GfGdgCy3ecDM67fTx4/14mZGLIw3zLA/tZunSi3SiRVWeclnIeZnMHL6JUjK6+ebpRtvEXb+y/JCGuVEnCwzx">
+    <NS1:updates RDF:resource="rdf:#$yPqd."/>
+  </RDF:Description>
   <RDF:Description RDF:about="rdf:#$IPqd."
                    NS1:id="{86c18b42-e466-45a9-ae7a-9b95ba6f5640}"
                    NS1:minVersion="1.8"
                    NS1:maxVersion="2.0.*"
-                   NS1:updateLink="http://nyx.arcao.com/firenyx/firenyx-0.1.6.2008042401.xpi" />
+                   NS1:updateLink="http://nyx.arcao.com/firenyx/firenyx-0.1.7.2008052001.xpi" />
 </RDF:RDF>
