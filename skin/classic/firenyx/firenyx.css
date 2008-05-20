@@ -1,8 +1,31 @@
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"); 
 
 #firenyx-close-dashboard {
-	list-style-image: url("chrome://firenyx/skin/sidebar/close.png");
+	list-style-image: url("chrome://firenyx/skin/sidebar/close.png");	
 }
 .disabled #firenyx-label {
-	color: gray;
+	color: GrayText;
+}
+#firenyx-friends label.nick {
+	font-weight: bold;
+	font-size: 1.5em;
+	color: GrayText;
+	-moz-box-align: start;
+	-moz-box-flex: 1;
+}
+#firenyx-friends:focus richlistitem[selected="true"] label.nick {
+	color: highlighttext;
+}
+
+#firenyx-friends label.time {
+	color: highlight;
+	font-size: 1.1em;
+	-moz-box-align: end;
+	padding-bottom: 3px;
+	background: url("chrome://firenyx/skin/sidebar/silk_icons/time_trasparent.png") no-repeat;
+	padding-top: 1px;
+	padding-left: 18px;
+}
+#firenyx-friends:focus richlistitem[selected="true"] label.time {
+	color: highlighttext;
 }

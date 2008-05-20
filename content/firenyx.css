@@ -2,27 +2,44 @@
 
 #firenyx-dashboard
 {
-    -moz-appearance: dialog !important;
+	-moz-appearance: dialog;
+	min-width: 50px;
 }
 
 #firenyx-dashboard-splitter
 {
-    background-color: ThreeDFace !important;
-    border: 1px solid ThreeDDarkShadow !important;
+  border: none;
+	background-color: ThreeDFace;
+	border-width: 0 2px 0 0;
+  border-style: solid;
+  -moz-border-right-colors: ThreeDDarkShadow ThreeDFace; 
 }
 
 #firenyx-dashboard-tab-box, #firenyx-dashboard-tab-panels
 {
-    margin: 0 !important;
-    padding: 0 !important;
+	margin: 0;
+	padding: 0;
 }
 
 #firenyx-dashboard-tabs
 {
-    display: block !important;
+	display: block;
 }
 
 #firenyx-dashboard-tabs > tab
 {
-    display: inline !important;
+	display: inline;
+}
+#firenyx-dashboard-tab-box {
+	margin-left: 2px;
+	margin-bottom: 2px;
+}
+
+#firenyx-dashboard-tab-box tabpanels, #firenyx-dashboard-tab-box tabpanel {
+	-moz-appearance: none;
+	padding: 0;
+	border: 0;	
+}
+#firenyx-friends, #firenyx-topics {
+	margin: 0;
 }

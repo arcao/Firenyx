@@ -75,7 +75,7 @@
         <menuitem id="firenyx-menuDisabled-13" label="&firenyx.menu.nyx.notepad;" oncommand="fn.openPage('l=notepad', event);" onclick="checkForMiddleClick(this, event);"/>
         <menuitem id="firenyx-menuDisabled-14" label="&firenyx.menu.nyx.people;" oncommand="fn.openPage('l=people', event);" onclick="checkForMiddleClick(this, event);"/>
         <menuitem id="firenyx-menuDisabled-15" label="&firenyx.menu.nyx.user;" oncommand="fn.openPage('l=user', event);" onclick="checkForMiddleClick(this, event);"/>
-        <menuitem id="firenyx-menuDisabled-16" label="&firenyx.menu.nyx.book;" oncommand="fn.openPage('l=book', event);" onclick="checkForMiddleClick(this, event);"/>
+        <menuitem id="firenyx-menuDisabled-16" label="&firenyx.menu.nyx.book;" style="font-weight:bold;" oncommand="fn.openPage('l=book', event);" onclick="checkForMiddleClick(this, event);"/>
         <menuitem id="firenyx-menuDisabled-17" label="&firenyx.menu.nyx.last;" oncommand="fn.openPage('l=last', event);" onclick="checkForMiddleClick(this, event);"/>
         <menuitem id="firenyx-menuDisabled-18" label="&firenyx.menu.nyx.plug;" oncommand="fn.openPage('l=plug', event);" onclick="checkForMiddleClick(this, event);"/>
         <menuseparator/> 
@@ -102,7 +102,7 @@
   <window id="main-window">
     <vbox id="firenyx-dashboard" width="200" height="100" hidden="true">
       <tabbox id="firenyx-dashboard-tab-box" flex="1">
-      	<tabs id="firenyx-dashboard-tabs">
+      	<tabs id="firenyx-dashboard-tabs" pack="start">
           <tab label="&firenyx.sidebar.friends;" />
           <tab label="&firenyx.sidebar.topics;" />
           <spacer id="firenyx-dashboard-spacer" flex="1"/>
@@ -123,7 +123,7 @@
 							  </hbox>
 						  </richlistitem>-->
 						  <menupopup id="popupmenu_friends" onpopupshowing="event.stopPropagation()">
-				        <menuitem label="&firenyx.menu.sidebar.writemail;" oncommand="fn.sidebar.menuAction('newmail', event);" onclick="checkForMiddleClick(this, event);"/>
+				        <menuitem label="&firenyx.menu.sidebar.writemail;" style="font-weight:bold;" oncommand="fn.sidebar.menuAction('newmail', event);" onclick="checkForMiddleClick(this, event);"/>
 				        <menuseparator/> 
 				        <menuitem label="&firenyx.menu.sidebar.userinfo;" oncommand="fn.sidebar.menuAction('userinfo', event);" onclick="checkForMiddleClick(this, event);"/>
       				</menupopup>

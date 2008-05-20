@@ -38,6 +38,7 @@ firenyx_sidebar.prototype.addPeople = function(nick, id, time) {
 	el.nick = nick;
 	el.id = id;
 	el.setAttribute('context', 'popupmenu_friends');
+	el.setAttribute('tooltiptext', fn_utils.printf(fn_s.get('fn.sidebar.people.tooltip'), nick, fn_utils.formatTime(time)));
 	el.setAttribute('ondblclick', "fn.sidebar.menuAction('newmail', event);");
 	
 	var hbox = document.createElement('hbox');
@@ -50,8 +51,10 @@ firenyx_sidebar.prototype.addPeople = function(nick, id, time) {
 	
 	var label_nick = document.createElement('label');
 	label_nick.setAttribute('value', nick);
+	label_nick.setAttribute('class', 'nick');
 	var label_time = document.createElement('label');
 	label_time.setAttribute('value', fn_utils.formatTime(time));
+	label_time.setAttribute('class', 'time');
 	
 	vbox.appendChild(label_nick);
 	vbox.appendChild(label_time);
@@ -81,6 +84,7 @@ firenyx_sidebar.prototype.editPeople = function(nick, time) {
 	
 	if (el) {
 		el.getElementsByTagName('label')[1].value = fn_utils.formatTime(time);
+		el.setAttribute('tooltiptext', fn_utils.printf(fn_s.get('fn.sidebar.people.tooltip'), nick, fn_utils.formatTime(time)));
 		//logme(el.getElementsByTagName('label')[1].value);
 	}	
 }

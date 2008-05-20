@@ -90,14 +90,12 @@ firenyx_sidebar_topics.prototype = {
 	
 	canDrop: function(index, orientation){ return false; },
 	drop: function(row, orientation){},
-	getCellValue: function(row, col){ return "";},
 	performActionOnRow: function(action, row){logme(action+"; "+row);},
 	selectionChanged: function(){},
 	setCellText: function(row, col, value){},
 	setCellValue: function(row, col, value){},
-	canDropOn: function canDropOn(index) { return false; },
-	canDropBeforeAfter: function canDropBeforeAfter(index, before) { return false; },
-	drop: function drop(index, orientation) { },
+	canDropOn: function(index) { return false; },
+	canDropBeforeAfter: function(index, before) { return false; },
 	
 	onClick: function(event) {
 		//logme(event);
