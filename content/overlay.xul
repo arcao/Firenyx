@@ -102,13 +102,14 @@
   <window id="main-window">
     <vbox id="firenyx-dashboard" width="200" height="100" hidden="true">
       <tabbox id="firenyx-dashboard-tab-box" flex="1">
-      	<tabs id="firenyx-dashboard-tabs" pack="start">
-          <tab label="&firenyx.sidebar.friends;" />
-          <tab label="&firenyx.sidebar.topics;" />
-          <spacer id="firenyx-dashboard-spacer" flex="1"/>
+      	<hbox id="firenyx-dashboard-header">
+				  <tabs id="firenyx-dashboard-tabs" flex="1">
+            <tab label="&firenyx.sidebar.friends;" />
+            <tab label="&firenyx.sidebar.topics;" />
+          </tabs>
           <!-- <toolbarbutton id="firenyx-position-dashboard" class="firenyx-dashboard-button" tooltiptext="&firenyx.firenyx.position.label;" oncommand="fn.changePositionDashboard()"/> -->
           <toolbarbutton id="firenyx-close-dashboard" tooltiptext="&firenyx.sidebar.close;" oncommand="fn.sidebar.toggleSidebar()"/>
-        </tabs>
+        </hbox>
         <tabpanels flex="1" style="padding:0">
 	        <!-- Sidebar content: begin -->
 	        <tabpanel flex="1" style="padding:0">

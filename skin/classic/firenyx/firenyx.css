@@ -1,11 +1,33 @@
 @namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"); 
 
 #firenyx-close-dashboard {
-	list-style-image: url("chrome://firenyx/skin/sidebar/close.png");	
+	-moz-appearance: none;
+	list-style-image: url("chrome://firenyx/skin/sidebar/closeSidebar.png");
+	-moz-image-region: rect(0px, 14px, 14px, 0px);
+  margin: 0px;
+  border: none;
+  padding: 0px 2px 0px 2px; 	
 }
+
+#firenyx-close-dashboard:hover {
+  -moz-image-region: rect(0px, 28px, 14px, 14px);
+}
+
+#firenyx-close-dashboard:hover:active {
+  -moz-image-region: rect(0px, 42px, 14px, 28px);
+}
+
 .disabled #firenyx-label {
 	color: GrayText;
 }
+
+#firenyx-friends, #firenyx-topics {
+	-moz-appearance: none;
+  border: 0;
+  margin: 0;
+  border-top: 1px solid ThreeDShadow; 
+}
+
 #firenyx-friends label.nick {
 	font-weight: bold;
 	font-size: 1.5em;

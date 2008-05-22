@@ -1,7 +1,10 @@
 ////////////////////////////////////////////////////////////////////////////////
 //sidebar
 function firenyx_sidebar() {
-	if (gBI('firenyx-topics')) this.topics = new firenyx_sidebar_topics(gBI('firenyx-topics'));
+	if (gBI('firenyx-topics')) {
+		this.topics = new firenyx_sidebar_topics(gBI('firenyx-topics'));
+		this.toggleSidebar(fn_p.getBool('show_sidebar', false));
+	}
 	return this;
 }
 firenyx_sidebar.prototype.toggleSidebar = function(show) {
@@ -19,6 +22,8 @@ firenyx_sidebar.prototype.toggleSidebar = function(show) {
 	try{ gBI('firenyx-toggleSidebar-0').setAttribute('checked', !hidden); } catch(e) {};	
 	try{ gBI('firenyx-toggleSidebar-1').setAttribute('checked', !hidden); } catch(e) {};
 	try{ gBI('firenyx-toggleSidebar-2').setAttribute('checked', !hidden); } catch(e) {};
+	
+	fn_p.setBool('show_sidebar', !hidden);
 }
 firenyx_sidebar.prototype.addPeople = function(nick, id, time) {
 	nick = nick.toUpperCase();
