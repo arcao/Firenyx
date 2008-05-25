@@ -66,6 +66,7 @@ firenyx.prototype.init = function() {
 	this.observerService.addObserver(this, "firenyx:topic:add", false);
 	this.observerService.addObserver(this, "firenyx:topic:update", false);
 	this.observerService.addObserver(this, "firenyx:topic:newposts", false);
+	this.observerService.addObserver(this, "firenyx:topic:newposts:replies", false);
 	this.observerService.addObserver(this, "firenyx:topic:remove", false);
 	
 	this.observerService.addObserver(this, "firenyx:friend:add", false);
@@ -231,7 +232,7 @@ firenyx.prototype.processXML = function() {
 		//pri prvnim prihlaseni se posila otaznik, feature?
 		if (isNaN(this.generated)) throw new Error();
 	} catch(e) {
-		this.generated = (new Date()).getTime() /1000;
+		this.generated = Math.floor((new Date()).getTime() /1000);
 	}
 	
 	//----------------------------------------------------------------------------
@@ -299,11 +300,15 @@ firenyx.prototype.processXML = function() {
 		var book_name = books_obj[i].firstChild.nodeValue;
 		var book_id = parseInt(books_obj[i].getAttribute('id'), 10);
 		var book_unreaded = parseInt(books_obj[i].getAttribute('new'), 10);
+		var book_replies = 0;
+		
+		if (books_obj[i].hasAttribute('replies')) book_replies = parseInt(books_obj[i].getAttribute('replies'), 10);
+		
 		var cat_name = books_obj[i].parentNode.getAttribute('name');
 		//TODO: presvedcit nyxe, aby to tam zakomponoval
 		var cat_id = 0;
 		
-		books.push({'name': book_name, 'id': book_id, 'unreaded': book_unreaded, 'cat_name': cat_name, 'cat_id': cat_id});
+		books.push({'name': book_name, 'id': book_id, 'unreaded': book_unreaded, 'unreaded_before': 0, 'replies': book_replies, 'replies_before': 0, 'cat_name': cat_name, 'cat_id': cat_id});
 		this.topics.unreaded+=book_unreaded;
 	}
 	//kluby hledani pridanych/odebranych/novych prizpevku v klubech
@@ -313,10 +318,18 @@ firenyx.prototype.processXML = function() {
 		var f = lb;
 		for(var y=0; y < books.length;y++) if (lb.id == books[y].id) {found=true; f=books[y]; break;}
 		if (found) {
+			f.unreaded_before = lb.unreaded;
+			f.replies_before = lb.replies; 
 			//topic update
 			//nove neprectene?
-			if (lb.unreaded < f.unreaded) this.observerService.notifyObservers(null, "firenyx:topic:newposts", Json.toJSON(f));
-			this.observerService.notifyObservers(null, "firenyx:topic:update", Json.toJSON(f));
+			if (lb.unreaded < f.unreaded) {
+				if (lb.replies >= f.replies) {
+					this.observerService.notifyObservers(null, "firenyx:topic:newposts", Json.toJSON(f));
+				} else {
+					this.observerService.notifyObservers(null, "firenyx:topic:newposts:replies", Json.toJSON(f));					
+				}
+			}
+			if (lb.unreaded != f.unreaded) this.observerService.notifyObservers(null, "firenyx:topic:update", Json.toJSON(f));
 		} else {
 			//topic remove
 			this.observerService.notifyObservers(null, "firenyx:topic:remove", Json.toJSON(f));
@@ -352,7 +365,7 @@ firenyx.prototype.processXML = function() {
 		var id = parseInt(friend_obj[i].getElementsByTagName('id')[0].firstChild.nodeValue, 10);
 		var username = friend_obj[i].getElementsByTagName('username')[0].firstChild.nodeValue;
 		var refresh = parseInt(friend_obj[i].getElementsByTagName('refresh')[0].firstChild.nodeValue, 10);
-		friends.push({'id': id, 'username': username, 'refresh': refresh});
+		friends.push({'id': id, 'username': username, 'refresh': this.generated - refresh, 'refresh_before': -1});
 	}
 	for(var i=0; i < this.friends.length; i++) {
 		var lf = this.friends[i];
@@ -360,9 +373,12 @@ firenyx.prototype.processXML = function() {
 		var f = lf;
 		for(var y=0; y < friends.length;y++) if (lf.username == friends[y].username) {found=true; f=friends[y]; break;}
 		if (found) {
+			f.refresh_before = lf.refresh;
 			//friend update
-			this.sidebar.editPeople(f.username, this.generated-f.refresh);
-			this.observerService.notifyObservers(null, "firenyx:friend:update", Json.toJSON(f));
+			if (lf.refresh != f.refresh) {
+				this.sidebar.editPeople(f.username, f.refresh);
+				this.observerService.notifyObservers(null, "firenyx:friend:update", Json.toJSON(f));
+			}
 		} else {
 			//friend remove
 			this.sidebar.removePeople(f.username);
@@ -375,7 +391,7 @@ firenyx.prototype.processXML = function() {
 		for(var y=0; y < this.friends.length;y++) if (f.username == this.friends[y].username) {found=true; break;}
 		if (!found) {
 			//friend add
-			this.sidebar.addPeople(f.username, f.id, this.generated-f.refresh);
+			this.sidebar.addPeople(f.username, f.id, f.refresh);
 			this.observerService.notifyObservers(null, "firenyx:friend:add", Json.toJSON(f));
 		}
 	}
@@ -575,6 +591,7 @@ firenyx.prototype.observe = function(subject, topic, data) {
 	
 	if (topic=='alertclickcallback') this.onAlertClickCallback(data);
 	if (topic=='alertfinished') this.onAlertFinished();
+	
 }
 firenyx.prototype.upgradeSettings = function() {
 	if (fn_p.getString('password', null) != null) {
@@ -599,6 +616,7 @@ firenyx.prototype.destroy = function() {
 	this.observerService.removeObserver(this, "firenyx:topic:add", false);
 	this.observerService.removeObserver(this, "firenyx:topic:update", false);
 	this.observerService.removeObserver(this, "firenyx:topic:newposts", false);
+	this.observerService.removeObserver(this, "firenyx:topic:newposts:replies", false);
 	this.observerService.removeObserver(this, "firenyx:topic:remove", false);
 	
 	this.observerService.removeObserver(this, "firenyx:friend:add", false);

@@ -88,7 +88,7 @@ firenyx_sidebar.prototype.editPeople = function(nick, time) {
 	}
 	
 	if (el) {
-		el.getElementsByTagName('label')[1].value = fn_utils.formatTime(time);
+		el.getElementsByTagName('label')[1].setAttribute('value', fn_utils.formatTime(time));
 		el.setAttribute('tooltiptext', fn_utils.printf(fn_s.get('fn.sidebar.people.tooltip'), nick, fn_utils.formatTime(time)));
 		//logme(el.getElementsByTagName('label')[1].value);
 	}	

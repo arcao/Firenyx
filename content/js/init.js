@@ -3,11 +3,13 @@
 var fn = null;
 var fn_p = null;
 var fn_s = null;
+var fn_debug = false;
 
 function fn_init() {
 	fn_p = new fn_Pref(fn_branchName);
 	fn_s = new fn_StringBundle(fn_stringBundle_properties);
 	fn = new firenyx();
+	fn_debug = fn_p.getBool('debug_mode', false);
 }
 function fn_destroy() {
 	fn.destroy();
