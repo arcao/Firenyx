@@ -65,7 +65,7 @@
 
 <!-- Options-mail -->
 <!ENTITY firenyx.options.mail.caption "Mail">
-<!ENTITY firenyx.options.mail.donot_mark_mail_as_readed "Do not mark new mail as readed">
+<!ENTITY firenyx.options.mail.donot_mark_mail_as_readed "Do not mark new mail as read">
 
 <!-- New mail -->
 <!ENTITY firenyx.newmail.title "Write Mail">
@@ -78,7 +78,7 @@
 <!ENTITY firenyx.sidebar.friends "Friends">
 <!ENTITY firenyx.sidebar.topics "Boards">
 <!ENTITY firenyx.sidebar.topics.topic "Board">
-<!ENTITY firenyx.sidebar.topics.unreaded "Unreaded">
+<!ENTITY firenyx.sidebar.topics.unreaded "Unread">
 <!ENTITY firenyx.sidebar.close "Close">
 
 <!-- About dialog -->
