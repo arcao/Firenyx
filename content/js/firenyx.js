@@ -36,7 +36,7 @@ const fn_img_alert_ok = 'chrome://firenyx/skin/alert/new/ok.png';
 const fn_img_alert_network = 'chrome://firenyx/skin/alert/new/network.png';
 const fn_img_alert_key = 'chrome://firenyx/skin/alert/new/key.png';
 
-const fn_img_avatar_error = 'chrome://firenyx/skin/no_avatar.gif';
+const fn_img_avatar_error = 'chrome://firenyx/skin/no_avatar.png';
 
 const ALERT_CHROME_URL = 'chrome://firenyx/content/alerts/alert.xul';
 const FIRENYX_CHROME_BASE = 'chrome://firenyx/';
