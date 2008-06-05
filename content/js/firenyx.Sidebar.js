@@ -43,7 +43,7 @@ firenyx_sidebar.prototype.addPeople = function(nick, id, time) {
 	el.nick = nick;
 	el.id = id;
 	el.setAttribute('context', 'popupmenu_friends');
-	el.setAttribute('tooltiptext', fn_utils.printf(fn_s.get('fn.sidebar.people.tooltip'), nick, fn_utils.formatTime(time)));
+	el.setAttribute('tooltiptext', fn_utils.printf(fn_s.get('fn.sidebar.people.tooltip'), nick, fn_utils.formatAgoTime(time)));
 	el.setAttribute('ondblclick', "fn.sidebar.menuAction('newmail', event);");
 	
 	var hbox = document.createElement('hbox');
@@ -52,19 +52,25 @@ firenyx_sidebar.prototype.addPeople = function(nick, id, time) {
 	image.setAttribute('src', fn_utils.printf(url_nyx_avatars, nick.substring(0,1), nick));
 	image.onerror = function() { image.src=fn_img_avatar_error;};
 	
+	var vboxImage = document.createElement('vbox');
 	var vbox = document.createElement('vbox');
 	
 	var label_nick = document.createElement('label');
 	label_nick.setAttribute('value', nick);
 	label_nick.setAttribute('class', 'nick');
+	label_nick.setAttribute('crop', 'end');
 	var label_time = document.createElement('label');
-	label_time.setAttribute('value', fn_utils.formatTime(time));
+	label_time.setAttribute('value', fn_utils.printf(fn_s.get('fn.activity'), fn_utils.formatAgoTime(time)));
 	label_time.setAttribute('class', 'time');
+	label_time.setAttribute('crop', 'end');
 	
 	vbox.appendChild(label_nick);
+	//vbox.appendChild(document.createElement('spacer'));
 	vbox.appendChild(label_time);
 	
-	hbox.appendChild(image);
+	vboxImage.appendChild(image);
+	
+	hbox.appendChild(vboxImage);
 	hbox.appendChild(vbox);
 	
 	el.appendChild(hbox);
@@ -88,8 +94,8 @@ firenyx_sidebar.prototype.editPeople = function(nick, time) {
 	}
 	
 	if (el) {
-		el.getElementsByTagName('label')[1].setAttribute('value', fn_utils.formatTime(time));
-		el.setAttribute('tooltiptext', fn_utils.printf(fn_s.get('fn.sidebar.people.tooltip'), nick, fn_utils.formatTime(time)));
+		el.getElementsByTagName('label')[1].setAttribute('value', fn_utils.printf(fn_s.get('fn.activity'), fn_utils.formatAgoTime(time)));
+		el.setAttribute('tooltiptext', fn_utils.printf(fn_s.get('fn.sidebar.people.tooltip'), nick, fn_utils.formatAgoTime(time)));
 		//logme(el.getElementsByTagName('label')[1].value);
 	}	
 }

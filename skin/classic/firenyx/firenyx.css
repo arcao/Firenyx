@@ -28,25 +28,21 @@
   border-top: 1px solid ThreeDShadow; 
 }
 #firenyx-friends label.nick {
-	font-weight: bold;
 	font-size: 1.5em;
-	color: GrayText;
-/*	-moz-box-align: start;
-	-moz-box-flex: 1; */
-}
-#firenyx-friends:focus richlistitem[selected="true"] label.nick {
-	color: highlighttext;
+	color: #000;
+	-moz-box-align: start;
+	-moz-crop: end;
+	-moz-box-flex: 1;
 }
 
 #firenyx-friends label.time {
-	color: highlight;
-	font-size: 1.1em;
-	-moz-box-align: end;
-	background: url("chrome://firenyx/skin/sidebar/silk_icons/time_transparent.png") no-repeat;
-	padding: 1px 0 3px 18px;
-}
-#firenyx-friends:focus richlistitem[selected="true"] label.time {
-	color: highlighttext;
+	color: #777;
+	font-size: 10px;
+	-moz-box-align: start;
+  -moz-crop: end;
+  -moz-box-flex: 1;
+	/*background: url("chrome://firenyx/skin/sidebar/silk_icons/time_transparent.png") no-repeat;
+	padding: 1px 0 3px 18px;*/
 }
 
 #firenyx-friends.min-icon label.nick {
@@ -56,11 +52,44 @@
 
 #firenyx-friends.min-icon label.time {
 	font-size: 10px;
-	padding: 0 0 0 12px;
-	background: url("chrome://firenyx/skin/sidebar/silk_icons/time_transparent_min.png") no-repeat left center;
+	/*padding: 0 0 0 12px;
+	background: url("chrome://firenyx/skin/sidebar/silk_icons/time_transparent_min.png") no-repeat left center;*/
 }
 
+#firenyx-friends image {
+	width: 40px;
+	height: 50px;
+	border: 1px #CCC solid
+}
 #firenyx-friends.min-icon image {
 	width: 24px;
 	height: 30px !important;
+}
+
+
+
+
+
+
+
+#firenyx-friends {
+	background: #FFF;
+}
+
+#firenyx-friends richlistitem {
+	padding: 5px 0 5px 5px;
+	border-bottom:1px solid #CCC;/*#6BE26B; #6C9; */
+	background-image: url("chrome://firenyx/skin/sidebar/friends_background.png");
+	background-repeat: repeat-x;
+	-moz-box-align: start;
+}
+
+#firenyx-friends richlistitem[selected="true"] {
+	background-color: #AFA;
+}
+#firenyx-friends richlistitem spacer {
+	-moz-box-flex: 1;
+}
+#firenyx-friends richlistitem hbox, #firenyx-friends richlistitem vbox {
+	-moz-box-align: start;
 }

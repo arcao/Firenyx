@@ -29,6 +29,31 @@ fn_utils.formatTime = function(sec) {
 	str+= (seconds < 10) ? '0'+seconds: seconds;
 	return str;
 }
+fn_utils.formatAgoTime = function(seconds) {
+	var minutes = Math.round(seconds / 60);
+	var hours = Math.round(seconds / (60 * 60));
+	var days = Math.round(seconds / (60 * 60 * 24));
+	
+	var text = "";
+	var value = 0;
+	
+	if (seconds < 60) {
+		text = fn_s.get('fn.activity.seconds_ago');
+		value = seconds;
+	} else if (minutes < 60) {
+		text = fn_s.get('fn.activity.minutes_ago');
+		value = minutes;
+	} else if (hours < 24) {
+		text = fn_s.get('fn.activity.hours_ago');
+		value = hours;
+	} else { 
+		text = fn_s.get('fn.activity.days_ago');
+		value = days;
+	}
+	
+	var arrText = text.split('|');
+	return this.printf(arrText[(value > 1)? 1 : 0], value);
+} 
 fn_utils.closeUnpairedTags = function(text) {
 	return text.replace(/<((br|img|hr).*?)(\/>|\/\s+>|>)/ig, "<$1 />");
 }
