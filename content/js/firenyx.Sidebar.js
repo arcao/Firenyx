@@ -47,6 +47,7 @@ firenyx_sidebar.prototype.addPeople = function(nick, id, time) {
 	el.setAttribute('ondblclick', "fn.sidebar.menuAction('newmail', event);");
 	
 	var hbox = document.createElement('hbox');
+	hbox.setAttribute('crop', 'end');
 	
 	var image = document.createElement('image');
 	image.setAttribute('src', fn_utils.printf(url_nyx_avatars, nick.substring(0,1), nick));

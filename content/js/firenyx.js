@@ -553,6 +553,10 @@ firenyx.prototype.sendMail = function(message_to, message, nohtml) {
 	}
 	window.setTimeout(Delegate.create(this, callback), 10);
 }
+firenyx.prototype.statusbarAction = function(e, type) {
+if (e.button == 1 && type=='dbclick') fn.openPage('l=book', event);
+if (e.button == 3 && type=='click') fn.sidebar.toggleSidebar();
+} 
 firenyx.prototype.showWriteMail = function(to) {
 	if (to==undefined) to='';
 	window.openDialog(fn_writemail_xul, 'fn_options', 'centerscreen, chrome', this, to);

@@ -63,7 +63,7 @@
     </menu>
   </menupopup>
   <statusbar id="status-bar">
-    <statusbarpanel id="firenyx-statuspanel" ondblclick="if (event.button != 2) fn.openPage('l=book', event);" context="popupmenu_statusbar">
+    <statusbarpanel id="firenyx-statuspanel" onclick="checkForMiddleClick(this, event);if (event.button == 1) fn.sidebar.toggleSidebar();" ondblclick="if (event.button == 0) fn.openPage('l=book', event);" context="popupmenu_statusbar">
       <image id="firenyx-icon" src="chrome://firenyx/skin/butterfly.png"/>
       <label id="firenyx-label" value="&firenyx.statusbar.label;"/> 
     </statusbarpanel>

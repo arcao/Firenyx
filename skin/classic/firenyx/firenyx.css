@@ -31,6 +31,7 @@
 	font-size: 1.5em;
 	color: #000;
 	-moz-box-align: start;
+	-moz-box-orient: horizontal;
 	-moz-crop: end;
 	-moz-box-flex: 1;
 }
@@ -39,6 +40,7 @@
 	color: #777;
 	font-size: 10px;
 	-moz-box-align: start;
+	-moz-box-orient: horizontal;
   -moz-crop: end;
   -moz-box-flex: 1;
 	/*background: url("chrome://firenyx/skin/sidebar/silk_icons/time_transparent.png") no-repeat;
