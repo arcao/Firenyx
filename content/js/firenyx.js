@@ -6,21 +6,23 @@ const fn_about_xul = 'chrome://firenyx/content/about/about.xul';
 const fn_writemail_xul = 'chrome://firenyx/content/writemail.xul';
 const fn_stringBundle_properties = 'chrome://firenyx/locale/firenyx.properties';
 
-const url_nyx_client = "https://www.nyx.cz/code/client.php";
-//ico url, all params must be uppercase: {0}=first letter of nick, {1}=nick
-const url_nyx_avatars = "http://i.nyx.cz/{0}/{1}.gif";
+//default urls, can be changed trough extension.firenyx.xxx settings 
+	var url_nyx_client = "https://www.nyx.cz/code/client.php";
+	//ico url, all params must be uppercase: {0}=first letter of nick, {1}=nick
+	var url_nyx_avatars = "http://i.nyx.cz/{0}/{1}.gif";
 
-//client login post vars: {0}=username, {1}=password, {2}=other post params
-const url_nyx_client_post_vars = "loguser={0}&logpass={1}{2}";
-//client send mail post vars: {0}=username, {1}=password, {3}=recipient, {4}=message
-const url_nyx_client_writemail_post_vars = "loguser={0}&logpass={1}&recipient={2}&message={3}";
+	//client login post vars: {0}=username, {1}=password, {2}=other post params
+	var url_nyx_client_post_vars = "loguser={0}&logpass={1}{2}";
+	//client send mail post vars: {0}=username, {1}=password, {3}=recipient, {4}=message
+	var url_nyx_client_writemail_post_vars = "loguser={0}&logpass={1}&recipient={2}&message={3}";
 
-//nyx global page url: {0}=protocol, {1}=params
-const url_nyx_page = "{0}://www.nyx.cz/index.php?{1}";
-//nyx login url: {0}=protocol
-const url_nyx_login_page = "{0}://www.nyx.cz/index.php?login=1";
-//nyx login post vars: {0}=username, {1}=password, {2}=invisible(1/0)
-const url_nyx_login_post_vars = "loguser={0}&logpass={1}&loginv={2}";
+	//nyx global page url: {0}=protocol, {1}=params
+	var url_nyx_page = "{0}://www.nyx.cz/index.php?{1}";
+	//nyx login url: {0}=protocol
+	var url_nyx_login_page = "{0}://www.nyx.cz/index.php?login=1";
+	//nyx login post vars: {0}=username, {1}=password, {2}=invisible(1/0)
+	var url_nyx_login_post_vars = "loguser={0}&logpass={1}&loginv={2}";
+//
 
 const fn_img_throbber = 'chrome://firenyx/skin/throbber.gif';
 const fn_img_butterfly = 'chrome://firenyx/skin/butterfly.png';
@@ -60,6 +62,17 @@ function firenyx() {
 	return this;
 }
 firenyx.prototype.init = function() {
+	//load user defined urls
+	if (fn_p.getBool('custom_urls', false)) {
+		if (fn_p.getString('url_nyx_client', '') != '') url_nyx_client = fn_p.getString('url_nyx_client', '');
+		if (fn_p.getString('url_nyx_avatars', '') != '') url_nyx_avatars = fn_p.getString('url_nyx_avatars', '');
+		if (fn_p.getString('url_nyx_client_post_vars', '') != '') url_nyx_client_post_vars = fn_p.getString('url_nyx_client_post_vars', '');
+		if (fn_p.getString('url_nyx_client_writemail_post_vars', '') != '') url_nyx_client_writemail_post_vars = fn_p.getString('url_nyx_client_writemail_post_vars', '');
+		if (fn_p.getString('url_nyx_page', '') != '') url_nyx_page = fn_p.getString('url_nyx_page', '');
+		if (fn_p.getString('url_nyx_login_page', '') != '') url_nyx_login_page = fn_p.getString('url_nyx_login_page', '');
+		if (fn_p.getString('url_nyx_login_post_vars', '') != '') url_nyx_login_post_vars = fn_p.getString('url_nyx_login_post_vars', '');
+	}
+
 	this.observerService = Components.classes["@mozilla.org/observer-service;1"].getService(Components.interfaces.nsIObserverService);
 	this.observerService.addObserver(this, "firenyx:mail:new", false);
 	
@@ -187,8 +200,8 @@ firenyx.prototype.refresh = function(timer) {
 	this.xmlHttp.open("POST", url, true);
 	this.xmlHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	this.xmlHttp.setRequestHeader("User-Agent", fn_utils.printf(fn_user_agent, fn_utils.getVersion('{5591137f-ca2c-4c2a-93d1-5514992b2d4a}')));
-	//logme(url);
-	//logme(this.processRefresh);
+	logme(url);
+	logme(params);
 	this.xmlHttp.onreadystatechange = Delegate.create(this, this.processRefresh);
 	//new CookieMonster(this.xmlHttp);
 	this.xmlHttp.send(params);
