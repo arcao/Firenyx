@@ -225,13 +225,13 @@ firenyx.prototype.processXML = function() {
 	var doc = parser.parseFromString(this.xmlHttp.responseText, "text/xml");
 	
 	//zpracovani chyb 2.cast
-	var error_obj = doc.getElementsByTagName('page')[0].getElementsByTagName('error');
+	var error_obj = doc.getElementsByTagName('error');
 	if (error_obj.length > 0) {
 		this.showAlert(fn_img_alert_stop, fn_s.get('fn.error.nyx.title'), fn_utils.printf(fn_s.get('fn.error.login.title'), error_obj[0].firstChild.nodeValue), false, '');
 	}
 	
 	//pokud obsahuje xml jen chybove hlaseni tak nepokracovat dal	
-	if (doc.getElementsByTagName('info')[0].getElementsByTagName('friends').length <1) {
+	if (doc.getElementsByTagName('info').length < 1 || doc.getElementsByTagName('info')[0].getElementsByTagName('friends').length <1) {
 		gBI('firenyx-label').value = fn_s.get('fn.statusbar.unlogged');
 		this.dont_show_network_error = true;
 		return;
@@ -375,10 +375,11 @@ firenyx.prototype.processXML = function() {
 	var friend_obj = doc.getElementsByTagName('friends')[0].getElementsByTagName('friend');
 	var friends = []
 	for(var i=0; i < friend_obj.length; i++) {
-		var id = parseInt(friend_obj[i].getElementsByTagName('id')[0].firstChild.nodeValue, 10);
+	  //id se jiz neposila
+		//var id = 0; //parseInt(friend_obj[i].getElementsByTagName('id')[0].firstChild.nodeValue, 10);
 		var username = friend_obj[i].getElementsByTagName('username')[0].firstChild.nodeValue;
 		var refresh = parseInt(friend_obj[i].getElementsByTagName('refresh')[0].firstChild.nodeValue, 10);
-		friends.push({'id': id, 'username': username, 'refresh': this.generated - refresh, 'refresh_before': -1});
+		friends.push({'username': username, 'refresh': this.generated - refresh, 'refresh_before': -1});
 	}
 	for(var i=0; i < this.friends.length; i++) {
 		var lf = this.friends[i];
@@ -404,7 +405,7 @@ firenyx.prototype.processXML = function() {
 		for(var y=0; y < this.friends.length;y++) if (f.username == this.friends[y].username) {found=true; break;}
 		if (!found) {
 			//friend add
-			this.sidebar.addPeople(f.username, f.id, f.refresh);
+			this.sidebar.addPeople(f.username, f.refresh);
 			this.observerService.notifyObservers(null, "firenyx:friend:add", Json.toJSON(f));
 		}
 	}

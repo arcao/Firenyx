@@ -3,7 +3,7 @@
   <Description about="urn:mozilla:install-manifest">
 		<em:updateKey>MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCV2MZffWQmjLu8cvKvsiKZ4LFkEer5LQy9oCTDPdiaN1j0yYKZg5yToISZQDxyructNCPKABE5D0J3PpcY8lKLBmIIQ4T6WEqZAfg4kr0lA1vpG4FaqQTPQoxXrPU3I+V+WjCQKIgG8gvPM4RCtZGLEuYZR8aBf1dUFGJd2DcWKwIDAQAB</em:updateKey>
     <em:id>{5591137f-ca2c-4c2a-93d1-5514992b2d4a}</em:id>
-    <em:version>0.1.7.2008052001</em:version>
+    <em:version>0.1.8.2008072201</em:version>
     <em:type>2</em:type><!-- extension -->
 
 
@@ -12,7 +12,7 @@
       <Description>
         <em:id>{ec8030f7-c20a-464f-9b0e-13a3a9e97384}</em:id>
         <em:minVersion>1.5</em:minVersion>
-        <em:maxVersion>3.0.*</em:maxVersion>
+        <em:maxVersion>3.1.*</em:maxVersion>
       </Description>
     </em:targetApplication>
 
@@ -48,7 +48,7 @@
       <Description>
         <em:id>{a463f10c-3994-11da-9945-000d60ca027b}</em:id>
         <em:minVersion>0.5</em:minVersion>
-        <em:maxVersion>1.0+</em:maxVersion>
+        <em:maxVersion>1.2.*</em:maxVersion>
       </Description>
     </em:targetApplication>
 

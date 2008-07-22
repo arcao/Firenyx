@@ -25,7 +25,7 @@ firenyx_sidebar.prototype.toggleSidebar = function(show) {
 	
 	fn_p.setBool('show_sidebar', !hidden);
 }
-firenyx_sidebar.prototype.addPeople = function(nick, id, time) {
+firenyx_sidebar.prototype.addPeople = function(nick, time) {
 	nick = nick.toUpperCase();
 
 	var list = gBI('firenyx-friends');
@@ -41,7 +41,6 @@ firenyx_sidebar.prototype.addPeople = function(nick, id, time) {
 	var el = document.createElement('richlistitem');
 	
 	el.nick = nick;
-	el.id = id;
 	el.setAttribute('context', 'popupmenu_friends');
 	el.setAttribute('tooltiptext', fn_utils.printf(fn_s.get('fn.sidebar.people.tooltip'), nick, fn_utils.formatAgoTime(time)));
 	el.setAttribute('ondblclick', "fn.sidebar.menuAction('newmail', event);");
