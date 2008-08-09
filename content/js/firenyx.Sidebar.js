@@ -14,6 +14,7 @@ firenyx_sidebar.prototype.toggleSidebar = function(show) {
 	} else {
 		var hidden = !show;
 	}
+	if (!hidden) this.loadTab();
 	
 	gBI('firenyx-dashboard').hidden = hidden;
 	gBI('firenyx-dashboard-splitter').hidden = hidden;
@@ -24,6 +25,18 @@ firenyx_sidebar.prototype.toggleSidebar = function(show) {
 	try{ gBI('firenyx-toggleSidebar-2').setAttribute('checked', !hidden); } catch(e) {};
 	
 	fn_p.setBool('show_sidebar', !hidden);
+}
+firenyx_sidebar.prototype.saveTab = function(index) {
+  fn_p.setInt('last_sidebar_tab', index);
+}
+firenyx_sidebar.prototype.loadTab = function() {
+	var tab = fn_p.getInt('look.default_sidebar_tab', 0);
+	if (tab < 0 || tab > 2) tab = 0;
+	
+	if (tab == 2){
+		tab = fn_p.getInt('last_sidebar_tab', 0);
+	}
+  gBI('firenyx-dashboard-tab-box').selectedIndex = tab;
 }
 firenyx_sidebar.prototype.addPeople = function(nick, time) {
 	nick = nick.toUpperCase();

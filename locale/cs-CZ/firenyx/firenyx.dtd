@@ -1,4 +1,4 @@
-<!-- cs-CZ localization, UTF8 dummy chars (do not remove, thx): € -->
+<!-- cs-CZ localization, UTF8 dummy char (do not remove, thx): € -->
 <!-- Statusbar -->
 <!ENTITY firenyx.statusbar.label "Přihlašuji se...">
 <!ENTITY firenyx.statusbar.unlogged "Nepřihlášen">
@@ -18,7 +18,7 @@
 
 <!-- Menu-Other -->
 <!ENTITY firenyx.menu.writemail "Napsat zprávu">
-<!ENTITY firenyx.menu.sidebar "Přátelé / Kluby">
+<!ENTITY firenyx.menu.sidebar "Přátelé / Diskuze">
 <!ENTITY firenyx.menu.disabled "Zakázat rozšíření">
 <!ENTITY firenyx.menu.options "Nastavení">
 <!ENTITY firenyx.menu.about "O rozšíření">
@@ -54,9 +54,13 @@
 
 <!-- Options-look -->
 <!ENTITY firenyx.options.look.caption "Vzhled">
-<!ENTITY firenyx.options.look.statusbar_counter "Za přezdívkou ve stavovém řádku zobrazovat počítadlo:">
-<!ENTITY firenyx.options.look.statusbar_counter.books "Klubů">
+<!ENTITY firenyx.options.look.statusbar_counter "Za přezdívkou ve stavovém řádku zobrazovat počítadlo nepřečtených:">
+<!ENTITY firenyx.options.look.statusbar_counter.books "Diskuzí">
 <!ENTITY firenyx.options.look.statusbar_counter.posts "Příspěvků">
+<!ENTITY firenyx.options.look.default_sidebar_tab "Zobrazovat vždy v postraní liště záložku:">
+<!ENTITY firenyx.options.look.default_sidebar_tab.friends "Přátelé">
+<!ENTITY firenyx.options.look.default_sidebar_tab.topics "Diskuze">
+<!ENTITY firenyx.options.look.default_sidebar_tab.last_tab "poslední zvolenou">
 
 <!-- Options-alerts -->
 <!ENTITY firenyx.options.alerts.caption "Upozorňování">
@@ -70,13 +74,13 @@
 <!ENTITY firenyx.newmail.title "Napsat novou zprávu">
 <!ENTITY firenyx.newmail.caption "Napsat novou zprávu">
 <!ENTITY firenyx.newmail.to "Komu:">
-<!ENTITY firenyx.newmail.message "Zpráva:">
+<!ENTITY firenyx.newmail.message "Text zprávy:">
 <!ENTITY firenyx.newmail.nohtml "Odeslat HTML kód jako prostý text">
 
 <!-- Sidebar -->
 <!ENTITY firenyx.sidebar.friends "Přátelé">
-<!ENTITY firenyx.sidebar.topics "Kluby">
-<!ENTITY firenyx.sidebar.topics.topic "Klub">
+<!ENTITY firenyx.sidebar.topics "Diskuze">
+<!ENTITY firenyx.sidebar.topics.topic "Diskuze">
 <!ENTITY firenyx.sidebar.topics.unreaded "Nepřečteno">
 <!ENTITY firenyx.sidebar.close "Zavřít">
 

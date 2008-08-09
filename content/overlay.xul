@@ -104,8 +104,8 @@
       <tabbox id="firenyx-dashboard-tab-box" flex="1">
       	<hbox id="firenyx-dashboard-header">
 				  <tabs id="firenyx-dashboard-tabs" flex="1">
-            <tab label="&firenyx.sidebar.friends;" />
-            <tab label="&firenyx.sidebar.topics;" />
+            <tab label="&firenyx.sidebar.friends;" oncommand="fn.sidebar.saveTab(0)" />
+            <tab label="&firenyx.sidebar.topics;" oncommand="fn.sidebar.saveTab(1)" />
           </tabs>
           <!-- <toolbarbutton id="firenyx-position-dashboard" class="firenyx-dashboard-button" tooltiptext="&firenyx.firenyx.position.label;" oncommand="fn.changePositionDashboard()"/> -->
           <toolbarbutton id="firenyx-close-dashboard" tooltiptext="&firenyx.sidebar.close;" oncommand="fn.sidebar.toggleSidebar()"/>
@@ -133,9 +133,9 @@
 	        <tabpanel flex="1">
 						<tree id="firenyx-topics" flex="1" hidecolumnpicker="true" seltype="single">
 							<treecols>
-								<treecol id="topic" label="&firenyx.sidebar.topics.topic;" primary="true" flex="1"/>
+								<treecol id="topic" label="&firenyx.sidebar.topics.topic;" tooltiptext="&firenyx.sidebar.topics.topic;" primary="true" flex="1"/>
 								<splitter class="tree-splitter" />
-								<treecol id="unreaded" label="&firenyx.sidebar.topics.unreaded;" style="width: 3em"/>
+								<treecol id="unreaded" label="&firenyx.sidebar.topics.unreaded;" tooltiptext="&firenyx.sidebar.topics.unreaded;" style="width: 3em"/>
 							</treecols>
 							<treechildren/>
 						</tree>

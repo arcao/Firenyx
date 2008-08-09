@@ -1,4 +1,4 @@
-<!-- en-US localization, UTF8 dummy chars (do not remove, thx): € -->
+<!-- en-US localization, UTF8 dummy char (do not remove, thx): € -->
 <!-- Statusbar -->
 <!ENTITY firenyx.statusbar.label "Logging in...">
 <!ENTITY firenyx.statusbar.unlogged "Logged out">
@@ -17,21 +17,21 @@
 <!ENTITY firenyx.menu.nyx.plug "Plugin">
 
 <!-- Menu-Other -->
-<!ENTITY firenyx.menu.writemail "Write Mail">
-<!ENTITY firenyx.menu.sidebar "Friends / Boards">
-<!ENTITY firenyx.menu.disabled "Disable Firenyx">
-<!ENTITY firenyx.menu.options "Options">
+<!ENTITY firenyx.menu.writemail "Compose Mail">
+<!ENTITY firenyx.menu.sidebar "Friends / Discussions">
+<!ENTITY firenyx.menu.disabled "Disable add-on">
+<!ENTITY firenyx.menu.options "Settings">
 <!ENTITY firenyx.menu.about "About add-on">
 
 
 <!-- PopupMenu-Friends -->
-<!ENTITY firenyx.menu.sidebar.writemail "Write Mail">
-<!ENTITY firenyx.menu.sidebar.userinfo "User Info">
+<!ENTITY firenyx.menu.sidebar.writemail "Compose Mail">
+<!ENTITY firenyx.menu.sidebar.userinfo "User profile">
 
 <!-- Options -->
-<!ENTITY firenyx.options.title "Firenyx Options">
+<!ENTITY firenyx.options.title "Firenyx Settings">
 <!-- Options-login -->
-<!ENTITY firenyx.options.login.caption "Login Info">
+<!ENTITY firenyx.options.login.caption "Account settings">
 <!ENTITY firenyx.options.login.username "Username:">
 <!ENTITY firenyx.options.login.password "External Password:">
 <!ENTITY firenyx.options.login.webpassword "Regular Password:">
@@ -47,7 +47,7 @@
 <!ENTITY firenyx.options.login.open_url_method.current_tab "the current tab">
 <!ENTITY firenyx.options.login.open_url_method.current_nyx_tab "an existing Nyx.cz tab">
 
-<!ENTITY firenyx.options.login.premium_version "I use the premium version of Nyx.cz">
+<!ENTITY firenyx.options.login.premium_version "I have a premium account on Nyx.cz">
 
 <!-- Options-refresh -->
 <!ENTITY firenyx.options.refresh.caption "Auto-Refresh">
@@ -56,8 +56,12 @@
 <!-- Options-look -->
 <!ENTITY firenyx.options.look.caption "Display">
 <!ENTITY firenyx.options.look.statusbar_counter "In the status bar, count:">
-<!ENTITY firenyx.options.look.statusbar_counter.books "Boards">
+<!ENTITY firenyx.options.look.statusbar_counter.books "Discussions">
 <!ENTITY firenyx.options.look.statusbar_counter.posts "Write-ups">
+<!ENTITY firenyx.options.look.default_sidebar_tab "Always show in sidebar:">
+<!ENTITY firenyx.options.look.default_sidebar_tab.friends "Friends tab">
+<!ENTITY firenyx.options.look.default_sidebar_tab.topics "Discussions tab">
+<!ENTITY firenyx.options.look.default_sidebar_tab.last_tab "last selected tab">
 
 <!-- Options-alerts -->
 <!ENTITY firenyx.options.alerts.caption "Alerts">
@@ -68,16 +72,16 @@
 <!ENTITY firenyx.options.mail.donot_mark_mail_as_readed "Do not mark new mail as read">
 
 <!-- New mail -->
-<!ENTITY firenyx.newmail.title "Write Mail">
-<!ENTITY firenyx.newmail.caption "Write Mail">
+<!ENTITY firenyx.newmail.title "Compose Mail">
+<!ENTITY firenyx.newmail.caption "Compose Mail">
 <!ENTITY firenyx.newmail.to "To:">
-<!ENTITY firenyx.newmail.message "Message:">
+<!ENTITY firenyx.newmail.message "Message body:">
 <!ENTITY firenyx.newmail.nohtml "Send HTML as plain text">
 
 <!-- Sidebar -->
 <!ENTITY firenyx.sidebar.friends "Friends">
-<!ENTITY firenyx.sidebar.topics "Boards">
-<!ENTITY firenyx.sidebar.topics.topic "Board">
+<!ENTITY firenyx.sidebar.topics "Discussions">
+<!ENTITY firenyx.sidebar.topics.topic "Discussion">
 <!ENTITY firenyx.sidebar.topics.unreaded "Unread">
 <!ENTITY firenyx.sidebar.close "Close">
 
