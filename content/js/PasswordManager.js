@@ -2,11 +2,11 @@
 //Password manager
 function fn_PasswordManager(chromeURL) {
 	this.chromeURL = chromeURL;
-  this.wrappedJSObject = this;
-  this._passwordManager = Components.classes["@mozilla.org/passwordmanager;1"];
+	this.wrappedJSObject = this;
+	this._passwordManager = Components.classes["@mozilla.org/passwordmanager;1"];
 	this._loginManager = Components.classes["@mozilla.org/login-manager;1"];
 
-  return this;
+	return this;
 }
 ////////////////////////////////////////////////////////////////////////////////
 fn_PasswordManager.prototype.set = function(username, password) {

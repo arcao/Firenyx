@@ -2,14 +2,14 @@
 //utils
 function fn_utils() {}
 fn_utils.printf = function() { 
-  var num = arguments.length; 
-  var oStr = arguments[0];   
-  for (var i = 1; i < num; i++) { 
-    var pattern = "\\{" + (i-1) + "\\}"; 
-    var re = new RegExp(pattern, "g"); 
-    oStr = oStr.replace(re, arguments[i]); 
-  } 
-  return oStr; 
+	var num = arguments.length;
+	var oStr = arguments[0];
+	for (var i = 1; i < num; i++) {
+		var pattern = "\\{" + (i-1) + "\\}";
+		var re = new RegExp(pattern, "g");
+		oStr = oStr.replace(re, arguments[i]);
+	}
+	return oStr;
 }
 fn_utils.encodehtml = function(text) {
 	text = text.replace(/&/g,"&amp;");
@@ -78,13 +78,13 @@ fn_utils.isDefined = function(variable) {
 //delegate
 function Delegate() {}
 Delegate.create = function (o, f) {
-  var a = new Array() ;
-  var l = arguments.length ;
-  for(var i = 2 ; i < l ; i++) a[i - 2] = arguments[i] ;
-  return function() {
-    var aP = [].concat(arguments, a) ;
-    f.apply(o, aP);
-  }
+	var a = new Array() ;
+	var l = arguments.length ;
+	for(var i = 2 ; i < l ; i++) a[i - 2] = arguments[i] ;
+	return function() {
+		var aP = [].concat(arguments, a) ;
+		f.apply(o, aP);
+	}
 }
 
 function logme(message) {
@@ -128,37 +128,37 @@ function gBI(id) { try { return document.getElementById(id); } catch (e) {return
 if (!fn_utils.isDefined('whereToOpenLink')) {
 	function whereToOpenLink( e, ignoreButton, ignoreAlt )
 	{
-	  if (!e)
-	    e = { shiftKey:false, ctrlKey:false, metaKey:false, altKey:false, button:0 };
+		if (!e)
+			e = { shiftKey:false, ctrlKey:false, metaKey:false, altKey:false, button:0 };
 	
-	  var shift = e.shiftKey;
-	  var ctrl =  e.ctrlKey;
-	  var meta =  e.metaKey;
-	  var alt  =  e.altKey && !ignoreAlt;
+		var shift = e.shiftKey;
+		var ctrl =	e.ctrlKey;
+		var meta =	e.metaKey;
+		var alt	=	e.altKey && !ignoreAlt;
 	
-	  // ignoreButton allows "middle-click paste" to use function without always opening in a new window.
-	  var middle = !ignoreButton && e.button == 1;
-	  var middleUsesTabs = fn_Pref.getBool("browser.tabs.opentabfor.middleclick", true);
+		// ignoreButton allows "middle-click paste" to use function without always opening in a new window.
+		var middle = !ignoreButton && e.button == 1;
+		var middleUsesTabs = fn_Pref.getBool("browser.tabs.opentabfor.middleclick", true);
 	
-	  // Don't do anything special with right-mouse clicks.  They're probably clicks on context menu items.
+		// Don't do anything special with right-mouse clicks.  They're probably clicks on context menu items.
 	
-	//@line 143 "/cygdrive/c/builds/tinderbox/Fx-Mozilla1.8-release/WINNT_5.2_Depend/mozilla/browser/base/content/utilityOverlay.js"
-	  if (ctrl || (middle && middleUsesTabs)) {
-	//@line 145 "/cygdrive/c/builds/tinderbox/Fx-Mozilla1.8-release/WINNT_5.2_Depend/mozilla/browser/base/content/utilityOverlay.js"
-	    if (shift)
-	      return "tabshifted";
-	    else
-	      return "tab";
-	  }
-	  else if (alt) {
-	    return "save";
-	  }
-	  else if (shift || (middle && !middleUsesTabs)) {
-	    return "window";
-	  }
-	  else {
-	    return "current";
-	  }
+		//@line 143 "/cygdrive/c/builds/tinderbox/Fx-Mozilla1.8-release/WINNT_5.2_Depend/mozilla/browser/base/content/utilityOverlay.js"
+		if (ctrl || (middle && middleUsesTabs)) {
+		//@line 145 "/cygdrive/c/builds/tinderbox/Fx-Mozilla1.8-release/WINNT_5.2_Depend/mozilla/browser/base/content/utilityOverlay.js"
+			if (shift)
+				return "tabshifted";
+			else
+				return "tab";
+		}
+		else if (alt) {
+			return "save";
+		}
+		else if (shift || (middle && !middleUsesTabs)) {
+			return "window";
+		}
+		else {
+			return "current";
+		}
 	}
 }
 
@@ -167,36 +167,36 @@ if (!fn_utils.isDefined('whereToOpenLink')) {
 if (!fn_utils.isDefined('checkForMiddleClick')) {
 	function checkForMiddleClick(node, event)
 	{
-	  // We should be using the disabled property here instead of the attribute,
-	  // but some elements that this function is used with don't support it (e.g.
-	  // menuitem).
-	  if (node.getAttribute("disabled") == "true")
-	    return; // Do nothing
+		// We should be using the disabled property here instead of the attribute,
+		// but some elements that this function is used with don't support it (e.g.
+		// menuitem).
+		if (node.getAttribute("disabled") == "true")
+			return; // Do nothing
 	
-	  if (event.button == 1) {
-	    /* Execute the node's oncommand.
-	     *
-	     * XXX: we should use node.oncommand(event) once bug 246720 is fixed.
-	     */
-	    var fn = new Function("event", node.getAttribute("oncommand"));
-	    fn.call(node, event);
+		if (event.button == 1) {
+			/* Execute the node's oncommand.
+			 *
+			 * XXX: we should use node.oncommand(event) once bug 246720 is fixed.
+			 */
+			var fn = new Function("event", node.getAttribute("oncommand"));
+			fn.call(node, event);
 	
-	    // If the middle-click was on part of a menu, close the menu.
-	    // (Menus close automatically with left-click but not with middle-click.)
-	    closeMenus(event.target);
-	  }
+			// If the middle-click was on part of a menu, close the menu.
+			// (Menus close automatically with left-click but not with middle-click.)
+			closeMenus(event.target);
+		}
 	}
 }
 // Closes all popups that are ancestors of the node.
 if (!fn_utils.isDefined('closeMenus')) {
 	function closeMenus(node)
 	{
-	  if ("tagName" in node) {
-	    if (node.namespaceURI == "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
-	    && (node.tagName == "menupopup" || node.tagName == "popup"))
-	      node.hidePopup();
+		if ("tagName" in node) {
+			if (node.namespaceURI == "http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+			&& (node.tagName == "menupopup" || node.tagName == "popup"))
+				node.hidePopup();
 	
-	    closeMenus(node.parentNode);
-	  }
+			closeMenus(node.parentNode);
+		}
 	}
 }

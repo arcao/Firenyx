@@ -375,7 +375,7 @@ firenyx.prototype.processXML = function() {
 	var friend_obj = doc.getElementsByTagName('friends')[0].getElementsByTagName('friend');
 	var friends = []
 	for(var i=0; i < friend_obj.length; i++) {
-	  //id se jiz neposila
+		//id se jiz neposila
 		//var id = 0; //parseInt(friend_obj[i].getElementsByTagName('id')[0].firstChild.nodeValue, 10);
 		var username = friend_obj[i].getElementsByTagName('username')[0].firstChild.nodeValue;
 		var refresh = parseInt(friend_obj[i].getElementsByTagName('refresh')[0].firstChild.nodeValue, 10);

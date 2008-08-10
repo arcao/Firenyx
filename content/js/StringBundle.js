@@ -1,8 +1,8 @@
 function fn_StringBundle(filename) {
 	this.service = Components.classes["@mozilla.org/intl/stringbundle;1"].getService(Components.interfaces.nsIStringBundleService);
-  this.bundle = this.service.createBundle(filename);
-  this.wrappedJSObject = this;
-  return this;
+	this.bundle = this.service.createBundle(filename);
+	this.wrappedJSObject = this;
+	return this;
 }
 fn_StringBundle.prototype.get = function(name) {
 	return this.bundle.GetStringFromName(name);

@@ -27,7 +27,7 @@ firenyx_sidebar.prototype.toggleSidebar = function(show) {
 	fn_p.setBool('show_sidebar', !hidden);
 }
 firenyx_sidebar.prototype.saveTab = function(index) {
-  fn_p.setInt('last_sidebar_tab', index);
+	fn_p.setInt('last_sidebar_tab', index);
 }
 firenyx_sidebar.prototype.loadTab = function() {
 	var tab = fn_p.getInt('look.default_sidebar_tab', 0);
@@ -36,7 +36,7 @@ firenyx_sidebar.prototype.loadTab = function() {
 	if (tab == 2){
 		tab = fn_p.getInt('last_sidebar_tab', 0);
 	}
-  gBI('firenyx-dashboard-tab-box').selectedIndex = tab;
+	gBI('firenyx-dashboard-tab-box').selectedIndex = tab;
 }
 firenyx_sidebar.prototype.addPeople = function(nick, time) {
 	nick = nick.toUpperCase();

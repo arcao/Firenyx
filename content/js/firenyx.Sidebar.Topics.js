@@ -50,8 +50,8 @@ firenyx_sidebar_topics.prototype = {
 	isContainerEmpty: function(row){
 		return true;
 		if (this.getLevel(row) == 0) {
-		  if (row < this._mytopics.length-1 && this._mytopics[row+1].type!='category') return false; 
-		  return true;
+			if (row < this._mytopics.length-1 && this._mytopics[row+1].type!='category') return false;
+			return true;
 		}
 		return true;
 	},
@@ -117,8 +117,21 @@ firenyx_sidebar_topics.prototype = {
 		this._mytopics = [];
 		var i = 0;
 		var parent = 0;
-		var cat_name = '';
+		var cat_name = fn_s.get('fn.sidebar.topics.replies.group_name');
 		var item = null;
+
+		for(var y = 0; y < this._topics.items.length; y++) {
+			item = this._topics.items[y];
+			if (item.replies > 0) {
+				if (i==0) {
+					this._mytopics.push({'name': cat_name, 'type': 'category', 'unreaded': 0, 'id': 0});
+					parent = i;
+				}
+
+				this._mytopics.push({'name': item.name, 'type': 'topic', 'unreaded': item.unreaded, 'id': item.id, 'parent': parent, 'replies': item.replies});
+				i+= 1;
+			}
+		}
 		
 		for(var x = 0; x < this._topics.cats.length; x++) {
 			cat_name = this._topics.cats[x].name;
@@ -128,7 +141,7 @@ firenyx_sidebar_topics.prototype = {
 			for(var y = 0; y < this._topics.items.length; y++) {
 				item = this._topics.items[y];
 				if (item.cat_name == cat_name) {
-					this._mytopics.push({'name': item.name, 'type': 'topic', 'unreaded': item.unreaded, 'id': item.id, 'parent': parent});
+					this._mytopics.push({'name': item.name, 'type': 'topic', 'unreaded': item.unreaded, 'id': item.id, 'parent': parent, 'replies': item.replies});
 					i+= 1;
 				}
 			}
