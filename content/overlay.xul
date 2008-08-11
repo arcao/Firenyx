@@ -58,6 +58,7 @@
         <menuseparator/>
         <menuitem checked="false" autocheck="false" type="checkbox" id="firenyx-toggleDisabled-0" label="&firenyx.menu.disabled;" oncommand="fn.toggleDisabled();"/>
         <menuitem label="&firenyx.menu.options;" oncommand="fn.showOptions();"/>
+        <menuitem label="&firenyx.menu.refresh;" oncommand="fn.updateRefreshing();"/>
         <menuitem label="&firenyx.menu.about;" oncommand="fn.showAbout();"/>
       </menupopup>
     </menu>
@@ -84,6 +85,7 @@
         <menuseparator/>
 				<menuitem checked="false" autocheck="false" type="checkbox" id="firenyx-toggleDisabled-1" label="&firenyx.menu.disabled;" oncommand="fn.toggleDisabled();"/> 
         <menuitem label="&firenyx.menu.options;" oncommand="fn.showOptions();"/>
+        <menuitem label="&firenyx.menu.refresh;" oncommand="fn.updateRefreshing();"/>
         <menuitem label="&firenyx.menu.about;" oncommand="fn.showAbout();"/>
       </menupopup>
   </statusbar>
@@ -113,7 +115,7 @@
         <tabpanels flex="1" style="padding:0">
 	        <!-- Sidebar content: begin -->
 	        <tabpanel flex="1" style="padding:0">
-	        	<richlistbox flex="1" id="firenyx-friends">
+	        	<richlistbox flex="1" id="firenyx-friends" context="popupmenu_friends_noselect">
 <!--				  <richlistitem label="arcao">
 						    <hbox>
 							  	<image width="20" height="25" src="http://i.nyx.cz/A/ARCAO.gif"/>
@@ -127,6 +129,10 @@
 				        <menuitem label="&firenyx.menu.sidebar.writemail;" style="font-weight:bold;" oncommand="fn.sidebar.menuAction('newmail', event);" onclick="checkForMiddleClick(this, event);"/>
 				        <menuseparator/> 
 				        <menuitem label="&firenyx.menu.sidebar.userinfo;" oncommand="fn.sidebar.menuAction('userinfo', event);" onclick="checkForMiddleClick(this, event);"/>
+				        <menuitem label="&firenyx.menu.refresh;" oncommand="fn.updateRefreshing();"/>
+      				</menupopup>
+      				<menupopup id="popupmenu_friends_noselect" onpopupshowing="event.stopPropagation()">
+				        <menuitem label="&firenyx.menu.refresh;" oncommand="fn.updateRefreshing();"/>
       				</menupopup>
 						</richlistbox>
 	        </tabpanel>
@@ -137,7 +143,10 @@
 								<splitter class="tree-splitter" />
 								<treecol id="unreaded" label="&firenyx.sidebar.topics.unreaded;" tooltiptext="&firenyx.sidebar.topics.unreaded;" style="width: 3em"/>
 							</treecols>
-							<treechildren/>
+							<treechildren context="popupmenu_topics"/>
+							<menupopup id="popupmenu_topics" onpopupshowing="event.stopPropagation()">
+							  <menuitem label="&firenyx.menu.refresh;" oncommand="fn.updateRefreshing();"/>
+							</menupopup>
 						</tree>
 	        </tabpanel>
 	        <!-- Sidebar content: end -->

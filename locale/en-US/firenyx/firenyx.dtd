@@ -21,6 +21,7 @@
 <!ENTITY firenyx.menu.sidebar "Friends / Discussions">
 <!ENTITY firenyx.menu.disabled "Disable add-on">
 <!ENTITY firenyx.menu.options "Settings">
+<!ENTITY firenyx.menu.refresh "Refresh">
 <!ENTITY firenyx.menu.about "About add-on">
 
 

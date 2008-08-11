@@ -21,6 +21,7 @@
 <!ENTITY firenyx.menu.sidebar "Přátelé / Diskuze">
 <!ENTITY firenyx.menu.disabled "Zakázat rozšíření">
 <!ENTITY firenyx.menu.options "Nastavení">
+<!ENTITY firenyx.menu.refresh "Aktualizovat">
 <!ENTITY firenyx.menu.about "O rozšíření">
 
 <!-- PopupMenu-Friends -->
