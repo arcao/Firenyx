@@ -62,6 +62,10 @@
 <!ENTITY firenyx.options.look.default_sidebar_tab.friends "Friends tab">
 <!ENTITY firenyx.options.look.default_sidebar_tab.topics "Discussions tab">
 <!ENTITY firenyx.options.look.default_sidebar_tab.last_tab "last selected tab">
+<!ENTITY firenyx.options.look.default_sidebar_open_state "Show sidebar on startup and after opening new window:">
+<!ENTITY firenyx.options.look.default_sidebar_open_state.show "always">
+<!ENTITY firenyx.options.look.default_sidebar_open_state.hide "never">
+<!ENTITY firenyx.options.look.default_sidebar_open_state.last_state "by last state">
 
 <!-- Options-alerts -->
 <!ENTITY firenyx.options.alerts.caption "Alerts">

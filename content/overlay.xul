@@ -15,33 +15,33 @@
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.Sidebar.Topics.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.Sidebar.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/firenyx.js"/>
-	<script type="application/x-javascript" src="chrome://firenyx/content/js/init.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/Json.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/PasswordManager.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/Pref.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/StringBundle.js"/>
 	<script type="application/x-javascript" src="chrome://firenyx/content/js/Utils.js"/>
+	<script type="application/x-javascript" src="chrome://firenyx/content/js/init.js"/>
 	<script type="application/x-javascript">
 	  function doLoad() {
-	  	var appContent        = document.getElementById("appcontent");
-    	var dashboard         = document.getElementById("firenyx-dashboard");
-    	var dashboardSplitter = document.getElementById("firenyx-dashboard-splitter"); 
-	  	var browser = appContent.parentNode;
-      browser.insertBefore(dashboard, appContent);
-      browser.insertBefore(dashboardSplitter, appContent); 
+			var appContent        = document.getElementById("appcontent");
+			var dashboard         = document.getElementById("firenyx-dashboard");
+			var dashboardSplitter = document.getElementById("firenyx-dashboard-splitter");
+			var browser = appContent.parentNode;
+			browser.insertBefore(dashboard, appContent);
+			browser.insertBefore(dashboardSplitter, appContent);
 
-	  	fn_init();
-	  	fn.startRefreshing();
+			fn_init();
+			fn.startRefreshing();
 		}
-    function doUnLoad() {
-      fn_destroy();
-    }
+		function doUnLoad() {
+			fn_destroy();
+		}
 
-    window.addEventListener('load',doLoad, false);
-    window.addEventListener('unload',doUnLoad, false);
+		window.addEventListener('load',doLoad, false);
+		window.addEventListener('unload',doUnLoad, false);
 	</script>
   <menupopup id="menu_ToolsPopup">
-    <menu insertafter="devToolsSeparator" label="&firenyx.menu.label;">
+    <menu insertafter="devToolsSeparator" label="&firenyx.menu.label;" id="firenyx-tools-menu-item">
       <menupopup id="menu_popupmenu">
         <menuitem id="firenyx-menuDisabled-0" label="&firenyx.menu.nyx.gate;" oncommand="fn.openPage('l=gate', event);" onclick="checkForMiddleClick(this, event);"/>
         <menuitem id="firenyx-menuDisabled-1" label="&firenyx.menu.nyx.mail;" oncommand="fn.openPage('l=mail', event);" onclick="checkForMiddleClick(this, event);"/>
@@ -63,12 +63,12 @@
     </menu>
   </menupopup>
   <statusbar id="status-bar">
-    <statusbarpanel id="firenyx-statuspanel" onclick="fn_sb_dblclick=false;if(event.button!=2)setTimeout('if(!fn_sb_dblclick)fn.sidebar.toggleSidebar();',400);" ondblclick="fn_sb_dblclick=true;if (event.button != 2) fn.openPage('l=book', event);" context="popupmenu_statusbar">
+    <statusbarpanel id="firenyx-statuspanel" onclick="fn_sb_dblclick=false;if(event.button!=2)setTimeout('if(!fn_sb_dblclick)fn.sidebar.toggleSidebar();',400);" ondblclick="fn_sb_dblclick=true;if (event.button != 2) fn.openPage('l=book', event);" context="firenyx-popupmenu-statusbar">
       <image id="firenyx-icon" src="chrome://firenyx/skin/butterfly.png"/>
       <label id="firenyx-label" value="&firenyx.statusbar.label;"/> 
     </statusbarpanel>
     
-      <menupopup id="popupmenu_statusbar" position="before_end" onpopupshowing="event.stopPropagation()">
+      <menupopup id="firenyx-popupmenu-statusbar" position="before_end" onpopupshowing="event.stopPropagation()">
         <menuitem id="firenyx-menuDisabled-10" label="&firenyx.menu.nyx.gate;" oncommand="fn.openPage('l=gate', event);" onclick="checkForMiddleClick(this, event);"/>
         <menuitem id="firenyx-menuDisabled-11" label="&firenyx.menu.nyx.mail;" oncommand="fn.openPage('l=mail', event);" onclick="checkForMiddleClick(this, event);"/>
         <menuitem id="firenyx-menuDisabled-12" label="&firenyx.menu.nyx.topics;" oncommand="fn.openPage('l=topics', event);" onclick="checkForMiddleClick(this, event);"/>

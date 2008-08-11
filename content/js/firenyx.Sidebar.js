@@ -3,7 +3,16 @@
 function firenyx_sidebar() {
 	if (gBI('firenyx-topics')) {
 		this.topics = new firenyx_sidebar_topics(gBI('firenyx-topics'));
-		this.toggleSidebar(fn_p.getBool('show_sidebar', false));
+		switch(fn_p.getInt('look.default_sidebar_open_state', 2)) {
+			case 0:
+				this.toggleSidebar(true);
+				break;
+			case 1:
+				break;
+			default:
+				this.toggleSidebar(fn_p.getBool('show_sidebar', false));
+				break;
+		}
 	}
 	return this;
 }

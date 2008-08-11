@@ -50,6 +50,7 @@
 		fn_p.setBool('donot_mark_mail_as_readed', gBI('firenyx-donot_mark_mail_as_readed').checked);
 		fn_p.setInt('look.statusbar_counter', gBI('firenyx-look-statusbar_counter').selectedIndex);
 		fn_p.setInt('look.default_sidebar_tab', gBI('firenyx-look-default_sidebar_tab').selectedIndex);
+		fn_p.setInt('look.default_sidebar_open_state', gBI('firenyx-look-default_sidebar_open_state').selectedIndex);
 	
 		var refresh_time = 0
 		
@@ -91,8 +92,10 @@
 		gBI('firenyx-invisible_mode').disabled = !gBI('firenyx-premium_version').checked;
 		gBI('firenyx-donot_show_mail_alert').checked = fn_p.getBool('donot_show_mail_alert', false);
 		gBI('firenyx-donot_mark_mail_as_readed').checked = fn_p.getBool('donot_mark_mail_as_readed', false);
+		
 		gBI('firenyx-look-statusbar_counter').selectedIndex = fn_p.getInt('look.statusbar_counter', 0);
 		gBI('firenyx-look-default_sidebar_tab').selectedIndex = fn_p.getInt('look.default_sidebar_tab', 0);
+		gBI('firenyx-look-default_sidebar_open_state').selectedIndex = fn_p.getInt('look.default_sidebar_open_state', 0);
 		
 		var refresh_time = fn_p.getInt('refresh.time', 60);
 		if (refresh_time < 60) refresh_time = 60;
@@ -172,6 +175,16 @@
         	<menuitem label="&firenyx.options.look.default_sidebar_tab.friends;" selected="true"/>
           <menuitem label="&firenyx.options.look.default_sidebar_tab.topics;"/>
           <menuitem label="&firenyx.options.look.default_sidebar_tab.last_tab;"/>
+        </menupopup>
+      </menulist>
+		</hbox>
+		<hbox align="center">
+		  <label value="&firenyx.options.look.default_sidebar_open_state;"/>
+		  <menulist id="firenyx-look-default_sidebar_open_state" flex="1">
+        <menupopup>
+        	<menuitem label="&firenyx.options.look.default_sidebar_open_state.show;"/>
+          <menuitem label="&firenyx.options.look.default_sidebar_open_state.hide;"/>
+          <menuitem label="&firenyx.options.look.default_sidebar_open_state.last_state;" selected="true"/>
         </menupopup>
       </menulist>
 		</hbox>

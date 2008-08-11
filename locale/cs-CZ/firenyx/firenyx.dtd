@@ -61,6 +61,10 @@
 <!ENTITY firenyx.options.look.default_sidebar_tab.friends "Přátelé">
 <!ENTITY firenyx.options.look.default_sidebar_tab.topics "Diskuze">
 <!ENTITY firenyx.options.look.default_sidebar_tab.last_tab "poslední zvolenou">
+<!ENTITY firenyx.options.look.default_sidebar_open_state "Zobrazit postraní lištu při startu a při otevření nového okna:">
+<!ENTITY firenyx.options.look.default_sidebar_open_state.show "vždy">
+<!ENTITY firenyx.options.look.default_sidebar_open_state.hide "nikdy">
+<!ENTITY firenyx.options.look.default_sidebar_open_state.last_state "dle posledního stavu">
 
 <!-- Options-alerts -->
 <!ENTITY firenyx.options.alerts.caption "Upozorňování">
