@@ -65,6 +65,7 @@
 <!ENTITY firenyx.options.look.default_sidebar_open_state.show "vždy">
 <!ENTITY firenyx.options.look.default_sidebar_open_state.hide "nikdy">
 <!ENTITY firenyx.options.look.default_sidebar_open_state.last_state "dle posledního stavu">
+<!ENTITY firenyx.options.look.sidebar_friends_small_icons "Zobrazit malé ikonky v postraní liště v záložce Přátelé">
 
 <!-- Options-alerts -->
 <!ENTITY firenyx.options.alerts.caption "Upozorňování">

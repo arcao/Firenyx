@@ -48,9 +48,11 @@
 		fn_p.setBool('premium_version', gBI('firenyx-premium_version').checked);
 		fn_p.setBool('donot_show_mail_alert', gBI('firenyx-donot_show_mail_alert').checked);
 		fn_p.setBool('donot_mark_mail_as_readed', gBI('firenyx-donot_mark_mail_as_readed').checked);
+		
 		fn_p.setInt('look.statusbar_counter', gBI('firenyx-look-statusbar_counter').selectedIndex);
 		fn_p.setInt('look.default_sidebar_tab', gBI('firenyx-look-default_sidebar_tab').selectedIndex);
 		fn_p.setInt('look.default_sidebar_open_state', gBI('firenyx-look-default_sidebar_open_state').selectedIndex);
+		fn_p.setBool('look.sidebar_friends_small_icons', gBI('firenyx-look-sidebar_friends_small_icons').checked);
 	
 		var refresh_time = 0
 		
@@ -63,7 +65,10 @@
 		
 		//logme(window.arguments[0]);
 		
-		if (window.arguments && window.arguments[0]) window.arguments[0].updateRefreshing(); 
+		//if (window.arguments && window.arguments[0]) window.arguments[0].updateRefreshing();
+		//upozornime vsechny instance firenyxu na zmenu nastaveni
+		var observerService = Components.classes["@mozilla.org/observer-service;1"].getService(Components.interfaces.nsIObserverService);
+		observerService.notifyObservers(null, "firenyx:settings:reload", '');
 		
 		return true;
 	}
@@ -96,6 +101,7 @@
 		gBI('firenyx-look-statusbar_counter').selectedIndex = fn_p.getInt('look.statusbar_counter', 0);
 		gBI('firenyx-look-default_sidebar_tab').selectedIndex = fn_p.getInt('look.default_sidebar_tab', 0);
 		gBI('firenyx-look-default_sidebar_open_state').selectedIndex = fn_p.getInt('look.default_sidebar_open_state', 0);
+		gBI('firenyx-look-sidebar_friends_small_icons').checked = fn_p.getBool('look.sidebar_friends_small_icons', false);
 		
 		var refresh_time = fn_p.getInt('refresh.time', 60);
 		if (refresh_time < 60) refresh_time = 60;
@@ -187,6 +193,9 @@
           <menuitem label="&firenyx.options.look.default_sidebar_open_state.last_state;" selected="true"/>
         </menupopup>
       </menulist>
+		</hbox>
+		<hbox align="center">
+      <checkbox label="&firenyx.options.look.sidebar_friends_small_icons;" id="firenyx-look-sidebar_friends_small_icons"/>
 		</hbox>
   </groupbox>
   <groupbox flex="1">

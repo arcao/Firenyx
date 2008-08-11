@@ -66,6 +66,7 @@
 <!ENTITY firenyx.options.look.default_sidebar_open_state.show "always">
 <!ENTITY firenyx.options.look.default_sidebar_open_state.hide "never">
 <!ENTITY firenyx.options.look.default_sidebar_open_state.last_state "by last state">
+<!ENTITY firenyx.options.look.sidebar_friends_small_icons "Show small icons in Friends' sidebar tab">
 
 <!-- Options-alerts -->
 <!ENTITY firenyx.options.alerts.caption "Alerts">

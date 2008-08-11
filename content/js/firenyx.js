@@ -85,6 +85,9 @@ firenyx.prototype.init = function() {
 	this.observerService.addObserver(this, "firenyx:friend:add", false);
 	this.observerService.addObserver(this, "firenyx:friend:update", false);
 	this.observerService.addObserver(this, "firenyx:friend:remove", false);
+
+	this.observerService.addObserver(this, "firenyx:settings:reload", false);
+
 	this.disabled = fn_p.getBool('disabled', false);
 	this.sidebar = new firenyx_sidebar();
 	this.upgradeSettings();
@@ -94,6 +97,7 @@ firenyx.prototype.startRefreshing = function() {
 	this.setDisabled(this.disabled);
 }
 firenyx.prototype.updateRefreshing = function() {
+  this.sidebar.reloadSettings();
 	if (this.disabled) return;
 	if (this.timer) {
 		this.timer.cancel();
@@ -609,6 +613,7 @@ firenyx.prototype.observe = function(subject, topic, data) {
 	
 	if (topic=='alertclickcallback') this.onAlertClickCallback(data);
 	if (topic=='alertfinished') this.onAlertFinished();
+	if (topic=='firenyx:settings:reload') this.updateRefreshing();
 	
 }
 firenyx.prototype.upgradeSettings = function() {
@@ -640,6 +645,8 @@ firenyx.prototype.destroy = function() {
 	this.observerService.removeObserver(this, "firenyx:friend:add", false);
 	this.observerService.removeObserver(this, "firenyx:friend:update", false);
 	this.observerService.removeObserver(this, "firenyx:friend:remove", false);
+	
+	this.observerService.removeObserver(this, "firenyx:settings:reload", false);
 	
 	this.observerService = null;
 	

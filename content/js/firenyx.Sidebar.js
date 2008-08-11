@@ -13,6 +13,7 @@ function firenyx_sidebar() {
 				this.toggleSidebar(fn_p.getBool('show_sidebar', false));
 				break;
 		}
+		this.reloadSettings();
 	}
 	return this;
 }
@@ -46,6 +47,16 @@ firenyx_sidebar.prototype.loadTab = function() {
 		tab = fn_p.getInt('last_sidebar_tab', 0);
 	}
 	gBI('firenyx-dashboard-tab-box').selectedIndex = tab;
+}
+firenyx_sidebar.prototype.reloadSettings = function() {
+	if (!gBI('firenyx-friends')) return;
+
+	var list = gBI('firenyx-friends');
+	if (fn_p.getBool('look.sidebar_friends_small_icons', false)) {
+		list.setAttribute('class', 'min-icon');
+	} else {
+		list.setAttribute('class', '');
+	}
 }
 firenyx_sidebar.prototype.addPeople = function(nick, time) {
 	nick = nick.toUpperCase();
