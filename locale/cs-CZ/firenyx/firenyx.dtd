@@ -43,9 +43,9 @@
 
 <!ENTITY firenyx.options.login.open_url_method "Zobrazit stránku rychlého přihlášení v:">
 <!ENTITY firenyx.options.login.open_url_method.new_window "novém okně">
-<!ENTITY firenyx.options.login.open_url_method.new_tab "nové záložce">
-<!ENTITY firenyx.options.login.open_url_method.current_tab "v aktuálně zobrazené záložce">
-<!ENTITY firenyx.options.login.open_url_method.current_nyx_tab "v záložce, kde je načtena stránka s nyx.cz">
+<!ENTITY firenyx.options.login.open_url_method.new_tab "novém panelu">
+<!ENTITY firenyx.options.login.open_url_method.current_tab "v aktuálně zobrazeném panely">
+<!ENTITY firenyx.options.login.open_url_method.current_nyx_tab "v panelu, kde je načtena stránka s nyx.cz">
 
 <!ENTITY firenyx.options.login.premium_version "Mám prémiovou verzi Nyxu (nutné zaškrtnout, pokud ji máte, jinak nezaškrtávat!)">
 
@@ -58,10 +58,10 @@
 <!ENTITY firenyx.options.look.statusbar_counter "Za přezdívkou ve stavovém řádku zobrazovat počítadlo nepřečtených:">
 <!ENTITY firenyx.options.look.statusbar_counter.books "Diskuzí">
 <!ENTITY firenyx.options.look.statusbar_counter.posts "Příspěvků">
-<!ENTITY firenyx.options.look.default_sidebar_tab "Zobrazovat vždy v postraní liště záložku:">
+<!ENTITY firenyx.options.look.default_sidebar_tab "Zobrazovat vždy v postraní liště panel:">
 <!ENTITY firenyx.options.look.default_sidebar_tab.friends "Přátelé">
 <!ENTITY firenyx.options.look.default_sidebar_tab.topics "Diskuze">
-<!ENTITY firenyx.options.look.default_sidebar_tab.last_tab "poslední zvolenou">
+<!ENTITY firenyx.options.look.default_sidebar_tab.last_tab "poslední zvolený">
 <!ENTITY firenyx.options.look.default_sidebar_open_state "Zobrazit postraní lištu při startu a při otevření nového okna:">
 <!ENTITY firenyx.options.look.default_sidebar_open_state.show "vždy">
 <!ENTITY firenyx.options.look.default_sidebar_open_state.hide "nikdy">
