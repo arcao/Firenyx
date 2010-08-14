@@ -57,15 +57,8 @@ fn_utils.formatAgoTime = function(seconds) {
 fn_utils.closeUnpairedTags = function(text) {
 	return text.replace(/<((br|img|hr).*?)(\/>|\/\s+>|>)/ig, "<$1 />");
 }
-fn_utils.getVersion = function(guid) {
-	try {
-		var em = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
-		var addon = em.getItemForID(guid);
-		if (!addon) return '';
-		return addon.version;
-	} catch(e) {
-		return '';
-	}
+fn_utils.getVersion = function() {
+	return fn_utils.version;
 }
 fn_utils.isDefined = function(variable) {
 	try {
@@ -74,6 +67,30 @@ fn_utils.isDefined = function(variable) {
 		return false;
 	}
 }
+fn_utils.version = '';
+// get app version (ugly code for a quite bad implementation in FF4)
+if (Components.classes["@mozilla.org/extensions/manager;1"] != null) {
+  fn_utils.version = (function() {
+    try {
+  		var em = Components.classes["@mozilla.org/extensions/manager;1"].getService(Components.interfaces.nsIExtensionManager);
+  		var addon = em.getItemForID("{5591137f-ca2c-4c2a-93d1-5514992b2d4a}");
+  		if (!addon) 
+        return '';
+  		return addon.version;
+  	} catch(e) {
+  		return '';
+  	}
+  })();
+} else {
+  try {  
+    Components.utils.import("resource://gre/modules/AddonManager.jsm");  
+    AddonManager.getAddonByID("{5591137f-ca2c-4c2a-93d1-5514992b2d4a}", function(addon) {
+      if (addon != null)
+        fn_utils.version = addon.vesion;              
+    });  
+  } catch (e) {}  
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 //delegate
 function Delegate() {}

@@ -2,7 +2,7 @@
 
 #firenyx-close-dashboard {
 	-moz-appearance: none;
-	list-style-image: url("chrome://firenyx/skin/sidebar/closeSidebar.png");
+	list-style-image: url("chrome://global/skin/icons/closeSidebar.png");
 	-moz-image-region: rect(0px, 14px, 14px, 0px);
   margin: 0px;
   border: none;

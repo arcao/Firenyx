@@ -6,3 +6,4 @@ content	firenyx	jar:chrome/firenyx.jar!/content/
 locale	firenyx	en-US	jar:chrome/firenyx.jar!/locale/en-US/firenyx/
 locale	firenyx	cs-CZ	jar:chrome/firenyx.jar!/locale/cs-CZ/firenyx/
 skin	firenyx	classic/1.0 jar:chrome/firenyx.jar!/skin/classic/firenyx/ 
+style chrome://firenyx/content/overlay.xul chrome://firenyx/skin/aero.css os=WINNT osversion>=6

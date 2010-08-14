@@ -1,0 +1,27 @@
+#firenyx-dashboard-splitter:-moz-system-metric(windows-default-theme) {
+  border: 0;
+  -moz-border-end: 1px solid;
+  -moz-border-right-colors: #A9B7C9;
+  -moz-border-left-colors: #A9B7C9;
+  min-width: 0;
+  width: 3px;
+  background-color: transparent;
+  -moz-margin-start: -3px;
+  position: relative;
+  z-index: 10;
+}
+#firenyx-friends, #firenyx-topics {
+  border: 0;
+  margin: 0; 
+}
+#firenyx-friends:-moz-system-metric(windows-default-theme),
+#firenyx-topics:-moz-system-metric(windows-default-theme) {
+  background-color: #EEF3FA;
+}
+#firenyx-friends richlistitem:-moz-system-metric(windows-default-theme) {
+  border-bottom:1px solid #A9B7C9;
+}
+#firenyx-friends richlistitem[selected="true"]:-moz-system-metric(windows-default-theme) {
+	background-color: Highlight;
+} 
+ 

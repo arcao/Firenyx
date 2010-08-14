@@ -5,4 +5,6 @@ content	firenyx	firenyx/content/
 
 locale	firenyx	en-US	firenyx/locale/en-US/firenyx/
 locale	firenyx	cs-CZ	firenyx/locale/cs-CZ/firenyx/
-skin	firenyx	classic/1.0 firenyx/skin/classic/firenyx/ 
+skin	firenyx	classic/1.0 firenyx/skin/classic/firenyx/
+style chrome://firenyx/content/overlay.xul chrome://firenyx/skin/aero.css os=WINNT osversion>=6
+ 
