@@ -9,7 +9,7 @@ function fn_init() {
 	fn_p = new fn_Pref(fn_branchName);
 	fn_s = new fn_StringBundle(fn_stringBundle_properties);
 	fn = new firenyx();
-	//fn_debug = fn_p.getBool('debug_mode', false);
+	fn_debug = fn_p.getBool('debug_mode', false);
 }
 function fn_destroy() {
 	fn.destroy();
