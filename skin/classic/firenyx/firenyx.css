@@ -2,19 +2,19 @@
 
 #firenyx-close-dashboard {
 	-moz-appearance: none;
-	list-style-image: url("chrome://global/skin/icons/closeSidebar.png");
-	-moz-image-region: rect(0px, 14px, 14px, 0px);
+	list-style-image: url("chrome://firenyx/skin/sidebar/close.png");
+	-moz-image-region: rect(0, 16px, 16px, 0);
   margin: 0px;
   border: none;
   padding: 0px 2px 0px 2px; 	
 }
 
 #firenyx-close-dashboard:hover {
-  -moz-image-region: rect(0px, 28px, 14px, 14px);
+  -moz-image-region: rect(0, 32px, 16px, 16px); 
 }
 
 #firenyx-close-dashboard:hover:active {
-  -moz-image-region: rect(0px, 42px, 14px, 28px);
+  -moz-image-region: rect(0, 48px, 16px, 32px); 
 }
 
 .disabled #firenyx-label {

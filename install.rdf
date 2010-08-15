@@ -3,7 +3,7 @@
   <Description about="urn:mozilla:install-manifest">
 		<em:updateKey>MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCV2MZffWQmjLu8cvKvsiKZ4LFkEer5LQy9oCTDPdiaN1j0yYKZg5yToISZQDxyructNCPKABE5D0J3PpcY8lKLBmIIQ4T6WEqZAfg4kr0lA1vpG4FaqQTPQoxXrPU3I+V+WjCQKIgG8gvPM4RCtZGLEuYZR8aBf1dUFGJd2DcWKwIDAQAB</em:updateKey>
     <em:id>{5591137f-ca2c-4c2a-93d1-5514992b2d4a}</em:id>
-    <em:version>0.1.11.2010081501</em:version>
+    <em:version>0.1.12.2010081501</em:version>
     <em:type>2</em:type><!-- extension -->
 
 
@@ -55,8 +55,8 @@
     <!-- Front End MetaData -->
     <em:name>Firenyx</em:name>
     <em:description>Localized - See http://kb.mozillazine.org/Localize_extension_descriptions</em:description>
-    <em:creator>Arcao</em:creator>
-    <em:homepageURL>http://nyx.arcao.com/firenyx/</em:homepageURL>
+    <em:creator>Martin &quot;Arcao&quot; Sloup</em:creator>
+    <em:homepageURL>http://lab.arcao.com/rozsireni/firefox/firenyx/</em:homepageURL>
     <em:updateURL>http://nyx.arcao.com/firenyx/update.rdf</em:updateURL>
 
     <!-- Front End Integration Hooks (used by Extension Manager)-->
@@ -78,11 +78,15 @@
       <Description>
         <em:locale>en-US</em:locale>
         <em:name>Firenyx</em:name>
+        <em:creator>Martin &quot;Arcao&quot; Sloup</em:creator>
+        <em:homepageURL>http://lab.arcao.com/rozsireni/firefox/firenyx/</em:homepageURL>
         <em:description>A client application for NYX.CZ community server. (en-US translation by Esten)</em:description>
       </Description>
       <Description>
         <em:locale>cs-CZ</em:locale>
         <em:name>Firenyx</em:name>
+        <em:creator>Martin &quot;Arcao&quot; Sloup</em:creator>
+        <em:homepageURL>http://lab.arcao.com/rozsireni/firefox/firenyx/</em:homepageURL>
         <em:description>Klient pro diskuzní server NYX.CZ. (cs-CZ)</em:description>
       </Description>
     </em:localized>

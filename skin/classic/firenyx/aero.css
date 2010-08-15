@@ -23,5 +23,10 @@
 }
 #firenyx-friends richlistitem[selected="true"]:-moz-system-metric(windows-default-theme) {
 	background-color: Highlight;
-} 
+}
+
+#firenyx-friends richlistitem[selected="true"] label.nick:-moz-system-metric(windows-default-theme),
+#firenyx-friends richlistitem[selected="true"] label.time:-moz-system-metric(windows-default-theme) {
+  color: HighlightText;
+}
  

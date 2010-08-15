@@ -78,6 +78,7 @@ if (Components.classes["@mozilla.org/extensions/manager;1"] != null) {
         return '';
   		return addon.version;
   	} catch(e) {
+  	  logme(Json.toJSON(e));
   		return '';
   	}
   })();
@@ -85,10 +86,13 @@ if (Components.classes["@mozilla.org/extensions/manager;1"] != null) {
   try {  
     Components.utils.import("resource://gre/modules/AddonManager.jsm");  
     AddonManager.getAddonByID("{5591137f-ca2c-4c2a-93d1-5514992b2d4a}", function(addon) {
+      //logme(Json.toJSON(addon));
       if (addon != null)
-        fn_utils.version = addon.vesion;              
+        fn_utils.version = addon.version;              
     });  
-  } catch (e) {}  
+  } catch (e) {
+    logme(Json.toJSON(e));
+  }  
 }
 
 ////////////////////////////////////////////////////////////////////////////////
