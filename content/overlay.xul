@@ -72,7 +72,7 @@
 
   <toolbarpalette id='BrowserToolbarPalette'>
     <toolbarbutton type='menu-button' id="firenyx-tbb" command="fn_toolbar_button"
-      class='toolbarbutton-1 chromeclass-toolbar-additional' label='&firenyx.statusbar.label;'>
+      class='toolbarbutton-1 chromeclass-toolbar-additional' label='&firenyx.statusbar.label;' title='&firenyx.menu.label;'>
       <menupopup id="firenyx-popupmenu-statusbar" onclick="event.stopPropagation();" oncommand="event.stopPropagation();" oncontextmenu="event.preventDefault();">
         <menuitem id="firenyx-menuDisabled-10" label="&firenyx.menu.nyx.gate;" oncommand="fn.openPage('l=gate', event);" onclick="checkForMiddleClick(this, event);"/>
         <menuitem id="firenyx-menuDisabled-11" label="&firenyx.menu.nyx.mail;" oncommand="fn.openPage('l=mail', event);" onclick="checkForMiddleClick(this, event);"/>
