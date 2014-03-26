@@ -1,0 +1,18 @@
+apply plugin: "base"
+
+project.archivesBaseName = 'firenyx'
+project.version = getVersion()
+
+def getVersion() {
+	def ns = new groovy.xml.Namespace("http://www.mozilla.org/2004/em-rdf#", "em")
+	def parsedProjectXml = (new XmlParser()).parse('install.rdf')
+	return parsedProjectXml.Description[ns.version].text()
+}
+
+task archives(type: Zip) {
+	from '.'
+	extension 'xpi'
+	include('content/**', 'skin/**', 'locale/**', 'defaults/**', 'chrome.manifest', 'install.rdf')
+}
+
+assemble.dependsOn archives
