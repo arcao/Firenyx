@@ -10,7 +10,7 @@ V adresari extensions ve vasem profilu Firefoxu, napr:
 
 	cd "c:\Users\user\AppData\Roaming\Mozilla\Firefox\Profiles\u905xshw.default-1360700277389\extensions\
 
-provedte checkout z gitu do adresare {5591137f-ca2c-4c2a-93d1-5514992b2d4a} (guid
+provedte checkout z gitu do adresare `{5591137f-ca2c-4c2a-93d1-5514992b2d4a}` (guid
 rozsireni. Musi odpovidat tomu, co je install.rdf):
 
 	git clone git@github.com:arcao/Firenyx.git "{5591137f-ca2c-4c2a-93d1-5514992b2d4a}"
