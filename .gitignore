@@ -1,0 +1,6 @@
+# built application files
+*.xpi
+
+# generated files
+build/
+.gradle
