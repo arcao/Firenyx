@@ -17,10 +17,6 @@
   -moz-image-region: rect(0, 48px, 16px, 32px); 
 }
 
-.disabled #firenyx-label {
-	color: GrayText;
-}
-
 #firenyx-friends, #firenyx-topics {
 	-moz-appearance: none;
   border: 0;

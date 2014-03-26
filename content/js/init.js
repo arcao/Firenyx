@@ -19,7 +19,7 @@ function fn_destroy() {
 	fn_p = null;
 	fn_s = null;
 }
-function fn_remove_node(node) {
+/*function fn_remove_node(node) {
 	node.parentNode.removeChild(node);
 }
 function fn_remove() {
@@ -31,4 +31,4 @@ function fn_remove() {
 	r(gBI('firenyx-toggleSidebar-2'));
 	r(gBI('firenyx-dashboard'));
 	r(gBI('firenyx-dashboard-splitter'));
-}
+}*/

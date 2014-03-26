@@ -135,13 +135,13 @@ firenyx.prototype.setDisabled = function(state) {
 	for(i=0; i<3;i++) try{ gBI('firenyx-toggleSidebar-'+i).setAttribute('disabled', state); } catch(e) {};
 	
 	if (state) {
-		gBI('firenyx-statuspanel').setAttribute('class', 'disabled');
-		gBI('firenyx-icon').src = fn_img_butterfly_disabled;
 		this.sidebar.toggleSidebar(false);
-		gBI('firenyx-label').value = fn_s.get('fn.statusbar.unlogged');
+		gBI('firenyx-tbb').label = fn_s.get('fn.statusbar.unlogged');
+		gBI('firenyx-tbb').setAttribute('tooltiptext', gBI('firenyx-tbb').label);
+		gBI('fn_toolbar_button').setAttribute('disabled', 'yes');
 		this.stopRefreshing();
 	} else {
-		gBI('firenyx-statuspanel').setAttribute('class', '');
+    gBI('fn_toolbar_button').removeAttribute('disabled');
 		this.updateRefreshing();
 	}	
 }
@@ -162,8 +162,9 @@ firenyx.prototype.processRefresh = function() {
 			}
 		}
 	} catch (e) {
-		gBI('firenyx-label').value = fn_s.get('fn.statusbar.unlogged');
-		gBI('firenyx-icon').src = fn_img_butterfly;
+		gBI('firenyx-tbb').label = fn_s.get('fn.statusbar.unlogged');
+		gBI('firenyx-tbb').setAttribute('tooltiptext', gBI('firenyx-tbb').label);
+		//gBI('firenyx-icon').src = fn_img_butterfly;
 		if (!this.dont_show_network_error) {
 			this.dont_show_network_error = true;
 			this.showAlert(fn_img_alert_network, fn_s.get('fn.error.network.title'), fn_s.get('fn.error.network.text'), false, '');
@@ -184,12 +185,14 @@ firenyx.prototype.refresh = function(timer) {
 	fn_pm = null;
 	
 	if (!username || !password) {
-		gBI('firenyx-label').value = fn_s.get('fn.statusbar.unlogged');
+		gBI('firenyx-tbb').label = fn_s.get('fn.statusbar.unlogged');
+		gBI('firenyx-tbb').setAttribute('tooltiptext', gBI('firenyx-tbb').label);
 		return;
 	}
 	
 	if (this.firstlogin || this.dont_show_network_error) {
-		gBI('firenyx-label').value = fn_s.get('fn.statusbar.logging');
+		gBI('firenyx-tbb').label = fn_s.get('fn.statusbar.logging');
+		gBI('firenyx-tbb').setAttribute('tooltiptext', gBI('firenyx-tbb').label);
 	}
 	
 	var append_post_vars = '';
@@ -198,7 +201,7 @@ firenyx.prototype.refresh = function(timer) {
 	
 	var params = fn_utils.printf(url_nyx_client_post_vars, encodeURIComponent(username), encodeURIComponent(password), append_post_vars);
 	
-	gBI('firenyx-icon').src = fn_img_throbber;
+	//gBI('firenyx-icon').src = fn_img_throbber;
 	
 	this.xmlHttp = new XMLHttpRequest();
 	this.xmlHttp.open("POST", url, true);
@@ -215,12 +218,13 @@ firenyx.prototype.processXML = function() {
 	//TODO: osetrit, zda to nehazi HTML error stranku
 	//zpracovani chyb 1.cast
 	logme(this.xmlHttp.responseText);
-	gBI('firenyx-icon').src = fn_img_butterfly;
+	//gBI('firenyx-icon').src = fn_img_butterfly;
 	
 	if (this.xmlHttp.responseText.indexOf('<?xml') != 0) {
 		this.dont_show_network_error = true;
 		this.showAlert(fn_img_alert_key, fn_s.get('fn.error.login.title'), fn_s.get('fn.error.login.text'), false, '');
-		gBI('firenyx-label').value = fn_s.get('fn.statusbar.unlogged');
+		gBI('firenyx-tbb').label = fn_s.get('fn.statusbar.unlogged');
+		gBI('firenyx-tbb').setAttribute('tooltiptext', gBI('firenyx-tbb').label);
 		return;
 	}
 	//logme(this.xmlHttp.responseText);
@@ -236,7 +240,8 @@ firenyx.prototype.processXML = function() {
 	
 	//pokud obsahuje xml jen chybove hlaseni tak nepokracovat dal	
 	if (doc.getElementsByTagName('info').length < 1 || doc.getElementsByTagName('info')[0].getElementsByTagName('friends').length <1) {
-		gBI('firenyx-label').value = fn_s.get('fn.statusbar.unlogged');
+		gBI('firenyx-tbb').label = fn_s.get('fn.statusbar.unlogged');
+		gBI('firenyx-tbb').setAttribute('tooltiptext', gBI('firenyx-tbb').label);
 		this.dont_show_network_error = true;
 		return;
 	}
@@ -422,7 +427,8 @@ firenyx.prototype.processXML = function() {
 	
 	if (mail_count >= 0) val = val + '/' + mail_count; 
 	
-	gBI('firenyx-label').value = fn_utils.printf(fn_s.get('fn.statusbar.text'), this.username, val);
+	gBI('firenyx-tbb').label = fn_utils.printf(fn_s.get('fn.statusbar.text'), this.username, val);
+	gBI('firenyx-tbb').setAttribute('tooltiptext', gBI('firenyx-tbb').label);
 }
 firenyx.prototype.openPage = function(page, e) {
 	//page = 'l=gate'

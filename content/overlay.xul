@@ -3,6 +3,7 @@
 <!-- Styles //-->
 <?xml-stylesheet href="chrome://firenyx/content/firenyx.css" type="text/css"?>
 <?xml-stylesheet href="chrome://firenyx/skin/firenyx.css" type="text/css"?> 
+<?xml-stylesheet href="chrome://firenyx/skin/toolbar.css" type="text/css"?>
 <!-- Locale info //-->
 <!DOCTYPE overlay [
 <!ENTITY % firenyxDTD SYSTEM "chrome://firenyx/locale/firenyx.dtd">
@@ -40,6 +41,11 @@
 		window.addEventListener('load',doLoad, false);
 		window.addEventListener('unload',doUnLoad, false);
 	</script>
+	
+  <commandset>
+    <command id="fn_toolbar_button" oncommand="fn.openPage('l=book', event);" onclick="checkForMiddleClick(this, event);"/>
+  </commandset> 
+	
   <menupopup id="menu_ToolsPopup">
     <menu insertafter="devToolsSeparator" label="&firenyx.menu.label;" id="firenyx-tools-menu-item">
       <menupopup id="menu_popupmenu">
@@ -63,13 +69,11 @@
       </menupopup>
     </menu>
   </menupopup>
-  <statusbar id="status-bar">
-    <statusbarpanel id="firenyx-statuspanel" onclick="fn_sb_dblclick=false;if(event.button!=2)setTimeout('if(!fn_sb_dblclick)fn.sidebar.toggleSidebar();',400);" ondblclick="fn_sb_dblclick=true;if (event.button != 2) fn.openPage('l=book', event);" context="firenyx-popupmenu-statusbar">
-      <image id="firenyx-icon" src="chrome://firenyx/skin/butterfly.png"/>
-      <label id="firenyx-label" value="&firenyx.statusbar.label;"/> 
-    </statusbarpanel>
-    
-      <menupopup id="firenyx-popupmenu-statusbar" position="before_end" onpopupshowing="event.stopPropagation()">
+
+  <toolbarpalette id='BrowserToolbarPalette'>
+    <toolbarbutton type='menu-button' id="firenyx-tbb" command="fn_toolbar_button"
+      class='toolbarbutton-1 chromeclass-toolbar-additional' label='&firenyx.statusbar.label;'>
+      <menupopup id="firenyx-popupmenu-statusbar" onclick="event.stopPropagation();" oncommand="event.stopPropagation();" oncontextmenu="event.preventDefault();">
         <menuitem id="firenyx-menuDisabled-10" label="&firenyx.menu.nyx.gate;" oncommand="fn.openPage('l=gate', event);" onclick="checkForMiddleClick(this, event);"/>
         <menuitem id="firenyx-menuDisabled-11" label="&firenyx.menu.nyx.mail;" oncommand="fn.openPage('l=mail', event);" onclick="checkForMiddleClick(this, event);"/>
         <menuitem id="firenyx-menuDisabled-12" label="&firenyx.menu.nyx.topics;" oncommand="fn.openPage('l=topics', event);" onclick="checkForMiddleClick(this, event);"/>
@@ -88,8 +92,10 @@
         <menuitem label="&firenyx.menu.refresh;" oncommand="fn.updateRefreshing();"/>
         <menuitem label="&firenyx.menu.about;" oncommand="fn.showAbout();"/>
       </menupopup>
-  </statusbar>
-  
+    </toolbarbutton>
+  </toolbarpalette> 
+
+    
   <!-- insert into mainKeyset -->
 	<keyset id="mainKeyset">
 		<key id="keyFirenyxSidebarShortcut" keycode="VK_F9" modifiers="&firenyx.sidebar.accesskey.modifiers;" oncommand="fn.sidebar.toggleSidebar();" />

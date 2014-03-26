@@ -53,3 +53,9 @@
 #firenyx-friends, #firenyx-topics {
 	margin: 0;
 }
+
+
+/* The "blank" ID prevents loops; it's not on the replacement. */
+#firenyx-tbb menupopup#blank {
+  -moz-binding: url('chrome://firefox/content/bindings.xml#firefox-tbb')/**/
+}

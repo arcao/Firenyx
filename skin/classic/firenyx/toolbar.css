@@ -1,0 +1,18 @@
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"); 
+
+#firenyx-tbb {
+  list-style-image: url("chrome://firenyx/skin/butterfly-24.png");
+}
+toolbar[iconsize="small"] #firenyx-tbb {
+  list-style-image: url("chrome://firenyx/skin/butterfly.png");
+}
+
+#firenyx-tbb[disabled="yes"] {
+  opacity: 0.8;
+}
+#firenyx-tbb[disabled="yes"] .toolbarbutton-text {
+  text-decoration: line-through;
+}
+#firenyx-tbb[disabled="yes"] .toolbarbutton-icon {
+  opacity: 0.5;
+}
