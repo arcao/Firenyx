@@ -30,7 +30,7 @@ souboru obsahuje verzi, která je získána ze souboru `install.rdf`.
 #### Poznámka
 
 Pokud se chcete odklonit od vıvojové verze a tvoøit vlastní produkt, nezapomeòte
-do install.rdf vygenerovat vlastní guid, a se to netloukne. 
+do `install.rdf` vygenerovat vlastní guid, a se to netloukne. 
 
 
   
