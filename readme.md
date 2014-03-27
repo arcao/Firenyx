@@ -1,36 +1,51 @@
 # Firenyx
 
-Firenyx je rozšíøení do Mozilla Firefox, které umoòuje odesílat a upozoròovat 
-na novou poštu na komunitnim serveru www.nyx.cz, ukazovat pøihlášené pøátelé a i
-strom nepøeètenıch klubù.
+Firenyx je rozÅ¡Ã­Å™enÃ­ do Mozilla Firefox, kterÃ© umoÅ¾Åˆuje odesÃ­lat a upozorÅˆovat 
+na novou poÅ¡tu na komunitnim serveru www.nyx.cz, ukazovat pÅ™ihlÃ¡Å¡enÃ© pÅ™Ã¡telÃ© a i
+strom nepÅ™eÄtenÃ½ch klubÅ¯.
 
-## Jak vyvíjet ve Firefoxu
+## Jak vyvÃ­jet ve Firefoxu
 
-V adresáøi extensions ve vašem profilu Firefoxu, napø.:
+V adresÃ¡Å™i extensions ve vaÅ¡em profilu Firefoxu, napÅ™.:
 
 	cd "c:\Users\user\AppData\Roaming\Mozilla\Firefox\Profiles\u905xshw.default-1360700277389\extensions\
 
-proveïte checkout Gitem do adresáøe `{5591137f-ca2c-4c2a-93d1-5514992b2d4a}` (guid
-rozšíøení musí odpovídat tomu, co je install.rdf):
+proveÄte checkout Gitem do adresÃ¡Å™e `{5591137f-ca2c-4c2a-93d1-5514992b2d4a}` (guid
+rozÅ¡Ã­Å™enÃ­ musÃ­ odpovÃ­dat tomu, co je v `install.rdf`):
 
 	git clone https://github.com/arcao/Firenyx.git "{5591137f-ca2c-4c2a-93d1-5514992b2d4a}"
 
-po restartu Firefoxu ji rozšíøení Firenyx funguje.
+po restartu Firefoxu jiÅ¾ rozÅ¡Ã­Å™enÃ­ Firenyx funguje.
 
-## Sestavení XPI instalaèního balíèku
+Pokud by jste chtÄ›li pÅ™ispÄ›t vaÅ¡imi zmÄ›nami, zde je pÃ¡r krokÅ¯, jak na to:
 
-Pro sestavení instalaèního balíèku je pouit Gradle build systém. Sestavení 
-provedete pøes pøíkaz:
+1. [ForknÄ›te tento projekt][fork] do vaÅ¡eho ÃºÄtu.
+2. [VytvoÅ™te branch][branch] na zmÄ›ny, kterÃ© chcete provÃ©st.
+3. Vy checkoutujte projekt, jak je uvedeno vÃ½Å¡e, ale pouÅ¾ijte vaÅ¡Ã­ adresu na forknutÃ½ projekt a jmÃ©no vaÅ¡Ã­ branche:
+
+		git clone -b vase-branch https://github.com/username/Firenyx.git "{5591137f-ca2c-4c2a-93d1-5514992b2d4a}"
+
+4. ProveÄte zmÄ›ny a commitnÄ›te je.
+5. [PoÅ¡lete pull request][pr] z vaÅ¡Ã­ forknutÃ© branche do mojÃ­ `master` branche.
+
+[fork]: http://help.github.com/forking/
+[branch]: https://help.github.com/articles/creating-and-deleting-branches-within-your-repository
+[pr]: http://help.github.com/pull-requests/
+
+
+## SestavenÃ­ XPI instalaÄnÃ­ho balÃ­Äku
+
+Pro sestavenÃ­ instalaÄnÃ­ho balÃ­Äku je pouÅ¾it Gradle build systÃ©m. SestavenÃ­ 
+provedete pÅ™es pÅ™Ã­kaz:
 
 	gradlew assemble
 	
-vıslednı xpi soubor se pak nachází v adresáøi `build\distributions`. Jméno XPI
-souboru obsahuje verzi, která je získána ze souboru `install.rdf`.
+vÃ½slednÃ½ xpi soubor se pak nachÃ¡zÃ­ v adresÃ¡Å™i `build\distributions`. JmÃ©no XPI
+souboru obsahuje verzi, kterÃ¡ je zÃ­skÃ¡na ze souboru `install.rdf`.
 
-#### Poznámka
-
-Pokud se chcete odklonit od vıvojové verze a tvoøit vlastní produkt, nezapomeòte
-do `install.rdf` vygenerovat vlastní guid, a se to netloukne. 
+**PoznÃ¡mka:**<br>
+Pokud se chcete odklonit od vÃ½vojovÃ© verze a tvoÅ™it vlastnÃ­ produkt, nezapomeÅˆte
+do `install.rdf` vygenerovat vlastnÃ­ guid, aÅ¥ se to netloukne. 
 
 
   
