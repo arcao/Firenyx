@@ -32,6 +32,7 @@
 			browser.insertBefore(dashboardSplitter, appContent);
 
 			fn_init();
+			fn.checkFirstUsage();
 			fn.startRefreshing();
 		}
 		function doUnLoad() {

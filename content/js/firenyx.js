@@ -187,7 +187,12 @@ firenyx.prototype.refresh = function(timer) {
 	if (!username || !password) {
 		gBI('firenyx-tbb').label = fn_s.get('fn.statusbar.unlogged');
 		gBI('firenyx-tbb').setAttribute('tooltiptext', gBI('firenyx-tbb').label);
+		for(i=0; i<20;i++) try{ gBI('firenyx-menuDisabled-'+i).setAttribute('disabled', true); } catch(e) {};
+		for(i=0; i<3;i++) try{ gBI('firenyx-toggleSidebar-'+i).setAttribute('disabled', true); } catch(e) {};
 		return;
+	} else {
+		for(i=0; i<20;i++) try{ gBI('firenyx-menuDisabled-'+i).setAttribute('disabled', false); } catch(e) {};
+		for(i=0; i<3;i++) try{ gBI('firenyx-toggleSidebar-'+i).setAttribute('disabled', false); } catch(e) {};
 	}
 	
 	if (this.firstlogin || this.dont_show_network_error) {
@@ -636,6 +641,17 @@ firenyx.prototype.upgradeSettings = function() {
 		fn_pm = null;
 		
 		fn_p.clear('webpassword');
+	}
+}
+firenyx.prototype.checkFirstUsage = function() {
+	if (fn_p.getBool('first_usage', true)) {
+		fn_p.setBool('first_usage', false);
+		
+		var navbar = document.getElementById("nav-bar");
+		var newset = navbar.currentSet + ",firenyx-tbb";
+		navbar.currentSet = newset;
+		navbar.setAttribute("currentset", newset);
+		document.persist("nav-bar", "currentset"); 
 	}
 }
 firenyx.prototype.destroy = function() {
