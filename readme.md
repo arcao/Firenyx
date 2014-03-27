@@ -21,9 +21,9 @@ Pokud by jste chtěli přispět vašimi změnami, zde je pár kroků, jak na to:
 
 1. [Forkněte tento projekt][fork] do vašeho účtu.
 2. [Vytvořte branch][branch] na změny, které chcete provést.
-3. Vy checkoutujte projekt, jak je uvedeno výše, ale použijte vaší adresu na forknutý projekt:
+3. Vy checkoutujte projekt, jak je uvedeno výše, ale použijte vaší adresu na forknutý projekt a jméno vaší branche:
 
-		git clone -b <branch-name> <repo-url> "{5591137f-ca2c-4c2a-93d1-5514992b2d4a}"
+		git clone -b vase-branch https://github.com/username/Firenyx.git "{5591137f-ca2c-4c2a-93d1-5514992b2d4a}"
 
 4. Proveďte změny a commitněte je.
 5. [Pošlete pull request][pr] z vaší forknuté branche do mojí `master` branche.
