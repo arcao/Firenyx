@@ -11,7 +11,7 @@ V adresáři extensions ve vašem profilu Firefoxu, např.:
 	cd "c:\Users\user\AppData\Roaming\Mozilla\Firefox\Profiles\u905xshw.default-1360700277389\extensions\
 
 proveďte checkout Gitem do adresáře `{5591137f-ca2c-4c2a-93d1-5514992b2d4a}` (guid
-rozšíření musí odpovídat tomu, co je install.rdf):
+rozšíření musí odpovídat tomu, co je v `install.rdf`):
 
 	git clone https://github.com/arcao/Firenyx.git "{5591137f-ca2c-4c2a-93d1-5514992b2d4a}"
 
