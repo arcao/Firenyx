@@ -1,7 +1,7 @@
 # Firenyx
 
-Firenyx je rozšíøení do Mozilla Firefox, který umožòuje odesílat a upozoròovat 
-na novou postu na komunitnim serveru www.nyx.cz, ukazovat pøihlášené pøátelé a i
+Firenyx je rozšíøení do Mozilla Firefox, které umožòuje odesílat a upozoròovat 
+na novou poštu na komunitnim serveru www.nyx.cz, ukazovat pøihlášené pøátelé a i
 strom nepøeètených klubù.
 
 ## Jak vyvíjet ve Firefoxu
